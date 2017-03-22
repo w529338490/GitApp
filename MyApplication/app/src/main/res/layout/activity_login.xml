@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_login"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    tools:context="com.example.administrator.myapplication.ui.comm.LoginActivity">
+      <com.example.administrator.myapplication.Utill.MyVideoView
+          android:id="@+id/videoView"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent" />
+
+          />
+      <TextView
+          android:id="@+id/mytv"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textColor="@color/wirt"
+          android:layout_centerInParent="true"
+          android:textSize="64dp"
+          android:text="AI SOCIAL"
+          />
+    <TextView
+        android:id="@+id/go"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="10dp"
+        android:textSize="40dp"
+        android:text="GO —>!"/>
+</RelativeLayout>

@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="navigation_drawer_open">open</string>
+    <string name="navigation_drawer_close">close</string>
+    <string name="title_activity_web">WebActivity</string>
+    <string name="title_activity_gank">GankActivity</string>
+
+</resources>
