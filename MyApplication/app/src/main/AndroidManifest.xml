@@ -29,6 +29,10 @@
             android:name=".ui.gank.GankActivity"
             android:label="@string/title_activity_gank">
         </activity>
+        <activity
+            android:name=".ui.gank.IamgeActivity"
+            android:label="@string/title_activity_iamge">
+        </activity>
     </application>
 
 </manifest>

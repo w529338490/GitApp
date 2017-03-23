@@ -1,6 +1,7 @@
 package com.example.administrator.myapplication.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,9 +13,13 @@ import com.bumptech.glide.Glide;
 import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.Utill.GlideRoundTransform;
 import com.example.administrator.myapplication.entity.RandomData;
+import com.example.administrator.myapplication.eventbus.BeseEvent;
+import com.example.administrator.myapplication.ui.gank.IamgeActivity;
 
 import java.util.List;
 import java.util.zip.Inflater;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by Administrator on 2017/3/22.
@@ -25,6 +30,7 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.Holder>
     List<RandomData.Gank> results;
     Context context;
     LayoutInflater inflater;
+    OnImageViewLisnter lisnter;  //点击图片监听回调
 
     public GankAdapter(Context context, List<RandomData.Gank> results)
     {
@@ -46,7 +52,7 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.Holder>
     }
 
     @Override
-    public void onBindViewHolder(GankAdapter.Holder holder, int position)
+    public void onBindViewHolder(GankAdapter.Holder holder, final int position)
     {
         Glide.with(context)
                 .load(results.get(position).getUrl())
@@ -56,6 +62,19 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.Holder>
                 .crossFade(1500)
                 .into(holder.img);
         holder.desc.setText(results.get(position).getDesc());
+
+       // 点击图片跳转IamgeActivity
+        holder.img.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                lisnter.getImgPath(results.get(position).getUrl());
+
+            }
+        });
+
+
     }
 
     @Override
@@ -71,8 +90,6 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.Holder>
         TextView desc;
         TextView date;
 
-
-
         public Holder(View view)
         {
             super(view);
@@ -81,5 +98,14 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.Holder>
             date= (TextView) view.findViewById(R.id.date);
 
         }
+    }
+
+    public  void setOnImageViewLisnter (OnImageViewLisnter lisnter)
+    {
+        this.lisnter=lisnter;
+    }
+    public interface OnImageViewLisnter
+    {
+        void getImgPath(String url);
     }
 }
