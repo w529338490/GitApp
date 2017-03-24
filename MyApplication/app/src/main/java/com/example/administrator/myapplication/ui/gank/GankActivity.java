@@ -191,7 +191,7 @@ public class GankActivity extends RxAppCompatActivity
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target)
             {
                 //更新集合位置，从新排布顺序
-                Collections.swap(list, viewHolder.getAdapterPosition(), target.getAdapterPosition());
+              //  Collections.swap(list, viewHolder.getAdapterPosition(), target.getAdapterPosition());
                 adapter.notifyItemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition());
                 return true;
 

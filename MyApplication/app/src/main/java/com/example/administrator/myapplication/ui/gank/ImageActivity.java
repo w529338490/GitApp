@@ -1,7 +1,10 @@
 package com.example.administrator.myapplication.ui.gank;
 
+import android.app.Instrumentation;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -17,6 +20,7 @@ public class ImageActivity extends RxActivity implements View.OnClickListener
 
     ImageView imgs;
     String imgPath;
+    Button back;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -42,7 +46,9 @@ public class ImageActivity extends RxActivity implements View.OnClickListener
     private void initView()
     {
         imgs= (ImageView) findViewById(R.id.imgs);
+        back= (Button) findViewById(R.id.back);
         imgs.setOnClickListener(this);
+        back.setOnClickListener(this);
         initData();
     }
 
@@ -54,8 +60,6 @@ public class ImageActivity extends RxActivity implements View.OnClickListener
     {
 
         imgPath = event.getUrl();
-
-
 
     }
 
@@ -74,9 +78,21 @@ public class ImageActivity extends RxActivity implements View.OnClickListener
     {
         switch (v.getId())
         {
-            case R.id.imgs:
+            case R.id.back:
+                new Thread()
+                {
+                    @Override
+                    public void run()
+                    {
+                        //模拟手机返回键功能
+                        Instrumentation inst = new Instrumentation();
+                        inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
+                        super.run();
+                    }
+                }.start();
 
                 break;
+
         }
 
     }
