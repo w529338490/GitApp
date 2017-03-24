@@ -5,12 +5,13 @@
     android:id="@+id/activity_iamge"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.administrator.myapplication.ui.gank.IamgeActivity">
+    tools:context=".ui.gank.ImageActivity">
 
-    <ImageView
-        android:id="@+id/img"
+    <uk.co.senab.photoview.PhotoView
+        android:id="@+id/imgs"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:transitionName="shareimg"
         android:src="@drawable/ic_love"/>
 
 </RelativeLayout>

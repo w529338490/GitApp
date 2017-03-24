@@ -1,7 +1,6 @@
 package com.example.administrator.myapplication.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,13 +12,8 @@ import com.bumptech.glide.Glide;
 import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.Utill.GlideRoundTransform;
 import com.example.administrator.myapplication.entity.RandomData;
-import com.example.administrator.myapplication.eventbus.BeseEvent;
-import com.example.administrator.myapplication.ui.gank.IamgeActivity;
 
 import java.util.List;
-import java.util.zip.Inflater;
-
-import de.greenrobot.event.EventBus;
 
 /**
  * Created by Administrator on 2017/3/22.
@@ -69,20 +63,18 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.Holder>
             @Override
             public void onClick(View view)
             {
-                lisnter.getImgPath(results.get(position).getUrl());
+                lisnter.getImgPath(results.get(position).getUrl(),view);
 
             }
         });
 
 
     }
-
     @Override
     public int getItemCount()
     {
         return results.size();
     }
-
     public class Holder extends RecyclerView.ViewHolder
     {
 
@@ -106,6 +98,6 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.Holder>
     }
     public interface OnImageViewLisnter
     {
-        void getImgPath(String url);
+        void getImgPath(String url,View v);
     }
 }
