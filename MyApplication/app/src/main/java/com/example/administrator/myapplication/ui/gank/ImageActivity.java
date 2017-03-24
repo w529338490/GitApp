@@ -1,42 +1,49 @@
 package com.example.administrator.myapplication.ui.gank;
 
 import android.os.Bundle;
-import android.app.Activity;
-import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.Utill.GlideRoundTransform;
 import com.example.administrator.myapplication.eventbus.BeseEvent;
-import com.example.administrator.myapplication.eventbus.FirstEvent;
 import com.trello.rxlifecycle.components.RxActivity;
 
 import de.greenrobot.event.EventBus;
 
-public class IamgeActivity extends RxActivity
+public class ImageActivity extends RxActivity implements View.OnClickListener
 {
 
-    ImageView img;
+    ImageView imgs;
+    String imgPath;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_iamge);
-        EventBus.getDefault().register(this);  //在onCreate，注入EventBus
+        EventBus.getDefault().registerSticky(this);  //在onCreate，注入EventBus    使用registerSticky,防止Activity未启动,接收不到广播
         initView();
         initData();
     }
 
     private void initData()
     {
+        Glide.with(ImageActivity.this)
+                .load(imgPath)
+                .transform(new GlideRoundTransform(this,20))
+                .centerCrop()
+                .placeholder(R.mipmap.ic_mr)
+                .crossFade(1500)
+                .into(imgs);
 
     }
 
     private void initView()
     {
-        img= (ImageView) findViewById(R.id.img);
+        imgs= (ImageView) findViewById(R.id.imgs);
+        imgs.setOnClickListener(this);
+        initData();
     }
 
     //5、接收消息
@@ -46,32 +53,31 @@ public class IamgeActivity extends RxActivity
     public void onEventMainThread(BeseEvent event)
     {
 
-        String msg = event.getUrl();
-        Log.e("msg","================="+msg);
+        imgPath = event.getUrl();
 
-//        Glide.with(this)
-//                .load(msg)
-//                .transform(new GlideRoundTransform(this,20))
-//                .centerCrop()
-//                .placeholder(R.mipmap.ic_mr)
-//                .crossFade(1500)
-//                .into(img);
+
+
     }
 
-    public void onEventMainThread(FirstEvent event) {
 
-        String msg = "onEventMainThread收到了消息：" + event.getMsg();
-        Log.d("harvic", msg);
-
-        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
-    }
 
     @Override
     protected void onDestroy()
     {
         super.onDestroy();
         //onDestroy的时候 销毁 EvenBus
-        EventBus.getDefault().unregister(this);//反注册EventBus
+//        EventBus.getDefault().unregister(this);//反注册EventBus
     }
 
+    @Override
+    public void onClick(View v)
+    {
+        switch (v.getId())
+        {
+            case R.id.imgs:
+
+                break;
+        }
+
+    }
 }

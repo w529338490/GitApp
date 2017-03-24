@@ -13,7 +13,7 @@ public class BeseEvent
 
     public BeseEvent(String url)
     {
-        url = url;
+        this.url = url;
     }
 
     public String getUrl()

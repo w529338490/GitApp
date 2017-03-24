@@ -1,27 +1,23 @@
 package com.example.administrator.myapplication.ui.gank;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.Activity;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
-import android.widget.LinearLayout;
+import android.view.View;
 
 import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.adapter.GankAdapter;
-import com.example.administrator.myapplication.entity.DayGankResult;
 import com.example.administrator.myapplication.entity.RandomData;
 import com.example.administrator.myapplication.eventbus.BeseEvent;
-import com.example.administrator.myapplication.eventbus.FirstEvent;
 import com.example.administrator.myapplication.net.Api;
 import com.example.administrator.myapplication.net.Service.GankService;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
-
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -43,6 +39,7 @@ public class GankActivity extends RxAppCompatActivity
     GridLayoutManager parent;
     GankService service;
     GankAdapter adapter;
+    StaggeredGridLayoutManager staggeredGridLayoutManager;
     int page_num = 20;
     List<RandomData.Gank> list = new ArrayList<>();
     ItemTouchHelper helper;   //实现recyview拖拽动画
@@ -53,6 +50,7 @@ public class GankActivity extends RxAppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gank);
 
+        Log.e("onCreate","======================");
         initView();
         initData();
     }
@@ -61,6 +59,8 @@ public class GankActivity extends RxAppCompatActivity
     {
         recyview = (RecyclerView) findViewById(R.id.recyview);
         fresh = (SwipeRefreshLayout) findViewById(R.id.fresh);
+        staggeredGridLayoutManager=new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
+
         parent = new GridLayoutManager(this, 2);
 
 
@@ -68,6 +68,7 @@ public class GankActivity extends RxAppCompatActivity
 
     private void initData()
     {
+
         //使用RxAndroid
         service = Api.getInstance().apiGank();
         //通过service获得 Observable对象,完成 异步加载数据
@@ -86,10 +87,18 @@ public class GankActivity extends RxAppCompatActivity
                 return randomData2;
             }
         });
-        obs.subscribeOn(Schedulers.io())//指定获取数据在io子线程
+        obs.doOnNext(new Action1<RandomData>()
+        {
+            @Override
+            public void call(RandomData randomData)
+            {
+
+            }
+        })
+        .subscribeOn(Schedulers.io())//指定获取数据在io子线程
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())//处理结果回调 在UI 主线程
-                .compose(this.<RandomData>bindToLifecycle())   //RxJava与Activity生命周期一起绑定，节约内存
+               // .compose(this.<RandomData>bindToLifecycle())   //RxJava与Activity生命周期一起绑定，节约内存
                 //subscribe  为返回回调
                 .subscribe(new Subscriber<RandomData>()
 
@@ -129,20 +138,24 @@ public class GankActivity extends RxAppCompatActivity
 
 
         adapter = new GankAdapter(GankActivity.this, list);
-        recyview.setLayoutManager(parent);
+
+       // recyview.setLayoutManager(staggeredGridLayoutManager);//瀑布流模式
+
+        recyview.setLayoutManager(staggeredGridLayoutManager);
         recyview.setAdapter(adapter);
         adapter.setOnImageViewLisnter(new GankAdapter.OnImageViewLisnter()
         {
             @Override
-            public void getImgPath(String url)
+            public void getImgPath(String url,View imgView)
             {
 
-                // TODO Auto-generated method stub
-                EventBus.getDefault().post(
-                        new FirstEvent("FirstEvent btn clicked"));
-               // EventBus.getDefault().post(new BeseEvent("hahahha"));
-                Intent intent=new Intent(GankActivity.this,IamgeActivity.class);
-                startActivity(intent);
+                // 发布Sticky事件
+                EventBus.getDefault().postSticky(new BeseEvent(url));
+
+                // 跳转到B页面  使用Android 转场动画,并且共享View  参考 http://www.cnblogs.com/lenve/p/5865897.html
+                startActivity(new Intent(GankActivity.this,ImageActivity.class),
+                        ActivityOptions.makeSceneTransitionAnimation(GankActivity.this,imgView,"shareimg").toBundle());
+
             }
         });
         //实现recyview拖拽
@@ -222,7 +235,12 @@ public class GankActivity extends RxAppCompatActivity
             super(callback);
         }
     }
-
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 
 }
 
