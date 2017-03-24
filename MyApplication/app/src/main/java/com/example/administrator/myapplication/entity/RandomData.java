@@ -33,6 +33,20 @@ public class RandomData
         String url;
         String who;
 
+        @Override
+        public String toString()
+        {
+            return "Gank{" +
+                    "id=" + id +
+                    ", createdAt=" + createdAt +
+                    ", desc='" + desc + '\'' +
+                    ", images=" + images +
+                    ", type='" + type + '\'' +
+                    ", url='" + url + '\'' +
+                    ", who='" + who + '\'' +
+                    '}';
+        }
+
         public int getId()
         {
             return id;
@@ -122,5 +136,14 @@ public class RandomData
     public void setResults(List<Gank> results)
     {
         this.results = results;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "RandomData{" +
+                "error=" + error +
+                ", results=" + results +
+                '}';
     }
 }

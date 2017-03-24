@@ -59,7 +59,7 @@ public class LoginActivity extends AppCompatActivity
             }
         }
 
-        Start(videoFile.getPath());
+       Start(videoFile.getPath());
     }
 
     private void Start( String videoFile)
@@ -81,7 +81,7 @@ public class LoginActivity extends AppCompatActivity
 
             }
         });
-        mVideoView.setVideoPath(videoFile);
+       // mVideoView.setVideoPath(videoFile);
         mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
 
             @Override
