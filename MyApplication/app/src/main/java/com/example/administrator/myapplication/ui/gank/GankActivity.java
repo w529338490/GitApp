@@ -39,6 +39,7 @@ public class GankActivity extends RxAppCompatActivity
     GridLayoutManager parent;
     GankService service;
     GankAdapter adapter;
+    StaggeredGridLayoutManager staggeredGridLayoutManager;
     int page_num = 20;
     List<RandomData.Gank> list = new ArrayList<>();
     ItemTouchHelper helper;   //实现recyview拖拽动画
@@ -58,6 +59,8 @@ public class GankActivity extends RxAppCompatActivity
     {
         recyview = (RecyclerView) findViewById(R.id.recyview);
         fresh = (SwipeRefreshLayout) findViewById(R.id.fresh);
+        staggeredGridLayoutManager=new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
+
         parent = new GridLayoutManager(this, 2);
 
 
@@ -135,7 +138,10 @@ public class GankActivity extends RxAppCompatActivity
 
 
         adapter = new GankAdapter(GankActivity.this, list);
-        recyview.setLayoutManager(parent);
+
+       // recyview.setLayoutManager(staggeredGridLayoutManager);//瀑布流模式
+
+        recyview.setLayoutManager(staggeredGridLayoutManager);
         recyview.setAdapter(adapter);
         adapter.setOnImageViewLisnter(new GankAdapter.OnImageViewLisnter()
         {
