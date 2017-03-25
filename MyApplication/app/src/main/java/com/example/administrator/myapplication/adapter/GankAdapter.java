@@ -25,6 +25,7 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.Holder>
     Context context;
     LayoutInflater inflater;
     OnImageViewLisnter lisnter;  //点击图片监听回调
+    OnItemViewClickLisnter onItemViewClickLisnter;  //点击每个item监听事件
 
     public GankAdapter(Context context, List<RandomData.Gank> results)
     {
@@ -67,6 +68,15 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.Holder>
 
             }
         });
+        //点击item监听，跳转页面
+        holder.parent.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                onItemViewClickLisnter.getItemViewPosition(position);
+            }
+        });
 
 
     }
@@ -81,6 +91,7 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.Holder>
         ImageView img;
         TextView desc;
         TextView date;
+        View parent;
 
         public Holder(View view)
         {
@@ -88,6 +99,7 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.Holder>
             img= (ImageView) view.findViewById(R.id.img);
             desc= (TextView) view.findViewById(R.id.desc);
             date= (TextView) view.findViewById(R.id.date);
+            parent=view;
 
         }
     }
@@ -96,8 +108,16 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.Holder>
     {
         this.lisnter=lisnter;
     }
+    public  void setOnItemViewClickLisnter (OnItemViewClickLisnter lisnter)
+    {
+        this.onItemViewClickLisnter=lisnter;
+    }
     public interface OnImageViewLisnter
     {
         void getImgPath(String url,View v);
+    }
+    public interface OnItemViewClickLisnter
+    {
+        void getItemViewPosition(int Postion);
     }
 }

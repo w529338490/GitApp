@@ -24,7 +24,8 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerSimple;
 
-public class GifActivity extends AppCompatActivity {
+public class GifActivity extends AppCompatActivity
+{
 
 
     Toolbar toolbar;
@@ -40,38 +41,39 @@ public class GifActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gif);
-        toolbar= (Toolbar) findViewById(R.id.toolbar);
-        tab= (TabLayout) findViewById(R.id.tab);
-        pager= (ViewPager) findViewById(R.id.paper);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        tab = (TabLayout) findViewById(R.id.tab);
+        pager = (ViewPager) findViewById(R.id.paper);
 
 
-
-         init();
+        init();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void init()
     {
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        toolbar.setNavigationOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 finish();
             }
         });
 
         tab.setupWithViewPager(pager);
-        for(int i=0;i<str.length;i++)
+        for (int i = 0; i < str.length; i++)
         {
 
-            GifFragment g=GifFragment.newInstance(i);
+            GifFragment g = GifFragment.newInstance(i);
             list.add(g);
         }
-        adapter=new PaperAdapter(getSupportFragmentManager(),list,str);
+        adapter = new PaperAdapter(getSupportFragmentManager(), list, str);
         pager.setAdapter(adapter);
-
 
 
     }
