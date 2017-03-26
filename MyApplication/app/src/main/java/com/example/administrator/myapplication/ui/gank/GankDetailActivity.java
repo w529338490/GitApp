@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 
 import com.bumptech.glide.Glide;
 import com.example.administrator.myapplication.R;
@@ -43,7 +44,7 @@ public class GankDetailActivity extends Activity
     private void initView()
     {
         tittle_img= (GifImageView) findViewById(R.id.tittle_img);
-    //    toolbar= (Toolbar) findViewById(R.id.toolbar);
+        toolbar= (Toolbar) findViewById(R.id.toolbar);
 
         initData();
     }
@@ -57,9 +58,19 @@ public class GankDetailActivity extends Activity
                 .centerCrop()
                 .placeholder(R.mipmap.ic_mr)
                 .crossFade(1500)
-                .into(tittle_img);//    toolbar.setTitle("这里是Title");
+                .into(tittle_img);
+        //    toolbar.setTitle("这里是Title");
      //   toolbar.setSubtitle("这里是子标题");
     //    toolbar.setTitleTextColor(Color.RED);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                onBackPressed();
+
+            }
+        });
 
 
 
