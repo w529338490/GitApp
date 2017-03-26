@@ -5,5 +5,6 @@
     <string name="title_activity_web">WebActivity</string>
     <string name="title_activity_gank">GankActivity</string>
     <string name="title_activity_iamge">IamgeActivity</string>
-
+    <string name="title_activity_music">MusicActivity</string>
+    <string name="title_activity_story">StoryActivity</string>
 </resources>

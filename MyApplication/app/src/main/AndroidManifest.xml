@@ -33,6 +33,11 @@
             android:name=".ui.gank.ImageActivity"
             android:label="@string/title_activity_iamge">
         </activity>
+        <activity android:name=".ui.comm.MusicActivity"
+                  android:label="@string/title_activity_music"/>
+        <activity
+            android:name=".ui.comm.StoryActivity"
+            android:label="@string/title_activity_music"/>
     </application>
 
 </manifest>

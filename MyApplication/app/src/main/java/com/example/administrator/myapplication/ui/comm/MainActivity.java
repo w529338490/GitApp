@@ -1,6 +1,7 @@
 package com.example.administrator.myapplication.ui.comm;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -11,18 +12,16 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.administrator.myapplication.R;
-import com.example.administrator.myapplication.ui.gank.GankActivity;
-import com.example.administrator.myapplication.ui.video.VideoActivity;
 import com.example.administrator.myapplication.adapter.PaperAdapter;
 import com.example.administrator.myapplication.fragment.NewsFragment;
+import com.example.administrator.myapplication.ui.gank.GankActivity;
 import com.example.administrator.myapplication.ui.gif.GifActivity;
+import com.example.administrator.myapplication.ui.video.VideoActivity;
 
 import java.util.ArrayList;
 
@@ -53,7 +52,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
         initData();
-
     }
 
     private void initData()
@@ -92,7 +90,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (item.getItemId())
         {
             case  R.id.nav_gif:
-
                 Intent intent=new Intent(MainActivity.this, GifActivity.class);
                 startActivity(intent);
                 break;
@@ -104,6 +101,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Intent intentGandk=new Intent(MainActivity.this, GankActivity.class);
                 startActivity(intentGandk);
                 break;
+            case R.id.nav_story:
+                startActivity(new Intent(MainActivity.this, StoryActivity.class));
+                break;
+            case R.id.nav_music:
+                startActivity(new Intent(MainActivity.this, MusicActivity.class));
         }
         return true;
     }
