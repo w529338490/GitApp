@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SizeReadyCallback;
 import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.Utill.GlideRoundTransform;
 import com.example.administrator.myapplication.entity.RandomData;
@@ -25,6 +26,7 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.Holder>
     Context context;
     LayoutInflater inflater;
     OnImageViewLisnter lisnter;  //点击图片监听回调
+    OnItemViewClickLisnter onItemViewClickLisnter;  //点击每个item监听事件
 
     public GankAdapter(Context context, List<RandomData.Gank> results)
     {
@@ -46,15 +48,23 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.Holder>
     }
 
     @Override
-    public void onBindViewHolder(GankAdapter.Holder holder, final int position)
+    public void onBindViewHolder(final GankAdapter.Holder holder, final int position)
     {
         Glide.with(context)
                 .load(results.get(position).getUrl())
-                .transform(new GlideRoundTransform(context,20))
                 .centerCrop()
                 .placeholder(R.mipmap.ic_mr)
                 .crossFade(1500)
-                .into(holder.img);
+                .into(holder.img)
+                .getSize(new SizeReadyCallback()
+                {
+                    @Override
+                    public void onSizeReady(int width, int height)
+                    {
+                        holder.parent.setVisibility(View.VISIBLE);
+                    }
+                });
+        ;
         holder.desc.setText(results.get(position).getDesc());
 
        // 点击图片跳转IamgeActivity
@@ -65,6 +75,15 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.Holder>
             {
                 lisnter.getImgPath(results.get(position).getUrl(),view);
 
+            }
+        });
+        //点击item监听，跳转页面
+        holder.parent.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                onItemViewClickLisnter.getItemViewPosition(position);
             }
         });
 
@@ -81,6 +100,7 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.Holder>
         ImageView img;
         TextView desc;
         TextView date;
+        View parent;
 
         public Holder(View view)
         {
@@ -88,6 +108,7 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.Holder>
             img= (ImageView) view.findViewById(R.id.img);
             desc= (TextView) view.findViewById(R.id.desc);
             date= (TextView) view.findViewById(R.id.date);
+            parent=view;
 
         }
     }
@@ -96,8 +117,16 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.Holder>
     {
         this.lisnter=lisnter;
     }
+    public  void setOnItemViewClickLisnter (OnItemViewClickLisnter lisnter)
+    {
+        this.onItemViewClickLisnter=lisnter;
+    }
     public interface OnImageViewLisnter
     {
         void getImgPath(String url,View v);
+    }
+    public interface OnItemViewClickLisnter
+    {
+        void getItemViewPosition(int Postion);
     }
 }

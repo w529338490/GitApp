@@ -5,6 +5,8 @@
     <string name="title_activity_web">WebActivity</string>
     <string name="title_activity_gank">GankActivity</string>
     <string name="title_activity_iamge">IamgeActivity</string>
-    <string name="title_activity_music">MusicActivity</string>
-    <string name="title_activity_story">StoryActivity</string>
+
+    <string name="title_activity_gank_detail">GankDetailActivity</string>
+    <string name="lorem">在Google I/O 15上，谷歌发布了一个新的 support library，里面包含了一些遵循Material Design\'s spec的UI组件，比如，AppbarLayout, CollapsingToolbarLayout 和 CoordinatorLayout。 这些组件配合起来使用可以产生强大的效果，那么让我们通过这篇文章来学习如何使用这些组件。</string>
+
 </resources>
