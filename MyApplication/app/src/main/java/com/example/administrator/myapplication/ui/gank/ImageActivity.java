@@ -16,6 +16,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.os.SystemClock;
 import android.support.annotation.RequiresApi;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -33,6 +34,7 @@ import com.bumptech.glide.request.target.SizeReadyCallback;
 import com.bumptech.glide.request.target.Target;
 import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.Utill.GlideRoundTransform;
+import com.example.administrator.myapplication.Utill.ToastUtil;
 import com.example.administrator.myapplication.eventbus.BeseEvent;
 import com.squareup.picasso.Picasso;
 import com.trello.rxlifecycle.components.RxActivity;
@@ -80,8 +82,9 @@ public class ImageActivity extends RxActivity implements View.OnClickListener
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void initData()
     {
+        ViewCompat.setTransitionName(imgs, "shareimg");
 
-        Glide.with(ImageActivity.this)
+           Glide.with(ImageActivity.this)
                 .load(imgPath)
                 .transform(new GlideRoundTransform(this,20))
                 .centerCrop()
@@ -124,15 +127,22 @@ public class ImageActivity extends RxActivity implements View.OnClickListener
         @Override
         public void onClick(View view)
         {
-            observerImg();
 
             //由文件得到uri
-            Uri uri=Uri.fromFile(cachepath);
-            Intent shareIntent = new Intent();
-            shareIntent.setAction(Intent.ACTION_SEND);
-            shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
-            shareIntent.setType("image/jpeg");
-            ImageActivity.this.startActivity(Intent.createChooser(shareIntent, "一张美图"));
+
+            if(cachepath!=null)
+            {
+                Uri uri=Uri.fromFile(cachepath);
+                Intent shareIntent = new Intent();
+                shareIntent.setAction(Intent.ACTION_SEND);
+                shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+                shareIntent.setType("image/jpeg");
+                ImageActivity.this.startActivity(Intent.createChooser(shareIntent, "一张美图"));
+
+            }else
+            {
+                ToastUtil.show(getApplicationContext(),"请先保存图片");
+            }
 
         }
     });
@@ -197,6 +207,7 @@ public class ImageActivity extends RxActivity implements View.OnClickListener
         observable  .subscribeOn(Schedulers.io())//指定获取数据在io子线程
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .compose(this.<Bitmap>bindToLifecycle())
                 .subscribe(new Action1<Bitmap>()
                 {
                     @Override

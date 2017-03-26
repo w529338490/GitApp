@@ -101,7 +101,7 @@ public class GankActivity extends RxAppCompatActivity
         .subscribeOn(Schedulers.io())//指定获取数据在io子线程
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())//处理结果回调 在UI 主线程
-               // .compose(this.<RandomData>bindToLifecycle())   //RxJava与Activity生命周期一起绑定，节约内存
+                .compose(this.<RandomData>bindToLifecycle())   //RxJava与Activity生命周期一起绑定，节约内存
                 //subscribe  为返回回调
                 .subscribe(new Subscriber<RandomData>()
 

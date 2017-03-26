@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SizeReadyCallback;
 import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.Utill.GlideRoundTransform;
 import com.example.administrator.myapplication.entity.RandomData;
@@ -47,15 +48,23 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.Holder>
     }
 
     @Override
-    public void onBindViewHolder(GankAdapter.Holder holder, final int position)
+    public void onBindViewHolder(final GankAdapter.Holder holder, final int position)
     {
         Glide.with(context)
                 .load(results.get(position).getUrl())
-                .transform(new GlideRoundTransform(context,20))
                 .centerCrop()
                 .placeholder(R.mipmap.ic_mr)
                 .crossFade(1500)
-                .into(holder.img);
+                .into(holder.img)
+                .getSize(new SizeReadyCallback()
+                {
+                    @Override
+                    public void onSizeReady(int width, int height)
+                    {
+                        holder.parent.setVisibility(View.VISIBLE);
+                    }
+                });
+        ;
         holder.desc.setText(results.get(position).getDesc());
 
        // 点击图片跳转IamgeActivity
