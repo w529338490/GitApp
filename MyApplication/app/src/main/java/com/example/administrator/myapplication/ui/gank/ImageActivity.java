@@ -65,7 +65,7 @@ public class ImageActivity extends RxActivity implements View.OnClickListener
     Button back;
     Toolbar toolbar;
     Bitmap saveImageBitmap;
-    String cachepath;
+    File cachepath;
     Bitmap bitmap;
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -80,41 +80,43 @@ public class ImageActivity extends RxActivity implements View.OnClickListener
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void initData()
     {
-        Picasso.with(this).load(imgPath).into(imgs);
-
 
         Glide.with(ImageActivity.this)
                 .load(imgPath)
-                .asBitmap() //必须
+                .transform(new GlideRoundTransform(this,20))
                 .centerCrop()
                 .placeholder(R.mipmap.ic_mr)
-                .into(new SimpleTarget<Bitmap>()
-                {
-                    @Override
-                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation)
-                    {
-                       // imgs.setImageBitmap(resource);
-                        saveImageBitmap=resource;
-                    }
-                });
+                .into(imgs);
 
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener()
         {
+
             @Override
             public void onClick(View v)
             {
-                new Thread()
+                Observable<String> ob=Observable.create(new Observable.OnSubscribe<String>()
                 {
                     @Override
-                    public void run()
+                    public void call(Subscriber<? super String> subscriber)
                     {
-                        //模拟手机返回键功能
+
                         Instrumentation inst = new Instrumentation();
                         inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
-                        super.run();
+
                     }
-                }.start();
+                });
+                ob.subscribeOn(Schedulers.io())//指定获取数据在io子线程
+                    .unsubscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Action1<String>()
+                    {
+                        @Override
+                        public void call(String s)
+                        {
+
+                        }
+                    });
             }
         });
         toolbar.findViewById(R.id.img_share).setOnClickListener(new View.OnClickListener()
@@ -122,9 +124,15 @@ public class ImageActivity extends RxActivity implements View.OnClickListener
         @Override
         public void onClick(View view)
         {
-            Toast.makeText(ImageActivity.this,"aaa",Toast.LENGTH_SHORT).show();
-            //由文件得到uri
+            observerImg();
 
+            //由文件得到uri
+            Uri uri=Uri.fromFile(cachepath);
+            Intent shareIntent = new Intent();
+            shareIntent.setAction(Intent.ACTION_SEND);
+            shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+            shareIntent.setType("image/jpeg");
+            ImageActivity.this.startActivity(Intent.createChooser(shareIntent, "一张美图"));
 
         }
     });
@@ -135,66 +143,7 @@ public class ImageActivity extends RxActivity implements View.OnClickListener
         @Override
         public void onClick(View view)
         {
-
-                Observable<Bitmap>observable=Observable.create(new Observable.OnSubscribe<Bitmap>()
-                {
-                    @Override
-                    public void call(Subscriber<? super Bitmap> subscriber)
-                    {
-                        try
-                        {
-                            saveImageBitmap = Picasso.with(ImageActivity.this).load(imgPath).get();
-                            subscriber.onNext(saveImageBitmap);
-                            saveCroppedImage(saveImageBitmap);
-
-                        } catch (IOException e)
-                        {
-                            e.printStackTrace();
-                        }
-
-                    }
-                });
-
-            observable .map(new Func1<Bitmap, String>()
-            {
-                @Override
-                public String call(Bitmap bitmap)
-                {
-
-
-                    String s="保存成功";
-                    Log.e("String","==============="+s);
-                     return s;
-                }
-            })
-                        .subscribeOn(Schedulers.io())//指定获取数据在io子线程
-                        .unsubscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Subscriber<String>()
-                        {
-                            @Override
-                            public void onCompleted()
-                            {
-
-                            }
-
-                            @Override
-                            public void onError(Throwable e)
-                            {
-
-                            }
-
-                            @Override
-                            public void onNext(String s)
-                            {
-                                Log.e("String","==============="+s);
-                                Toast.makeText(ImageActivity.this,s,Toast.LENGTH_SHORT).show();
-
-
-                            }
-                        });
-
-
+            observerImg();
         }
     });
 
@@ -221,8 +170,53 @@ public class ImageActivity extends RxActivity implements View.OnClickListener
 
     }
 
+
+
+    public void observerImg()
+    {
+
+        Observable<Bitmap>observable=Observable.create(new Observable.OnSubscribe<Bitmap>()
+        {
+            @Override
+            public void call(Subscriber<? super Bitmap> subscriber)
+            {
+                try
+                {
+                    saveImageBitmap = Picasso.with(ImageActivity.this).load(imgPath).get();
+                    saveCroppedImage(saveImageBitmap);
+                    subscriber.onNext(saveImageBitmap);
+
+                } catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
+        observable  .subscribeOn(Schedulers.io())//指定获取数据在io子线程
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Bitmap>()
+                {
+                    @Override
+                    public void call(Bitmap bitmap)
+                    {
+                        Log.e("String","==============="+bitmap);
+
+                        Toast.makeText(ImageActivity.this,"保存成功",Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+
+
+    }
     private void saveCroppedImage(Bitmap bmp)
     {
+
+
+
+
 
         File appDir = new File(Environment.getExternalStorageDirectory(), "GitApp");
         if (appDir.exists()&&appDir.isFile())
@@ -252,6 +246,7 @@ public class ImageActivity extends RxActivity implements View.OnClickListener
             bmp.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
             outputStream.flush();
             outputStream.close();
+            cachepath=ff;
 
         }
          catch (IOException e)

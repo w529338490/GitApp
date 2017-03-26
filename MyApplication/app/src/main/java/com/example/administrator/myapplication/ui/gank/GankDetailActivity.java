@@ -13,6 +13,7 @@ import com.example.administrator.myapplication.Utill.GlideRoundTransform;
 import com.example.administrator.myapplication.entity.RandomData;
 import com.example.administrator.myapplication.eventbus.GankEvent;
 import com.example.administrator.myapplication.ui.view.GifImageView;
+import com.orhanobut.logger.Logger;
 
 import de.greenrobot.event.EventBus;
 
@@ -69,6 +70,7 @@ public class GankDetailActivity extends Activity
     public void onEventMainThread (GankEvent event)
 {
     gankDetail=event;
+    Logger.json(gankDetail.toString());
     Log.e("gankDetail","============================"+gankDetail.getGankDetail().getUrl());
 }
 
