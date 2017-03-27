@@ -3,6 +3,8 @@ package com.example.administrator.myapplication.ui.gank;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +17,7 @@ import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.adapter.GankAdapter;
 import com.example.administrator.myapplication.entity.RandomData;
 import com.example.administrator.myapplication.eventbus.BeseEvent;
+import com.example.administrator.myapplication.eventbus.GankEvent;
 import com.example.administrator.myapplication.net.Api;
 import com.example.administrator.myapplication.net.Service.GankService;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
@@ -98,7 +101,7 @@ public class GankActivity extends RxAppCompatActivity
         .subscribeOn(Schedulers.io())//指定获取数据在io子线程
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())//处理结果回调 在UI 主线程
-               // .compose(this.<RandomData>bindToLifecycle())   //RxJava与Activity生命周期一起绑定，节约内存
+                .compose(this.<RandomData>bindToLifecycle())   //RxJava与Activity生命周期一起绑定，节约内存
                 //subscribe  为返回回调
                 .subscribe(new Subscriber<RandomData>()
 
@@ -129,7 +132,7 @@ public class GankActivity extends RxAppCompatActivity
     }
 
     //更新 UI炒作
-    public void UpDataUi(RandomData randomData)
+    public void UpDataUi(final RandomData randomData)
     {
         if (randomData.isError() == false && randomData.getResults() != null)
         {
@@ -143,6 +146,7 @@ public class GankActivity extends RxAppCompatActivity
 
         recyview.setLayoutManager(staggeredGridLayoutManager);
         recyview.setAdapter(adapter);
+        //点击图片跳转 大图欣赏页面
         adapter.setOnImageViewLisnter(new GankAdapter.OnImageViewLisnter()
         {
             @Override
@@ -155,6 +159,23 @@ public class GankActivity extends RxAppCompatActivity
                 // 跳转到B页面  使用Android 转场动画,并且共享View  参考 http://www.cnblogs.com/lenve/p/5865897.html
                 startActivity(new Intent(GankActivity.this,ImageActivity.class),
                         ActivityOptions.makeSceneTransitionAnimation(GankActivity.this,imgView,"shareimg").toBundle());
+
+
+            }
+        });
+        //点击Item跳转，Gank细节页面
+        adapter.setOnItemViewClickLisnter(new GankAdapter.OnItemViewClickLisnter()
+        {
+            @Override
+            public void getItemViewPosition(int Postion)
+            {
+                //获得单个Item的实体类
+                RandomData.Gank gankDetail=   list.get(Postion);
+
+                EventBus.getDefault().postSticky(new GankEvent(gankDetail));
+
+                Intent intent=new Intent(GankActivity.this,GankDetailActivity.class);
+                startActivity(intent);
 
             }
         });
@@ -191,7 +212,7 @@ public class GankActivity extends RxAppCompatActivity
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target)
             {
                 //更新集合位置，从新排布顺序
-                Collections.swap(list, viewHolder.getAdapterPosition(), target.getAdapterPosition());
+              //  Collections.swap(list, viewHolder.getAdapterPosition(), target.getAdapterPosition());
                 adapter.notifyItemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition());
                 return true;
 

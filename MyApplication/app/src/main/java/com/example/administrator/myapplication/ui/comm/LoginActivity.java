@@ -107,6 +107,7 @@ public class LoginActivity extends AppCompatActivity
         FileOutputStream fos=openFileOutput(VIDEO_NAME, MODE_PRIVATE);
 
         InputStream in = getResources().openRawResource(welcome_video);
+
         byte[] buff = new byte[1024];
         int len = 0;
         while ((len = in.read(buff)) != -1)

@@ -18,19 +18,10 @@ import com.example.administrator.myapplication.Utill.JsoupUtil;
 import com.example.administrator.myapplication.adapter.GifRecyclerViewAdapter;
 import com.example.administrator.myapplication.common.Ip;
 import com.example.administrator.myapplication.entity.Gif;
-import com.example.administrator.myapplication.entity.RandomData;
 import com.example.administrator.myapplication.net.Service.HttpService;
-import com.trello.rxlifecycle.components.RxFragment;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import rx.Observable;
-import rx.Scheduler;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
 
 import static android.R.attr.type;
 
@@ -38,9 +29,9 @@ import static android.R.attr.type;
  * Created by Administrator on 2017/2/22.
  */
 
-public class GifFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener
+public class StoryFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener
 {
-    static GifFragment instance;
+    static StoryFragment instance;
     View view;
 
     RecyclerView recyview;
@@ -58,9 +49,9 @@ public class GifFragment extends Fragment implements SwipeRefreshLayout.OnRefres
     String str[]= new String[]{ Ip.url_gif_dongtai, Ip.url_gif_xiegif, Ip.url_gif_gaoxiao};
     String url;
 
-    public static GifFragment newInstance(int type) {
+    public static StoryFragment newInstance(int type) {
 
-            instance = new GifFragment();
+            instance = new StoryFragment();
             Bundle bundle=new Bundle();
             bundle.putInt("type",type);
             instance.setArguments(bundle);
@@ -76,7 +67,7 @@ public class GifFragment extends Fragment implements SwipeRefreshLayout.OnRefres
 
         recyview= (RecyclerView) view.findViewById(R.id.recyview);
         fresh= (SwipeRefreshLayout) view.findViewById(R.id.fresh);
-        manager=new LinearLayoutManager(getActivity());
+        manager=new LinearLayoutManager(StoryFragment.this.getContext());
         parent= (LinearLayout) view.findViewById(R.id.parent);
         url=str[getArguments().getInt("type")];
         initView();
@@ -87,60 +78,34 @@ public class GifFragment extends Fragment implements SwipeRefreshLayout.OnRefres
     private void getData(final String url, boolean reflash)
 
     {
-        //使用RxJava 异步网络请求
-        Observable<Integer> observable=Observable.create(new Observable.OnSubscribe<Integer>()
-        {
+        new Thread() {
             @Override
-            public void call(Subscriber<? super Integer> subscriber)
-            {
+            public void run() {
+                super.run();
                 list = JsoupUtil.getGif(url, type);
-                subscriber.onNext(1);
+                Log.e("list","=================="+list.size());
+                if (list.size() > 0) {
+                    if (getActivity() != null) {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                updateUi();
+                            }
+                        });
+                    }
+
+
+                }
 
             }
-        });
-      observable.subscribeOn(Schedulers.io())//指定获取数据在io子线程
-                .unsubscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())//处理结果回调 在UI 主线程
-                .subscribe(new Action1<Integer>()
-                {
-                    @Override
-                    public void call(Integer integer)
-                    {
-                        if(integer==1)
-                        {
-                            updateUi();
-                        }
-                    }
-                });
+        }.start();
 
-        //使用原始的线程方法
-//        new Thread() {
-//            @Override
-//            public void run() {
-//                super.run();
-//
-//                if (list.size() > 0) {
-//                    if (getActivity() != null) {
-//                        getActivity().runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                updateUi();
-//                            }
-//                        });
-//                    }
-//
-//
-//                }
-//
-//            }
-//        }.start();
-//
 
     }
 
     private void updateUi()
     {
-        adapter=new GifRecyclerViewAdapter(getActivity(),list);
+        adapter=new GifRecyclerViewAdapter(StoryFragment.this.getContext(),list);
         recyview.setLayoutManager(manager);
         recyview.setAdapter(adapter);
 
@@ -150,7 +115,7 @@ public class GifFragment extends Fragment implements SwipeRefreshLayout.OnRefres
     {
         fresh.setOnRefreshListener(this);
         fresh.setColorSchemeResources(android.R.color.holo_orange_light, android.R.color.holo_red_light, android.R.color.holo_green_light);
-        manager=new LinearLayoutManager(getActivity());
+        manager=new LinearLayoutManager(StoryFragment.this.getContext());
         recyview.setLayoutManager(manager);
 
 
@@ -159,13 +124,5 @@ public class GifFragment extends Fragment implements SwipeRefreshLayout.OnRefres
     @Override
     public void onRefresh() {
 
-    }
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if(isVisibleToUser)
-        {
-            getData(url,reflash);
-        }
     }
 }
