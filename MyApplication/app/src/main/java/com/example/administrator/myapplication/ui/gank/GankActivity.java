@@ -3,8 +3,6 @@ package com.example.administrator.myapplication.ui.gank;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,21 +12,22 @@ import android.util.Log;
 import android.view.View;
 
 import com.example.administrator.myapplication.R;
+import com.example.administrator.myapplication.Utill.ToastUtil;
 import com.example.administrator.myapplication.adapter.GankAdapter;
 import com.example.administrator.myapplication.entity.RandomData;
 import com.example.administrator.myapplication.eventbus.BeseEvent;
 import com.example.administrator.myapplication.eventbus.GankEvent;
 import com.example.administrator.myapplication.net.Api;
 import com.example.administrator.myapplication.net.Service.GankService;
+import com.example.administrator.myapplication.ui.view.GifImageView;
+import com.orhanobut.logger.Logger;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
 import rx.Observable;
-import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func2;
@@ -46,7 +45,7 @@ public class GankActivity extends RxAppCompatActivity
     int page_num = 20;
     List<RandomData.Gank> list = new ArrayList<>();
     ItemTouchHelper helper;   //实现recyview拖拽动画
-
+    GifImageView error_bgimg;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -62,6 +61,7 @@ public class GankActivity extends RxAppCompatActivity
     {
         recyview = (RecyclerView) findViewById(R.id.recyview);
         fresh = (SwipeRefreshLayout) findViewById(R.id.fresh);
+        error_bgimg= (GifImageView) findViewById(R.id.error_bgimg);
         staggeredGridLayoutManager=new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
 
         parent = new GridLayoutManager(this, 2);
@@ -103,30 +103,23 @@ public class GankActivity extends RxAppCompatActivity
                 .observeOn(AndroidSchedulers.mainThread())//处理结果回调 在UI 主线程
                 .compose(this.<RandomData>bindToLifecycle())   //RxJava与Activity生命周期一起绑定，节约内存
                 //subscribe  为返回回调
-                .subscribe(new Subscriber<RandomData>()
-
+                .subscribe(new Action1<RandomData>()
                 {
                     @Override
-                    public void onCompleted()
+                    public void call(RandomData randomData)
                     {
-                        Log.e("onCompleted", "=====================");
-                        //  请求完成回调
-                    }
-
-                    @Override
-                    public void onError(Throwable e)
-                    {
-                        //请求 错误回调
-                        Log.e("error", "=================" + e.getMessage());
-
-                    }
-
-                    @Override
-                    public void onNext(RandomData randomData)
-                    {
-
                         //在主线程 更新UI
                         UpDataUi(randomData);
+                    }
+                }, new Action1<Throwable>()
+                {
+                    @Override
+                    public void call(Throwable throwable)
+                    {
+                        //请求错误 回调
+                        error_bgimg.setVisibility(View.VISIBLE);
+                        ToastUtil.show("加载失败,网络错误");
+                        Logger.e(throwable.getMessage());
                     }
                 });
     }
@@ -143,7 +136,7 @@ public class GankActivity extends RxAppCompatActivity
         adapter = new GankAdapter(GankActivity.this, list);
 
        // recyview.setLayoutManager(staggeredGridLayoutManager);//瀑布流模式
-
+        error_bgimg.setVisibility(View.GONE);
         recyview.setLayoutManager(staggeredGridLayoutManager);
         recyview.setAdapter(adapter);
         //点击图片跳转 大图欣赏页面

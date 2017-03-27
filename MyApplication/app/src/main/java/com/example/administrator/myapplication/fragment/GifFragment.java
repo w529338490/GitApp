@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,15 +17,12 @@ import com.example.administrator.myapplication.Utill.JsoupUtil;
 import com.example.administrator.myapplication.adapter.GifRecyclerViewAdapter;
 import com.example.administrator.myapplication.common.Ip;
 import com.example.administrator.myapplication.entity.Gif;
-import com.example.administrator.myapplication.entity.RandomData;
 import com.example.administrator.myapplication.net.Service.HttpService;
-import com.trello.rxlifecycle.components.RxFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import rx.Observable;
-import rx.Scheduler;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -87,14 +83,18 @@ public class GifFragment extends Fragment implements SwipeRefreshLayout.OnRefres
     private void getData(final String url, boolean reflash)
 
     {
+
         //使用RxJava 异步网络请求
         Observable<Integer> observable=Observable.create(new Observable.OnSubscribe<Integer>()
         {
             @Override
             public void call(Subscriber<? super Integer> subscriber)
             {
+
+                JsoupUtil.getFamous("http://www.zbjuran.com/dongtai");
                 list = JsoupUtil.getGif(url, type);
                 subscriber.onNext(1);
+
 
             }
         });

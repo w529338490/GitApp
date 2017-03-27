@@ -2,13 +2,16 @@ package com.example.administrator.myapplication.Utill;
 
 import android.util.Log;
 
+import com.example.administrator.myapplication.entity.Famous;
 import com.example.administrator.myapplication.entity.Gif;
+import com.orhanobut.logger.Logger;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -21,6 +24,8 @@ public class JsoupUtil {
     public static ArrayList<String> list_dongtai = new ArrayList<>();
     public static ArrayList<String> list_xiegif = new ArrayList<>();
     public static ArrayList<String> list_gaoxiao = new ArrayList<>();
+
+    public  static ArrayList<Famous>list_famous=new ArrayList<>();  //每日名言
 
 
     public static int getListSize(int type) {
@@ -67,8 +72,12 @@ public class JsoupUtil {
         ArrayList<Gif> list = new ArrayList<>();
         Document doc = null;
         try {
+
             doc = Jsoup.parse(new URL(urls), 5000);
+             Logger.e(doc.nodeName());
+
             Elements es_item = doc.getElementsByClass("item");
+
             for (int i = 0; i < es_item.size(); i++) {
                 Element et = es_item.get(i).getElementsByTag("h3").first();
                 if (et != null) {
@@ -108,5 +117,43 @@ public class JsoupUtil {
         return list;
     }
 
+    /**
+     *
+     * @param url
+     * 每日名言 爬取;
+     *
+     */
+    public  static ArrayList<Famous> getFamous(String url)
+    {
+        ArrayList<Famous>list_famous=new ArrayList<>();
+        String Famous[] = new String[0];
+        Document docs = null;
+        try
+        {
+            docs=Jsoup.parse(new URL("http://www.diyifanwen.com/tool/jingdianmingyan/1251421170040936.htm"), 5000);
+            Element element=docs.getElementById("ArtContent");
+            Elements es=element.getElementsByTag("p");
+
+            String strs[]=es.get(0).text().split(" ");
+            for(String str:strs)
+            {
+                com.example.administrator.myapplication.entity.Famous famous=new Famous();
+                famous.setFamous(str);
+                list_famous.add(famous);
+            }
+
+            Famous=strs;
+            Logger.e(strs[0]+">>>>"+strs[3]);
+
+
+
+        } catch (IOException e)
+        {
+            Logger.e("Jsoup->getFamous:",e.getMessage());
+            e.printStackTrace();
+        }
+
+        return list_famous;
+    }
 
 }

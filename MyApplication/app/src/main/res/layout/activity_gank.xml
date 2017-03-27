@@ -7,18 +7,24 @@
     android:layout_height="match_parent"
     android:background="@color/colorAccent"
     tools:context="com.example.administrator.myapplication.ui.gank.GankActivity">
-
+    <com.example.administrator.myapplication.ui.view.GifImageView
+        android:id="@+id/error_bgimg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@mipmap/error_bg"
+        android:visibility="gone"/>
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/fresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+         <android.support.v7.widget.RecyclerView
+             android:id="@+id/recyview"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+         </android.support.v7.widget.RecyclerView>
 
-        </android.support.v7.widget.RecyclerView>
+
     </android.support.v4.widget.SwipeRefreshLayout>
 </RelativeLayout>
