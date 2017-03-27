@@ -2,6 +2,7 @@ package com.example.administrator.myapplication.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.entity.Gif;
+import com.orhanobut.logger.Logger;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
