@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SizeReadyCallback;
 import com.example.administrator.myapplication.R;
-import com.example.administrator.myapplication.Utill.GlideRoundTransform;
 import com.example.administrator.myapplication.entity.RandomData;
 
 import java.util.List;
@@ -27,6 +26,7 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.Holder>
     LayoutInflater inflater;
     OnImageViewLisnter lisnter;  //点击图片监听回调
     OnItemViewClickLisnter onItemViewClickLisnter;  //点击每个item监听事件
+
 
     public GankAdapter(Context context, List<RandomData.Gank> results)
     {

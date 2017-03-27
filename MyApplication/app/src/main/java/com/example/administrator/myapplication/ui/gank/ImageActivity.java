@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.SystemClock;
 import android.support.annotation.RequiresApi;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.Toolbar;
@@ -119,7 +118,7 @@ public class ImageActivity extends RxActivity implements View.OnClickListener
 
             }else
             {
-                ToastUtil.show(getApplicationContext(),"请先保存图片");
+                ToastUtil.show("请先保存图片");
             }
 
         }
@@ -182,11 +181,11 @@ public class ImageActivity extends RxActivity implements View.OnClickListener
             }
         });
 
-        observable  .subscribeOn(Schedulers.io())//指定获取数据在io子线程
-                .unsubscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .compose(this.<Bitmap>bindToLifecycle())
-                .subscribe(new Action1<Bitmap>()
+        observable.subscribeOn(Schedulers.io())//指定获取数据在io子线程
+                  .unsubscribeOn(Schedulers.io())
+                  .observeOn(AndroidSchedulers.mainThread())
+                  .compose(this.<Bitmap>bindToLifecycle())
+                  .subscribe(new Action1<Bitmap>()
                 {
                     @Override
                     public void call(Bitmap bitmap)
@@ -202,40 +201,26 @@ public class ImageActivity extends RxActivity implements View.OnClickListener
     }
     private void saveCroppedImage(Bitmap bmp)
     {
-
-
-
-
-
-        File appDir = new File(Environment.getExternalStorageDirectory(), "GitApp");
-        if (appDir.exists()&&appDir.isFile())
+        String path = null;
+        String imageName = System.currentTimeMillis() + ".png";
+        String local_file =
+                Environment.getExternalStorageDirectory().getAbsolutePath() + "/GitApp/";
+        File f = new File(local_file);
+        if (!f.exists())
         {
-            appDir.delete();
-
+            f.mkdirs();  //mkdirs 创建多级目录,防止上级目录不存在
         }
-        File ff=new File(appDir,"hahha"+SystemClock.elapsedRealtime()+".jpg");
-        if(!ff.exists()||!ff.isFile())
-        {
-            ff.getParentFile().mkdir();
-            try
-            {
-                ff.createNewFile();
+        path = f.getAbsolutePath() + "/" + imageName;
+        File saveIamge = new File(path);
 
-            } catch (IOException e)
-            {
-                Log.e("cap","===============");
-                e.printStackTrace();
-            }
-
-        }
         FileOutputStream outputStream = null;
         try
         {
-            outputStream = new FileOutputStream(ff);
+            outputStream = new FileOutputStream(saveIamge);
             bmp.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
             outputStream.flush();
             outputStream.close();
-            cachepath=ff;
+            cachepath=saveIamge;
 
         }
          catch (IOException e)
@@ -244,7 +229,7 @@ public class ImageActivity extends RxActivity implements View.OnClickListener
             e.printStackTrace();
         }
 
-        Uri uri = Uri.fromFile(ff);
+        Uri uri = Uri.fromFile(saveIamge);
         // 通知图库更新
         Intent scannerIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri);
         ImageActivity.this.sendBroadcast(scannerIntent);

@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.administrator.myapplication.R;
+import com.example.administrator.myapplication.common.myApplication;
 import com.example.administrator.myapplication.entity.Gif;
 import com.orhanobut.logger.Logger;
 
@@ -32,7 +33,7 @@ public class GifRecyclerViewAdapter extends RecyclerView.Adapter<GifRecyclerView
     public GifRecyclerViewAdapter(Context context, List<Gif> list) {
         this.context = context;
         this.list = list;
-        this.inflater=LayoutInflater.from(context);
+        this.inflater=LayoutInflater.from(myApplication.context);
 
     }
 

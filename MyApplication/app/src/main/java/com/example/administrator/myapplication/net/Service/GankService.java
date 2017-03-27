@@ -1,6 +1,7 @@
 package com.example.administrator.myapplication.net.Service;
 
 import com.example.administrator.myapplication.entity.DayGankResult;
+import com.example.administrator.myapplication.entity.GankAllData;
 import com.example.administrator.myapplication.entity.RandomData;
 
 import retrofit2.http.GET;
@@ -35,6 +36,8 @@ public  interface GankService
     @GET("random/data/{type}/{page_num}")
     Observable<RandomData>getRandomData(@Path("type")String type,@Path("page_num")Integer page_num);
 
+    @GET("day/{date}")
+    Observable<GankAllData>getAllData(@Path("date")String date);
 
 
 }

@@ -16,7 +16,8 @@
             >
 
             <android.support.design.widget.CollapsingToolbarLayout
-                android:id="@+id/main.collapsing"
+
+                android:id="@+id/collapsing"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
@@ -24,8 +25,6 @@
                 app:contentScrim="?attr/colorPrimary"
                 app:expandedTitleMarginStart="48dp"
                 app:expandedTitleMarginEnd="64dp"
-
-                app:title="@string/flexible_title"
                 >
                 <com.example.administrator.myapplication.ui.view.GifImageView
                     android:id="@+id/tittle_img"
@@ -45,8 +44,6 @@
                 android:background="@null"
                 app:navigationIcon="?attr/homeAsUpIndicator"
                 />
-
-
             </android.support.design.widget.CollapsingToolbarLayout>
         </android.support.design.widget.AppBarLayout>
         <android.support.v4.widget.NestedScrollView
@@ -55,15 +52,10 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             >
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:lineSpacingExtra="8dp"
-                android:text="@string/lorem"
-                android:textColor="@color/colorAccent"
-                android:padding="@dimen/activity_horizontal_margin"
-                />
+            <include
+                android:id="@+id/include"
+                layout="@layout/gankdetaill_all_data"/>
+
 
         </android.support.v4.widget.NestedScrollView>
 

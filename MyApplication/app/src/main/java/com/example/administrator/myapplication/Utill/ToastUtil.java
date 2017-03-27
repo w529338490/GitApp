@@ -2,7 +2,9 @@ package com.example.administrator.myapplication.Utill;
 
 import android.content.Context;
 import android.widget.Toast;
-import com.example.administrator.myapplication.R;
+
+import com.example.administrator.myapplication.common.myApplication;
+
 /**
  * Created by Administrator on 2017/3/26.
  */
@@ -10,11 +12,10 @@ import com.example.administrator.myapplication.R;
 public  class ToastUtil
 {
     private Context context;
-    public static void  show(Context context,
-            String str)
+    public static void  show(String str)
     {
 
-        Toast.makeText(context,str,Toast.LENGTH_SHORT).show();
+        Toast.makeText(myApplication.context,str,Toast.LENGTH_SHORT).show();
     }
 
 }
