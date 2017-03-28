@@ -40,7 +40,13 @@
             android:title="音乐"/>
     </group>
 
-
+    <group android:id="@+id/group_artcle">
+        <item
+            android:id="@+id/nav_artcle"
+            android:checkable="false"
+            android:icon="@drawable/ic_png"
+            android:title="每日阅读"/>
+    </group>
 
 
 </menu>

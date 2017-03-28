@@ -19,6 +19,7 @@ import android.view.View;
 import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.adapter.PaperAdapter;
 import com.example.administrator.myapplication.fragment.NewsFragment;
+import com.example.administrator.myapplication.ui.article.ArtcleActivity;
 import com.example.administrator.myapplication.ui.gank.GankActivity;
 import com.example.administrator.myapplication.ui.gif.GifActivity;
 import com.example.administrator.myapplication.ui.video.VideoActivity;
@@ -106,6 +107,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_music:
                 startActivity(new Intent(MainActivity.this, MusicActivity.class));
+            case R.id.nav_artcle:
+                startActivity(new Intent(MainActivity.this, ArtcleActivity.class));
         }
         return true;
     }
