@@ -1,15 +1,19 @@
 package com.example.administrator.myapplication.ui.comm;
 
+import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.administrator.myapplication.R;
@@ -26,8 +30,8 @@ import static com.example.administrator.myapplication.R.id.toolbar;
 
 public class StoryActivity extends AppCompatActivity
 {
-    @InjectView(R.id.sv_search)
-    SearchView sv_search;
+    //    @InjectView(R.id.sv_search)
+//    SearchView sv_search;
     @InjectView(toolbar)
     Toolbar tb_bar;
     @InjectView(R.id.tl_layout)
@@ -60,26 +64,71 @@ public class StoryActivity extends AppCompatActivity
         }
         mAdapter = new PaperAdapter(getSupportFragmentManager(), fm_list, mTitles);
         vp_paper.setAdapter(mAdapter);
-
-        tb_bar.setNavigationOnClickListener(new View.OnClickListener() {
+        setSupportActionBar(tb_bar);
+        tb_bar.setNavigationOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 finish();
             }
         });
+    }
 
-        sv_search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+    @TargetApi(11)
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.story_menu, menu);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search)); // 在菜单中找到对应控件的item
+        searchView.setOnSearchClickListener(new View.OnClickListener()
+        {
             @Override
-            public boolean onQueryTextSubmit(String query) {
+            public void onClick(View v)
+            {
+                if (!searchView.isIconified())
+                {
+                    ViewGroup.LayoutParams lp = v.getLayoutParams();
+                    lp.width = Toolbar.LayoutParams.MATCH_PARENT;
+                }
+            }
+
+        });
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener()
+        {
+            @Override
+            public boolean onQueryTextSubmit(String s)
+            {
+                Toast.makeText(StoryActivity.this, s, Toast.LENGTH_SHORT).show();
                 return false;
             }
 
             @Override
-            public boolean onQueryTextChange(String newText) {
-                Toast.makeText(StoryActivity.this, newText, Toast.LENGTH_SHORT);
-                return true;
+            public boolean onQueryTextChange(String s)
+            {
+
+                return false;
             }
         });
+//        MenuItemCompat.setOnActionExpandListener((MenuItem) searchView, new MenuItemCompat.OnActionExpandListener()
+//        {//设置打开关闭动作监听
+//            @Override
+//            public boolean onMenuItemActionExpand(MenuItem item)
+//            {
+//                Toast.makeText(StoryActivity.this, "onExpand", Toast.LENGTH_LONG).show();
+//                return true;
+//            }
+//
+//            @Override
+//            public boolean onMenuItemActionCollapse(MenuItem item)
+//            {
+//                Toast.makeText(StoryActivity.this, "Collapse", Toast.LENGTH_LONG).show();
+//                return true;
+//            }
+//        });
+        return super.onCreateOptionsMenu(menu);
     }
+
+
 
 }

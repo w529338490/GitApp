@@ -91,7 +91,7 @@ public class GifFragment extends Fragment implements SwipeRefreshLayout.OnRefres
             public void call(Subscriber<? super Integer> subscriber)
             {
 
-                JsoupUtil.getFamous("http://www.zbjuran.com/dongtai");
+
                 list = JsoupUtil.getGif(url, type);
                 subscriber.onNext(1);
 
@@ -118,7 +118,7 @@ public class GifFragment extends Fragment implements SwipeRefreshLayout.OnRefres
 //            @Override
 //            public void run() {
 //                super.run();
-//
+//                   list = JsoupUtil.getGif(url, type);
 //                if (list.size() > 0) {
 //                    if (getActivity() != null) {
 //                        getActivity().runOnUiThread(new Runnable() {
@@ -128,8 +128,6 @@ public class GifFragment extends Fragment implements SwipeRefreshLayout.OnRefres
 //                            }
 //                        });
 //                    }
-//
-//
 //                }
 //
 //            }
@@ -140,7 +138,7 @@ public class GifFragment extends Fragment implements SwipeRefreshLayout.OnRefres
 
     private void updateUi()
     {
-        adapter=new GifRecyclerViewAdapter(getActivity(),list);
+        adapter=new GifRecyclerViewAdapter(getContext(),list);
         recyview.setLayoutManager(manager);
         recyview.setAdapter(adapter);
 

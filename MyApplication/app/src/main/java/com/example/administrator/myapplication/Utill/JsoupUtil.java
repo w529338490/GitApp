@@ -25,9 +25,6 @@ public class JsoupUtil {
     public static ArrayList<String> list_xiegif = new ArrayList<>();
     public static ArrayList<String> list_gaoxiao = new ArrayList<>();
 
-    public  static ArrayList<Famous>list_famous=new ArrayList<>();  //每日名言
-
-
     public static int getListSize(int type) {
         switch (type) {
             case 0:
@@ -134,18 +131,20 @@ public class JsoupUtil {
             Element element=docs.getElementById("ArtContent");
             Elements es=element.getElementsByTag("p");
 
-            String strs[]=es.get(0).text().split(" ");
-            for(String str:strs)
-            {
-                com.example.administrator.myapplication.entity.Famous famous=new Famous();
-                famous.setFamous(str);
-                list_famous.add(famous);
-            }
+          //  String strs[]=es.get(0).text().split(" ");
 
-            Famous=strs;
-            Logger.e(strs[0]+">>>>"+strs[3]);
-
-
+          for(int j=0;j<es.size();j++)
+          {
+              for(String str:es.get(j).text().split(" "))
+              {
+                  com.example.administrator.myapplication.entity.Famous famous=new Famous();
+                  if(str.length()<=16&&str.length()>6)
+                  {
+                      famous.setFamous(str);
+                      list_famous.add(famous);
+                  }
+              }
+          }
 
         } catch (IOException e)
         {
