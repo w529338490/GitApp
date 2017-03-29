@@ -4,12 +4,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.app.Activity;
 import android.support.annotation.RequiresApi;
+import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.TextView;
-import android.widget.Toolbar;
+
 
 import com.example.administrator.myapplication.R;
 
@@ -19,7 +21,7 @@ import butterknife.InjectView;
 public class WebActivity extends Activity
 {
 
-    TextView back;
+    Toolbar toobar;
     WebView webView;
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -27,17 +29,25 @@ public class WebActivity extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
-        back= (TextView) findViewById(R.id.back);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();
+            localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
+        }
+
         webView= (WebView) findViewById(R.id.webView);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        toobar= (Toolbar) findViewById(R.id.toolbar);
         String url = getIntent().getStringExtra("url");
         WebSettings webSettings = webView.getSettings();
         webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
+
+        toobar.setNavigationOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                finish();
+            }
+        });
         webView.loadUrl(url);
         webView.setOnKeyListener(new View.OnKeyListener() { // webview can
             // go back

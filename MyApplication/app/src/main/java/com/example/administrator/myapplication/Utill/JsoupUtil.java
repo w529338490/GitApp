@@ -14,9 +14,12 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 
 /**
@@ -186,15 +189,10 @@ public class JsoupUtil {
                   article.tittle=elements.get(i).getElementsByTag("title").text();
                   article.description=elements.get(i).getElementsByTag("description").text();
                   article.link=elements.get(i).getElementsByTag("link").text();
+                  article.position=i;
                   String d = elements.get(i).getElementsByTag("pubDate").text();
-                  SimpleDateFormat sdf = new SimpleDateFormat("yyyy年mm月dd日 ");
-                  try
-                  {
-                      article.pubDate=sdf.parse(d);
-                  } catch (ParseException e)
-                  {
-                      e.printStackTrace();
-                  }
+                  article.pubDate=convertDateFormat(d,"EEE, d MMM yyyy HH:mm:ss","yyyy年MM月dd日 HH:mm");
+
                   articles.add(article);
                 }
         } catch (IOException e)
@@ -214,7 +212,7 @@ public class JsoupUtil {
         Document docs = null;
         try
         {
-            docs=Jsoup.parse(new URL("http://w.ihx.cc/meiriyiwen/1434.html"),5000);
+            docs=Jsoup.parse(new URL(url),5000);
             Elements elements=docs.getElementsByClass("article_text");
             content=elements.text();
 
@@ -225,5 +223,22 @@ public class JsoupUtil {
 
 
         return content;
+    }
+    public static String convertDateFormat(String dateTime, String previousFormat,
+                                           String destinationFormat) {
+
+        String formattedDateTime = null;
+
+        try {
+            DateFormat dateFormat = new SimpleDateFormat(previousFormat, Locale.getDefault());
+            Date date = dateFormat.parse(dateTime);
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(destinationFormat, Locale.getDefault());
+            formattedDateTime = simpleDateFormat.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return formattedDateTime;
+
     }
 }

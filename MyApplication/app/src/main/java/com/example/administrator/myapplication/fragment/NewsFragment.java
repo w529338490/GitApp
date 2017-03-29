@@ -171,7 +171,7 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             {
                 Intent intent=new Intent(NewsFragment.this.getContext(), WebActivity.class);
                 intent.putExtra("url",data.get(position).getUrl());
-               /// NewsFragment.this.getContext().startActivity(intent);
+                NewsFragment.this.getContext().startActivity(intent);
 
 
             }

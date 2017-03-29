@@ -202,9 +202,9 @@ public class GankDetailActivity extends Activity
                      public void call(GankAllData.ResultsBean.AndroidBean androidBean)
                      {
 
-                         desc.setText(androidBean.getDesc());
-                         who.setText(androidBean.getWho());
-                         video_ll.addView(chid);
+//                         desc.setText(androidBean.getDesc());
+//                         who.setText(androidBean.getWho());
+//                         video_ll.addView(chid);
                      }
                  });
 
