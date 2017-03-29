@@ -1,40 +1,35 @@
 package com.example.administrator.myapplication.ui.gank;
 
 import android.app.Activity;
-import android.graphics.LinearGradient;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.Utill.GlideRoundTransform;
 import com.example.administrator.myapplication.Utill.JsoupUtil;
+import com.example.administrator.myapplication.adapter.GankDetailAdapter;
 import com.example.administrator.myapplication.entity.Famous;
+import com.example.administrator.myapplication.entity.Gank;
 import com.example.administrator.myapplication.entity.GankAllData;
-import com.example.administrator.myapplication.entity.RandomData;
 import com.example.administrator.myapplication.eventbus.GankEvent;
 import com.example.administrator.myapplication.net.Api;
 import com.example.administrator.myapplication.net.Service.GankService;
 import com.example.administrator.myapplication.ui.view.GifImageView;
 import com.orhanobut.logger.Logger;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 import de.greenrobot.event.EventBus;
 import rx.Observable;
-import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
@@ -53,10 +48,12 @@ public class GankDetailActivity extends Activity
     Toolbar toolbar;
     CollapsingToolbarLayout collapsing;
     List<Famous>list =new ArrayList<>();
+    List<Gank>list_Gank =new ArrayList<>();
+    GankDetailAdapter adapter;
     String date;
     GankService service;
-
-    LinearLayout video_ll,android_ll,ios_ll,more_ll;
+    RecyclerView recyview;
+    LinearLayoutManager manager;
     View chid;
     TextView desc;
     TextView who;
@@ -76,18 +73,15 @@ public class GankDetailActivity extends Activity
         tittle_img= (GifImageView) findViewById(R.id.tittle_img);
         toolbar= (Toolbar) findViewById(R.id.toolbar);
         collapsing= (CollapsingToolbarLayout) findViewById(R.id.collapsing);
-        video_ll= (LinearLayout) findViewById(R.id.video_ll);
-        android_ll= (LinearLayout) findViewById(R.id.video_ll);
-        ios_ll= (LinearLayout) findViewById(R.id.video_ll);
-        more_ll= (LinearLayout) findViewById(R.id.video_ll);
-
+        recyview= (RecyclerView) findViewById(R.id.recyview);
+        manager=new LinearLayoutManager(this);
         initData();
     }
 
     private void initData()
     {
-        getAllData();
-        Logger.e("initData");
+
+
         Glide.with(GankDetailActivity.this)
                 .load(gankDetail.getGankDetail().getUrl())
                 .transform(new GlideRoundTransform(this,20))
@@ -142,7 +136,7 @@ public class GankDetailActivity extends Activity
 {
     gankDetail=event;
     date=new SimpleDateFormat("yyyy/MM/dd").format(gankDetail.getGankDetail().getCreatedAt());
-
+    getAllData();
 
 }
 
@@ -182,33 +176,70 @@ public class GankDetailActivity extends Activity
 
     }
 
-    private void addview(GankAllData gankAllData)
+    private void addview(final GankAllData gankAllData)
     {
 
-        chid= LayoutInflater.from(this).inflate(R.layout.gankdetail_child,null,false);
-        desc= (TextView) chid.findViewById(R.id.desc);
-        who= (TextView) chid.findViewById(R.id.who);
-       // video_ll,android_ll,ios_ll,more_ll;
-        ((TextView)video_ll.getChildAt(0)).setText(gankAllData.getCategory().get(0));
+        Observable<Gank> obAndroid=Observable.from(gankAllData.getResults().getAndroid());
+        obAndroid.map(new Func1<Gank, Gank>()
+        {
+            @Override
+            public Gank call(Gank gank)
+            {
+                gank.setCategory("Android");
+                return gank;
+            }
+        }).subscribe(new Action1<Gank>()
+        {
+            @Override
+            public void call(Gank gank)
+            {
+                list_Gank.add(gank);
+            }
+        });
+        Observable<Gank> obIos=Observable.from(gankAllData.getResults().getiOS());
+        obIos.map(new Func1<Gank, Gank>()
+        {
+            @Override
+            public Gank call(Gank gank)
+            {
+                gank.setCategory("IOS");
+                return gank;
+            }
+        }).subscribe(new Action1<Gank>()
+        {
+            @Override
+            public void call(Gank gank)
+            {
+                list_Gank.add(gank);
+            }
+        });
+        Observable<Gank> obmore=Observable.from(gankAllData.getResults().get拓展资源());
+        obmore.map(new Func1<Gank, Gank>()
+        {
+            @Override
+            public Gank call(Gank gank)
+            {
+                gank.setCategory("拓展资源");
+                return gank;
+            }
+        }).subscribe(new Action1<Gank>()
+        {
+            @Override
+            public void call(Gank gank)
+            {
+                list_Gank.add(gank);
 
+            }
+        });
 
-          Observable<GankAllData.ResultsBean.AndroidBean> android=Observable.from(gankAllData.getResults().getAndroid());
-          android.subscribeOn(Schedulers.io())//指定获取数据在io子线程
-                 .unsubscribeOn(Schedulers.io())
-                 .observeOn(AndroidSchedulers.mainThread())
-                 .subscribe(new Action1<GankAllData.ResultsBean.AndroidBean>()
-                 {
-                     @Override
-                     public void call(GankAllData.ResultsBean.AndroidBean androidBean)
-                     {
-
-//                         desc.setText(androidBean.getDesc());
-//                         who.setText(androidBean.getWho());
-//                         video_ll.addView(chid);
-                     }
-                 });
+        adapter=new GankDetailAdapter(list_Gank);
+        recyview.setLayoutManager(manager);
+        recyview.setAdapter(adapter);
 
 
     }
+
+
+
 }
 

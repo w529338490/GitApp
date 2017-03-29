@@ -52,9 +52,12 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             >
 
-            <include
-                android:id="@+id/include"
-                layout="@layout/gankdetaill_all_data"/>
+          <android.support.v7.widget.RecyclerView
+              android:id="@+id/recyview"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+          </android.support.v7.widget.RecyclerView>
 
         </android.support.v4.widget.NestedScrollView>
     </android.support.design.widget.CoordinatorLayout>
