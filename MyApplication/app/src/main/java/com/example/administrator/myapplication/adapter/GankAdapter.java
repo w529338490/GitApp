@@ -94,6 +94,8 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.Holder>
     {
         return results.size();
     }
+
+
     public class Holder extends RecyclerView.ViewHolder
     {
 

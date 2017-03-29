@@ -52,69 +52,69 @@ public class GankAllData
 
     public static class ResultsBean
     {
-        private List<AndroidBean> Android;
-        private List<IOSBean> iOS;
-        private List<休息视频Bean> 休息视频;
-        private List<拓展资源Bean> 拓展资源;
-        private List<瞎推荐Bean> 瞎推荐;
-        private List<福利Bean> 福利;
+        private List<Gank> Android;
+        private List<Gank> iOS;
+        private List<Gank> 休息视频;
+        private List<Gank> 拓展资源;
+        private List<Gank> 瞎推荐;
+        private List<Gank> 福利;
 
-        public List<AndroidBean> getAndroid()
+        public List<Gank> getAndroid()
         {
             return Android;
         }
 
-        public void setAndroid(List<AndroidBean> Android)
+        public void setAndroid(List<Gank> android)
         {
-            this.Android = Android;
+            Android = android;
         }
 
-        public List<IOSBean> getIOS()
+        public List<Gank> getiOS()
         {
             return iOS;
         }
 
-        public void setIOS(List<IOSBean> iOS)
+        public void setiOS(List<Gank> iOS)
         {
             this.iOS = iOS;
         }
 
-        public List<休息视频Bean> get休息视频()
+        public List<Gank> get休息视频()
         {
             return 休息视频;
         }
 
-        public void set休息视频(List<休息视频Bean> 休息视频)
+        public void set休息视频(List<Gank> 休息视频)
         {
             this.休息视频 = 休息视频;
         }
 
-        public List<拓展资源Bean> get拓展资源()
+        public List<Gank> get拓展资源()
         {
             return 拓展资源;
         }
 
-        public void set拓展资源(List<拓展资源Bean> 拓展资源)
+        public void set拓展资源(List<Gank> 拓展资源)
         {
             this.拓展资源 = 拓展资源;
         }
 
-        public List<瞎推荐Bean> get瞎推荐()
+        public List<Gank> get瞎推荐()
         {
             return 瞎推荐;
         }
 
-        public void set瞎推荐(List<瞎推荐Bean> 瞎推荐)
+        public void set瞎推荐(List<Gank> 瞎推荐)
         {
             this.瞎推荐 = 瞎推荐;
         }
 
-        public List<福利Bean> get福利()
+        public List<Gank> get福利()
         {
             return 福利;
         }
 
-        public void set福利(List<福利Bean> 福利)
+        public void set福利(List<Gank> 福利)
         {
             this.福利 = 福利;
         }
