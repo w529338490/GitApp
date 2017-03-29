@@ -30,8 +30,6 @@ import static com.example.administrator.myapplication.R.id.toolbar;
 
 public class StoryActivity extends AppCompatActivity
 {
-    //    @InjectView(R.id.sv_search)
-//    SearchView sv_search;
     @InjectView(toolbar)
     Toolbar tb_bar;
     @InjectView(R.id.tl_layout)

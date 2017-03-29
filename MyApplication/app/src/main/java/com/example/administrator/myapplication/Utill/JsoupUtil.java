@@ -2,6 +2,7 @@ package com.example.administrator.myapplication.Utill;
 
 import android.util.Log;
 
+import com.example.administrator.myapplication.entity.Article;
 import com.example.administrator.myapplication.entity.Famous;
 import com.example.administrator.myapplication.entity.Gif;
 import com.orhanobut.logger.Logger;
@@ -13,6 +14,8 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 
@@ -155,4 +158,72 @@ public class JsoupUtil {
         return list_famous;
     }
 
+    /**
+     * 每日一文。爬取http://w.ihx.cc/meiriyiwen/1434.html
+     * http://w.ihx.cc/category/meiriyiwen
+     */
+
+    public  static ArrayList<Article> getArticle()
+    {
+
+        ArrayList<Article>articles =new ArrayList<>();
+        Document docs = null;
+        try
+        {
+            docs=Jsoup.parse(new URL("http://w.ihx.cc/category/meiriyiwen/feed"),10000);
+            Elements elements=docs.getElementsByTag("item");
+              for(int i=0;i<elements.size();i++)
+              {
+                  Article article=new Article();
+               //  Logger.e(elements.get(i).getElementsByTag("a").first().attr("href"));
+                  Logger.e(elements.get(i).getElementsByTag("title").outerHtml());
+                  Logger.e(elements.get(i).getElementsByTag("link").outerHtml());
+                  Logger.e(elements.get(i).getElementsByTag("pubDate").outerHtml());
+                  Logger.e(elements.get(i).getElementsByTag("description").outerHtml());
+                  Logger.e(elements.get(i).getElementsByTag("category").eq(2).outerHtml());
+
+                  article.author=elements.get(i).getElementsByTag("category").eq(2).text();
+                  article.tittle=elements.get(i).getElementsByTag("title").text();
+                  article.description=elements.get(i).getElementsByTag("description").text();
+                  article.link=elements.get(i).getElementsByTag("link").text();
+                  String d = elements.get(i).getElementsByTag("pubDate").text();
+                  SimpleDateFormat sdf = new SimpleDateFormat("yyyy年mm月dd日 ");
+                  try
+                  {
+                      article.pubDate=sdf.parse(d);
+                  } catch (ParseException e)
+                  {
+                      e.printStackTrace();
+                  }
+                  articles.add(article);
+                }
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        return articles;
+    }
+    /**
+     *  每日文章的 具体内容
+     * @param url   文章链接
+     * @return    f返回文章内容
+     */
+    public  static String getArtcleContent(String url)
+    {
+        String content="";
+        Document docs = null;
+        try
+        {
+            docs=Jsoup.parse(new URL("http://w.ihx.cc/meiriyiwen/1434.html"),5000);
+            Elements elements=docs.getElementsByClass("article_text");
+            content=elements.text();
+
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+
+        return content;
+    }
 }
