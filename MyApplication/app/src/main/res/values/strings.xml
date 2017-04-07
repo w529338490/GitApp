@@ -11,5 +11,6 @@
     <string name="lorem">在Google I/O 15上，谷歌发布了一个新的 support library，里面包含了一些遵循Material Design\'s spec的UI组件，比如，AppbarLayout, CollapsingToolbarLayout 和 CoordinatorLayout。 这些组件配合起来使用可以产生强大的效果，那么让我们通过这篇文章来学习如何使用这些组件。</string>
     <string name="flexible_title">this is tittle</string>
     <string name="title_activity_artcle">ARtcleActivity</string>
+    <string name="title_activity_artcle_contetn">ArtcleContetnActivity</string>
 
 </resources>

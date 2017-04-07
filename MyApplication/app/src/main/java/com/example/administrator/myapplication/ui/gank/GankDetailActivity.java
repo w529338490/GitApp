@@ -236,7 +236,9 @@ public class GankDetailActivity extends Activity
         recyview.setLayoutManager(manager);
         recyview.setAdapter(adapter);
 
+
     }
+
 
 
 }

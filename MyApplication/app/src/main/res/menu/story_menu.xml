@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <item
         android:id="@+id/action_search"
-        android:iconifiedByDefault="true"
-        android:imeOptions="actionSearch"
-        android:inputType="textCapWords"
-        android:searchMode="queryRewriteFromText"
-        android:title="search"
-        android:icon="@drawable/ic_music"
         android:orderInCategory="80"
-        app:actionViewClass="android.support.v7.widget.SearchView"
-        app:showAsAction="ifRoom|collapseActionView"/>
+        android:title="action_search"
+        android:icon="@drawable/ic_search"
+        app:showAsAction="ifRoom"/>
 </menu>

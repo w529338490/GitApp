@@ -1,6 +1,8 @@
 package com.example.administrator.myapplication.ui.article;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -17,10 +19,12 @@ import com.example.administrator.myapplication.Utill.JsoupUtil;
 import com.example.administrator.myapplication.Utill.layoutmanger.CardConfig;
 import com.example.administrator.myapplication.Utill.layoutmanger.OverLayCardLayoutManager;
 import com.example.administrator.myapplication.adapter.ArtcleAdapter;
+import com.example.administrator.myapplication.adapter.GankAdapter;
 import com.example.administrator.myapplication.entity.Article;
 import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import rx.Observable;
@@ -74,6 +78,7 @@ public class ArtcleActivity extends AppCompatActivity
             public void call(Subscriber<? super Integer> subscriber)
             {
                 results=  JsoupUtil.getArticle();
+                Collections.reverse(results);
                 subscriber.onNext(1);
 
             }
@@ -98,6 +103,18 @@ public class ArtcleActivity extends AppCompatActivity
         adapter=new ArtcleAdapter(results);
         recyview.setLayoutManager(manager);
         recyview.setAdapter(adapter);
+        adapter.setOnItemViewClickLisnter(new GankAdapter.OnItemViewClickLisnter()
+        {
+            @Override
+            public void getItemViewPosition(int Postion)
+            {
+                Intent intent=new Intent(ArtcleActivity.this,ArtcleContetnActivity.class);
+                intent.putExtra("Art", results.get(Postion));
+                startActivity(intent);
+
+            }
+        });
+
 
         //实现recyview拖拽
         helper = new ItemTouchHelper(new ItemTouchHelper.Callback()
@@ -133,7 +150,7 @@ public class ArtcleActivity extends AppCompatActivity
             {
                 //更新集合位置，从新排布顺序
                 //  Collections.swap(list, viewHolder.getAdapterPosition(), target.getAdapterPosition());
-                adapter.notifyItemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition());
+              //  adapter.notifyItemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition());
                 return true;
 
             }

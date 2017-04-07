@@ -22,7 +22,7 @@ import java.util.List;
  * Created by k9579 on 2017/3/28.
  */
 
-public class StoryRecyclerViewAdapter extends RecyclerView.Adapter
+public class StoryRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 {
     Context context;
     LayoutInflater inflater;
@@ -67,13 +67,7 @@ public class StoryRecyclerViewAdapter extends RecyclerView.Adapter
             ((MyHolder) holder).content.setText(data.get(position).getTitle());
             ((MyHolder) holder).score.setText(data.get(position).getTitle());
             ((MyHolder) holder).author.setText(data.get(position).getDate());
-            Glide.with(context)
-                    .load(data.get(position).getThumbnail_pic_s())
-                    .transform(new GlideRoundTransform(context,20))
-                    .centerCrop()
-                    .placeholder(R.mipmap.ic_mr)
-                    .crossFade(1500)
-                    .into(((MyHolder) holder).pic);
+
 
             ((MyHolder) holder).view.setOnClickListener(new View.OnClickListener()
             {
@@ -100,7 +94,6 @@ public class StoryRecyclerViewAdapter extends RecyclerView.Adapter
 
     class MyHolder extends RecyclerView.ViewHolder
     {
-        ImageView pic;
         MarqueeTextView tittle;
         TextView content;
         TextView score;
@@ -110,7 +103,6 @@ public class StoryRecyclerViewAdapter extends RecyclerView.Adapter
         public MyHolder(View itemView)
         {
             super(itemView);
-            pic = (ImageView) itemView.findViewById(R.id.item_story_img);
             tittle = (MarqueeTextView) itemView.findViewById(R.id.tittle);
             content = (TextView) itemView.findViewById(R.id.content);
             score = (TextView) itemView.findViewById(R.id.score);

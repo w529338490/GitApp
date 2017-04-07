@@ -5,6 +5,7 @@ import android.util.Log;
 import com.example.administrator.myapplication.entity.Article;
 import com.example.administrator.myapplication.entity.Famous;
 import com.example.administrator.myapplication.entity.Gif;
+import com.example.administrator.myapplication.entity.Story;
 import com.orhanobut.logger.Logger;
 
 import org.jsoup.Jsoup;
@@ -14,22 +15,28 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 
 /**
  * Created by jiangzehui on 16/11/9.
  */
-public class JsoupUtil {
+public class JsoupUtil
+{
 
     public static ArrayList<String> list_dongtai = new ArrayList<>();
     public static ArrayList<String> list_xiegif = new ArrayList<>();
     public static ArrayList<String> list_gaoxiao = new ArrayList<>();
 
-    public static int getListSize(int type) {
-        switch (type) {
+    public static int getListSize(int type)
+    {
+        switch (type)
+        {
             case 0:
                 return list_dongtai.size();
 
@@ -44,8 +51,10 @@ public class JsoupUtil {
         }
     }
 
-    public static String getListItem(int position, int type) {
-        switch (type) {
+    public static String getListItem(int position, int type)
+    {
+        switch (type)
+        {
             case 0:
                 return list_dongtai.get(position);
 
@@ -66,21 +75,25 @@ public class JsoupUtil {
      * @param type
      * @return
      */
-    public static ArrayList<Gif> getGif(String urls, int type) {
+    public static ArrayList<Gif> getGif(String urls, int type)
+    {
 
 
         ArrayList<Gif> list = new ArrayList<>();
         Document doc = null;
-        try {
+        try
+        {
 
             doc = Jsoup.parse(new URL(urls), 5000);
-             Logger.e(doc.nodeName());
+            Logger.e(doc.nodeName());
 
             Elements es_item = doc.getElementsByClass("item");
 
-            for (int i = 0; i < es_item.size(); i++) {
+            for (int i = 0; i < es_item.size(); i++)
+            {
                 Element et = es_item.get(i).getElementsByTag("h3").first();
-                if (et != null) {
+                if (et != null)
+                {
                     String title = et.getElementsByTag("b").text();
                     String url = es_item.get(i).select("img").first().attr("src");
                     Log.i("jsoup", title + "\t\t" + url + "\n");
@@ -90,10 +103,13 @@ public class JsoupUtil {
 
             }
             Elements es_page = doc.getElementsByClass("page").first().getElementsByTag("select").first().getElementsByTag("option");
-            for (int i = 0; i < es_page.size(); i++) {
+            for (int i = 0; i < es_page.size(); i++)
+            {
                 Element et = es_page.get(i);
-                if (et != null) {
-                    switch (type) {
+                if (et != null)
+                {
+                    switch (type)
+                    {
                         case 0:
                             list_dongtai.add(et.attr("value"));
                             break;
@@ -110,7 +126,8 @@ public class JsoupUtil {
 
             }
 
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             e.printStackTrace();
         }
 
@@ -118,40 +135,37 @@ public class JsoupUtil {
     }
 
     /**
-     *
-     * @param url
-     * 每日名言 爬取;
-     *
+     * @param url 每日名言 爬取;
      */
-    public  static ArrayList<Famous> getFamous(String url)
+    public static ArrayList<Famous> getFamous(String url)
     {
-        ArrayList<Famous>list_famous=new ArrayList<>();
+        ArrayList<Famous> list_famous = new ArrayList<>();
         String Famous[] = new String[0];
         Document docs = null;
         try
         {
-            docs=Jsoup.parse(new URL("http://www.diyifanwen.com/tool/jingdianmingyan/1251421170040936.htm"), 5000);
-            Element element=docs.getElementById("ArtContent");
-            Elements es=element.getElementsByTag("p");
+            docs = Jsoup.parse(new URL("http://www.diyifanwen.com/tool/jingdianmingyan/1251421170040936.htm"), 5000);
+            Element element = docs.getElementById("ArtContent");
+            Elements es = element.getElementsByTag("p");
 
-          //  String strs[]=es.get(0).text().split(" ");
+            //  String strs[]=es.get(0).text().split(" ");
 
-          for(int j=0;j<es.size();j++)
-          {
-              for(String str:es.get(j).text().split(" "))
-              {
-                  com.example.administrator.myapplication.entity.Famous famous=new Famous();
-                  if(str.length()<=16&&str.length()>6)
-                  {
-                      famous.setFamous(str);
-                      list_famous.add(famous);
-                  }
-              }
-          }
+            for (int j = 0; j < es.size(); j++)
+            {
+                for (String str : es.get(j).text().split(" "))
+                {
+                    com.example.administrator.myapplication.entity.Famous famous = new Famous();
+                    if (str.length() <= 16 && str.length() > 6)
+                    {
+                        famous.setFamous(str);
+                        list_famous.add(famous);
+                    }
+                }
+            }
 
         } catch (IOException e)
         {
-            Logger.e("Jsoup->getFamous:",e.getMessage());
+            Logger.e("Jsoup->getFamous:", e.getMessage());
             e.printStackTrace();
         }
 
@@ -163,60 +177,57 @@ public class JsoupUtil {
      * http://w.ihx.cc/category/meiriyiwen
      */
 
-    public  static ArrayList<Article> getArticle()
+    public static ArrayList<Article> getArticle()
     {
 
-        ArrayList<Article>articles =new ArrayList<>();
+        ArrayList<Article> articles = new ArrayList<>();
         Document docs = null;
         try
         {
-            docs=Jsoup.parse(new URL("http://w.ihx.cc/category/meiriyiwen/feed"),10000);
-            Elements elements=docs.getElementsByTag("item");
-              for(int i=0;i<elements.size();i++)
-              {
-                  Article article=new Article();
-               //  Logger.e(elements.get(i).getElementsByTag("a").first().attr("href"));
-                  Logger.e(elements.get(i).getElementsByTag("title").outerHtml());
-                  Logger.e(elements.get(i).getElementsByTag("link").outerHtml());
-                  Logger.e(elements.get(i).getElementsByTag("pubDate").outerHtml());
-                  Logger.e(elements.get(i).getElementsByTag("description").outerHtml());
-                  Logger.e(elements.get(i).getElementsByTag("category").eq(2).outerHtml());
+            docs = Jsoup.parse(new URL("http://w.ihx.cc/category/meiriyiwen/feed"), 10000);
+            Elements elements = docs.getElementsByTag("item");
+            for (int i = 0; i < elements.size(); i++)
+            {
+                Article article = new Article();
+                //  Logger.e(elements.get(i).getElementsByTag("a").first().attr("href"));
+                Logger.e(elements.get(i).getElementsByTag("title").outerHtml());
+                Logger.e(elements.get(i).getElementsByTag("link").outerHtml());
+                Logger.e(elements.get(i).getElementsByTag("pubDate").outerHtml());
+                Logger.e(elements.get(i).getElementsByTag("description").outerHtml());
+                Logger.e(elements.get(i).getElementsByTag("category").eq(2).outerHtml());
 
-                  article.author=elements.get(i).getElementsByTag("category").eq(2).text();
-                  article.tittle=elements.get(i).getElementsByTag("title").text();
-                  article.description=elements.get(i).getElementsByTag("description").text();
-                  article.link=elements.get(i).getElementsByTag("link").text();
-                  String d = elements.get(i).getElementsByTag("pubDate").text();
-                  SimpleDateFormat sdf = new SimpleDateFormat("yyyy年mm月dd日 ");
-                  try
-                  {
-                      article.pubDate=sdf.parse(d);
-                  } catch (ParseException e)
-                  {
-                      e.printStackTrace();
-                  }
-                  articles.add(article);
-                }
+                article.author = elements.get(i).getElementsByTag("category").eq(2).text();
+                article.tittle = elements.get(i).getElementsByTag("title").text();
+                article.description = elements.get(i).getElementsByTag("description").text();
+                article.link = elements.get(i).getElementsByTag("link").text();
+                article.position = i;
+                String d = elements.get(i).getElementsByTag("pubDate").text();
+                article.pubDate = convertDateFormat(d, "EEE, d MMM yyyy HH:mm:ss", "yyyy年MM月dd日 HH:mm");
+
+                articles.add(article);
+            }
         } catch (IOException e)
         {
             e.printStackTrace();
         }
         return articles;
     }
+
     /**
-     *  每日文章的 具体内容
-     * @param url   文章链接
-     * @return    f返回文章内容
+     * 每日文章的 具体内容
+     *
+     * @param url 文章链接
+     * @return f返回文章内容
      */
-    public  static String getArtcleContent(String url)
+    public static String getArtcleContent(String url)
     {
-        String content="";
+        String content = "";
         Document docs = null;
         try
         {
-            docs=Jsoup.parse(new URL("http://w.ihx.cc/meiriyiwen/1434.html"),5000);
-            Elements elements=docs.getElementsByClass("article_text");
-            content=elements.text();
+            docs = Jsoup.parse(new URL(url), 5000);
+            Elements elements = docs.getElementsByClass("article_text");
+            content = elements.text();
 
         } catch (IOException e)
         {
@@ -225,5 +236,65 @@ public class JsoupUtil {
 
 
         return content;
+    }
+
+    public static String convertDateFormat(String dateTime, String previousFormat,
+                                           String destinationFormat)
+    {
+
+        String formattedDateTime = null;
+
+        try
+        {
+            DateFormat dateFormat = new SimpleDateFormat(previousFormat, Locale.getDefault());
+            Date date = dateFormat.parse(dateTime);
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(destinationFormat, Locale.getDefault());
+            formattedDateTime = simpleDateFormat.format(date);
+        } catch (ParseException e)
+        {
+            e.printStackTrace();
+        }
+
+        return formattedDateTime;
+
+    }
+
+    /**
+     * 爬取小说
+     */
+    public static ArrayList<Story> getStory(String url, int type)
+    {
+        Document docs = null;
+        ArrayList<Story> storyList = new ArrayList<>();
+        try
+        {
+            docs = Jsoup.parse(new URL(url), 5000);
+            Elements elts = docs.getElementsByClass("main_con");
+//            Logger.e(elts.html());
+
+            for (int i = 0; i < elts.get(0).getElementsByTag("li").size(); i++)
+            {
+                Element et = elts.get(0).getElementsByTag("li").get(i); // 获取根节点的元素对象
+                Story story = new Story();
+                story.setType(et.getElementsByClass("kind").text());
+                story.setTitle(et.getElementsByClass("chap").get(0).getElementsByClass("fs14").attr("title"));
+                story.setUri(et.getElementsByClass("chap").get(0).getElementsByClass("fs14").attr("href"));
+                story.setMark(et.getElementsByClass("mark").text());
+                story.setHot(ConvertUtils.strToInt(et.getElementsByClass("bit").text()));
+                story.setAuthor(et.getElementsByClass("author").text());
+                story.setIndex(et.getElementsByClass("author").get(0).getElementsByTag("a").attr("href"));
+                story.setUpdateTime(et.getElementsByClass("time").text());
+//                Logger.e("第："+ i + "个对象是：" + story.toString());
+                storyList.add(story);
+//                Logger.e("猜猜拿到了什么：" + storyList.toString());
+            }
+
+        } catch (IOException e)
+        {
+//            Logger.e("报错了");
+            e.printStackTrace();
+            return null;
+        }
+        return storyList;
     }
 }
