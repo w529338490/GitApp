@@ -228,22 +228,18 @@ public class JsoupUtil
             docs = Jsoup.parse(new URL(url), 5000);
             Elements elements = docs.getElementsByClass("article_text");
             content = elements.text();
-
         } catch (IOException e)
         {
             e.printStackTrace();
         }
-
-
         return content;
     }
+
 
     public static String convertDateFormat(String dateTime, String previousFormat,
                                            String destinationFormat)
     {
-
         String formattedDateTime = null;
-
         try
         {
             DateFormat dateFormat = new SimpleDateFormat(previousFormat, Locale.getDefault());
@@ -254,15 +250,13 @@ public class JsoupUtil
         {
             e.printStackTrace();
         }
-
         return formattedDateTime;
-
     }
 
     /**
      * 爬取小说
      */
-    public static ArrayList<Story> getStory(String url, int type)
+    public static ArrayList<Story> getStory(String url)
     {
         Document docs = null;
         ArrayList<Story> storyList = new ArrayList<>();
@@ -272,6 +266,7 @@ public class JsoupUtil
             Elements elts = docs.getElementsByClass("main_con");
 //            Logger.e(elts.html());
 
+            Logger.e("一共有" + elts.get(0).getElementsByTag("li").size()+"个节点");
             for (int i = 0; i < elts.get(0).getElementsByTag("li").size(); i++)
             {
                 Element et = elts.get(0).getElementsByTag("li").get(i); // 获取根节点的元素对象
@@ -284,14 +279,12 @@ public class JsoupUtil
                 story.setAuthor(et.getElementsByClass("author").text());
                 story.setIndex(et.getElementsByClass("author").get(0).getElementsByTag("a").attr("href"));
                 story.setUpdateTime(et.getElementsByClass("time").text());
-//                Logger.e("第："+ i + "个对象是：" + story.toString());
+                Logger.e("第："+ i + "个对象是：" + story.toString());
                 storyList.add(story);
 //                Logger.e("猜猜拿到了什么：" + storyList.toString());
             }
-
         } catch (IOException e)
         {
-//            Logger.e("报错了");
             e.printStackTrace();
             return null;
         }

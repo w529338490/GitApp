@@ -27,8 +27,6 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
-import static android.R.attr.type;
-
 /**
  * Created by k9579 on 2017/2/25.
  */
@@ -98,7 +96,7 @@ public class StoryFragment extends Fragment implements SwipeRefreshLayout.OnRefr
             @Override
             public void call(Subscriber<? super Integer> subscriber)
             {
-                ArrayList<Story> storyList= JsoupUtil.getStory(url, type);
+                ArrayList<Story> storyList= JsoupUtil.getStory(url);
                 Logger.e("拿到的集合就是："+storyList.toString());
                 subscriber.onNext(1);
             }
