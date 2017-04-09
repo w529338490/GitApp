@@ -81,7 +81,6 @@ public class GankDetailActivity extends Activity
     private void initData()
     {
 
-
         Glide.with(GankDetailActivity.this)
                 .load(gankDetail.getGankDetail().getUrl())
                 .transform(new GlideRoundTransform(this,20))
@@ -118,7 +117,6 @@ public class GankDetailActivity extends Activity
             }
         }.start();
 
-
         toolbar.setNavigationOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -130,8 +128,6 @@ public class GankDetailActivity extends Activity
         });
 
     }
-
-
     public void onEventMainThread (GankEvent event)
 {
     gankDetail=event;
@@ -236,10 +232,7 @@ public class GankDetailActivity extends Activity
         recyview.setLayoutManager(manager);
         recyview.setAdapter(adapter);
 
-
     }
-
-
 
 }
 
