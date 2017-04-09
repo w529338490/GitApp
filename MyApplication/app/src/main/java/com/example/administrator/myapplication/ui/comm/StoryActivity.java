@@ -34,8 +34,7 @@ public class StoryActivity extends AppCompatActivity
     ViewPager vp_paper;
 
     ArrayList<Fragment> fm_list = new ArrayList<>();
-    private final String[] mTitles = {"奇幻"};
-//    private final String[] mTitles = {"奇幻", "武侠", "历史", "都市"};
+    private final String[] mTitles = {"奇幻", "武侠", "历史", "都市"};
     PaperAdapter mAdapter;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)

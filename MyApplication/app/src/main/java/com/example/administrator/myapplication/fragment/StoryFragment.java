@@ -46,8 +46,8 @@ public class StoryFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     boolean reflash = false;
 
     String url = "";
-//    String str[] = new String[]{Ip.url_story_qihuan, Ip.url_story_wuxia, Ip.url_story_history, Ip.url_story_yule};
-    String str[] = new String[]{Ip.url_story_qihuan};
+    String str[] = new String[]{Ip.url_story_qihuan, Ip.url_story_wuxia, Ip.url_story_history, Ip.url_story_yule};
+//    String str[] = new String[]{Ip.url_story_qihuan};
 
     public static StoryFragment newInstance(int type)
     {
@@ -62,11 +62,10 @@ public class StoryFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        view = inflater.inflate(R.layout.gif_fragment, container, false);
-        recyview = (RecyclerView) view.findViewById(R.id.recyview);
-        fresh = (SwipeRefreshLayout) view.findViewById(R.id.fresh);
+        view = inflater.inflate(R.layout.story_fragment, container, false);
+        recyview = (RecyclerView) view.findViewById(R.id.rv_list);
+        fresh = (SwipeRefreshLayout) view.findViewById(R.id.story_fresh);
         manager = new LinearLayoutManager(getActivity());
-        parent = (LinearLayout) view.findViewById(R.id.parent);
         url = str[getArguments().getInt("type")];
         initView();
         getData(url, reflash);
@@ -128,6 +127,9 @@ public class StoryFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     public void onRefresh()
     {
         reflash = true;
+        updateUi();
+        adapter.notifyDataSetChanged();
+        fresh.setRefreshing(false);
     }
 
     @Override
