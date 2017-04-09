@@ -1,5 +1,7 @@
 package com.example.administrator.myapplication.entity;
 
+import java.util.List;
+
 /**
  * 书籍实体类
  * Created by admin on 2017/4/3.
@@ -7,9 +9,11 @@ package com.example.administrator.myapplication.entity;
 
 public class Story
 {
+    private List<Story> storyList;
     private String type; // 小说分类
     private String title; // 标题
     private String uri; // 链接
+    private String content; // 简介
     private String author; // 作者
     private String index; // 作者主页
     private Integer hot; // 人气
@@ -17,16 +21,37 @@ public class Story
     private String updateTime; // 更新时间
 
     public Story(){};
-    public Story(String type, String title, String uri, String author,String index,  Integer hot, String mark, String updateTime)
+    public Story(String type, String title, String uri,String content, String author,String index,  Integer hot, String mark, String updateTime)
     {
         this.type = type;
         this.title = title;
         this.uri = uri;
+        this.content = content;
         this.author = author;
         this.index = index;
         this.hot = hot;
         this.mark = mark;
         this.updateTime = updateTime;
+    }
+
+    public List<Story> getStoryList()
+    {
+        return storyList;
+    }
+
+    public String getContent()
+    {
+        return content;
+    }
+
+    public void setContent(String content)
+    {
+        this.content = content;
+    }
+
+    public void setStoryList(List<Story> storyList)
+    {
+        this.storyList = storyList;
     }
 
     public String getType()

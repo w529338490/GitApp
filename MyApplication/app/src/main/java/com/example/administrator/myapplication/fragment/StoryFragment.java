@@ -16,12 +16,12 @@ import com.example.administrator.myapplication.Utill.JsoupUtil;
 import com.example.administrator.myapplication.adapter.StoryRecyclerViewAdapter;
 import com.example.administrator.myapplication.common.Ip;
 import com.example.administrator.myapplication.entity.Story;
-import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
+import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -65,7 +65,7 @@ public class StoryFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         view = inflater.inflate(R.layout.gif_fragment, container, false);
         recyview = (RecyclerView) view.findViewById(R.id.recyview);
         fresh = (SwipeRefreshLayout) view.findViewById(R.id.fresh);
-        manager = new LinearLayoutManager(StoryFragment.this.getContext());
+        manager = new LinearLayoutManager(getActivity());
         parent = (LinearLayout) view.findViewById(R.id.parent);
         url = str[getArguments().getInt("type")];
         initView();
@@ -91,13 +91,12 @@ public class StoryFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     private void getData(final String url, boolean reflash)
     {
         //使用RxJava 异步网络请求
-        rx.Observable<Integer> observable = rx.Observable.create(new rx.Observable.OnSubscribe<Integer>()
+        Observable<Integer> observable = Observable.create(new rx.Observable.OnSubscribe<Integer>()
         {
             @Override
             public void call(Subscriber<? super Integer> subscriber)
             {
-                ArrayList<Story> storyList= JsoupUtil.getStory(url);
-                Logger.e("拿到的集合就是："+storyList.toString());
+                storyList= JsoupUtil.getStory(url);
                 subscriber.onNext(1);
             }
         });
@@ -120,7 +119,7 @@ public class StoryFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     // 更新UI
     private void updateUi()
     {
-//        adapter=new StoryRecyclerViewAdapter(getContext(),list);
+        adapter=new StoryRecyclerViewAdapter(getContext(),storyList);
         recyview.setLayoutManager(manager);
         recyview.setAdapter(adapter);
     }
@@ -139,12 +138,11 @@ public class StoryFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     }
 
     @Override
-    public void setUserVisibleHint(boolean isVisibleToUser)
-    {
+    public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser)
+        if(isVisibleToUser)
         {
-//            getData(url,reflash);
+            getData(url,reflash);
         }
     }
 }

@@ -255,6 +255,10 @@ public class JsoupUtil
 
     /**
      * 爬取小说
+     * http://book.zongheng.com/rank/male/r14/c1/q0/1.html  // 小说_ 奇幻玄幻</br>
+     * http://book.zongheng.com/rank/male/r7/c3/q0/1.html // 小说_ 武侠仙侠</br>
+     * http://book.zongheng.com/rank/male/r7/c6/q0/1.html // 小说_ 历史军事</br>
+     * http://book.zongheng.com/rank/male/r7/c9/q0/1.html // 小说_都市娱乐</br>
      */
     public static ArrayList<Story> getStory(String url)
     {
@@ -264,23 +268,29 @@ public class JsoupUtil
         {
             docs = Jsoup.parse(new URL(url), 5000);
             Elements elts = docs.getElementsByClass("main_con");
-//            Logger.e(elts.html());
+            Logger.e(elts.html());
 
-            Logger.e("一共有" + elts.get(0).getElementsByTag("li").size()+"个节点");
+//            Logger.e("一共有" + elts.get(0).getElementsByTag("li").size()+"个节点");
             for (int i = 0; i < elts.get(0).getElementsByTag("li").size(); i++)
             {
                 Element et = elts.get(0).getElementsByTag("li").get(i); // 获取根节点的元素对象
                 Story story = new Story();
-                story.setType(et.getElementsByClass("kind").text());
-                story.setTitle(et.getElementsByClass("chap").get(0).getElementsByClass("fs14").attr("title"));
-                story.setUri(et.getElementsByClass("chap").get(0).getElementsByClass("fs14").attr("href"));
-                story.setMark(et.getElementsByClass("mark").text());
-                story.setHot(ConvertUtils.strToInt(et.getElementsByClass("bit").text()));
-                story.setAuthor(et.getElementsByClass("author").text());
-                story.setIndex(et.getElementsByClass("author").get(0).getElementsByTag("a").attr("href"));
-                story.setUpdateTime(et.getElementsByClass("time").text());
-                Logger.e("第："+ i + "个对象是：" + story.toString());
-                storyList.add(story);
+                if (et.text() == null || "".equals(et.text()))
+                {
+                    continue;
+                } else
+                {
+                    story.setType(et.getElementsByClass("kind").text());
+                    story.setTitle(et.getElementsByClass("chap").get(0).getElementsByClass("fs14").attr("title"));
+                    story.setUri(et.getElementsByClass("chap").get(0).getElementsByClass("fs14").attr("href"));
+                    story.setContent(et.getElementsByClass("limit").get(0).text());
+                    story.setMark(et.getElementsByClass("mark").text());
+                    story.setHot(ConvertUtils.strToInt(et.getElementsByClass("bit").text()));
+                    story.setAuthor(et.getElementsByClass("author").text());
+                    story.setIndex(et.getElementsByClass("author").get(0).getElementsByTag("a").attr("href"));
+                    story.setUpdateTime(et.getElementsByClass("time").text());
+                    storyList.add(story);
+                }
 //                Logger.e("猜猜拿到了什么：" + storyList.toString());
             }
         } catch (IOException e)
