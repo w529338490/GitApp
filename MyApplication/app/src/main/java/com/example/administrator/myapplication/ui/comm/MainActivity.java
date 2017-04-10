@@ -19,6 +19,7 @@ import android.view.View;
 import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.adapter.PaperAdapter;
 import com.example.administrator.myapplication.fragment.NewsFragment;
+import com.example.administrator.myapplication.ui.Fan.FanActivity;
 import com.example.administrator.myapplication.ui.article.ArtcleActivity;
 import com.example.administrator.myapplication.ui.gank.GankActivity;
 import com.example.administrator.myapplication.ui.gif.GifActivity;
@@ -109,6 +110,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(new Intent(MainActivity.this, MusicActivity.class));
             case R.id.nav_artcle:
                 startActivity(new Intent(MainActivity.this, ArtcleActivity.class));
+            case R.id.nav_fan:
+
+                startActivity(new Intent(MainActivity.this, FanActivity.class));
+                break;
         }
         return true;
     }

@@ -64,6 +64,8 @@
             android:label="@string/title_activity_artcle_contetn"
             android:theme="@style/AppTheme">
         </activity>
+        <activity android:name=".ui.Fan.FanActivity">
+        </activity>
     </application>
 
 </manifest>

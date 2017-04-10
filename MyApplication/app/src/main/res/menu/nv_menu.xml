@@ -48,5 +48,13 @@
             android:title="每日阅读"/>
     </group>
 
+    <group android:id="@+id/group_fan">
+        <item
+            android:id="@+id/nav_fan"
+            android:checkable="false"
+            android:icon="@drawable/ic_png"
+            android:title="Fan"/>
+    </group>
+
 
 </menu>

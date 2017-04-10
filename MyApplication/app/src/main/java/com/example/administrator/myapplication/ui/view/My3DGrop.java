@@ -8,13 +8,11 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Scroller;
 import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Administrator on 2017/4/4.
@@ -25,13 +23,15 @@ public class My3DGrop extends ViewGroup implements GestureDetector.OnGestureList
     private Context context;
     private Scroller scroller;
     private boolean scrolling = false; //拦截子类的滑动事件，不拦截子类的点击事件
-    private List<View> list;
     private Camera mCamera;
     private Matrix mMatrix;
     private float mAngle = 90;//两个item间的夹角
 
     //定义手势检测器实例
     GestureDetector detector;
+
+    //在滑动菜单的时候，有时需要快速的滑动条件下，才显示菜单
+    private VelocityTracker mVelocityTracker = null;
 
     public My3DGrop(Context context)
     {
@@ -44,7 +44,6 @@ public class My3DGrop extends ViewGroup implements GestureDetector.OnGestureList
         super(context, attrs);
         this.context = context;
         scroller = new Scroller(context);
-        list = new ArrayList<>();
         mCamera = new Camera();
         mMatrix = new Matrix();
         detector = new GestureDetector(context,this);
@@ -96,8 +95,19 @@ public class My3DGrop extends ViewGroup implements GestureDetector.OnGestureList
                 Log.e("onInterceptTouchEvent", "=====================ACTION_DOWN");
                 break;
             case MotionEvent.ACTION_MOVE:
-
-                scrolling = true;
+                //如果滑动距离<20像素,则视为点击事件,不拦截
+                if(Math.abs(mLastMotionY-ev.getY()) < 20)
+                {
+                    scrolling = false;
+                    break;
+                }
+                //否则是滑动事件,拦截子类滑动
+                else
+                {
+                    scrolling = true;
+                }
+                //默认,为true　拦截滑动事件
+                 scrolling = true;
                 Log.e("onInterceptTouchEvent", "=====================ACTION_MOVE");
 
                 break;
@@ -120,9 +130,9 @@ public class My3DGrop extends ViewGroup implements GestureDetector.OnGestureList
                 break;
 
             case MotionEvent.ACTION_MOVE:
-                detector.onTouchEvent(ev);
+
                 int detaY = (int) (mLastMotionY - ev.getY());
-            //    scrollBy(0, detaY);
+                scrollBy(0,detaY );
                 mLastMotionY = ev.getY();
 
                 //向下 滑动
@@ -133,7 +143,7 @@ public class My3DGrop extends ViewGroup implements GestureDetector.OnGestureList
                     View view = getChildAt(0);
                     removeViewAt(0);
                     addView(view, childCount - 1);
-            //       scrollBy(0, -getChildAt(0).getMeasuredHeight());
+                    scrollBy(0, -getChildAt(0).getMeasuredHeight());
 
                 }
                 //向上滑动
@@ -143,7 +153,7 @@ public class My3DGrop extends ViewGroup implements GestureDetector.OnGestureList
                     View view = getChildAt(childCount - 1);
                     removeViewAt(childCount - 1);
                     addView(view, 0);
-                //    scrollBy(0, getChildAt(0).getMeasuredHeight());
+                    scrollBy(0, getChildAt(0).getMeasuredHeight());
 
                 }
                 break;
@@ -171,15 +181,15 @@ public class My3DGrop extends ViewGroup implements GestureDetector.OnGestureList
         }
     }
 
-//    @Override
-//    protected void dispatchDraw(Canvas canvas) {
-//
-//            for (int i = 0; i < getChildCount(); i++)
-//            {
-//                drawScreen(canvas, i, getDrawingTime());
-//            }
-//
-//    }
+    @Override
+    protected void dispatchDraw(Canvas canvas) {
+
+            for (int i = 0; i < getChildCount(); i++)
+            {
+                drawScreen(canvas, i, getDrawingTime());
+            }
+
+    }
 
     private void drawScreen(Canvas canvas, int i, long drawingTime)
     {
@@ -188,14 +198,14 @@ public class My3DGrop extends ViewGroup implements GestureDetector.OnGestureList
 
         int curScreenY = getMeasuredHeight() * i;
         //屏幕中不显示的部分不进行绘制
-        if (getScrollY() + mHeight < curScreenY)
-        {
-            return;
-        }
-        if (curScreenY < getScrollY() - mHeight)
-        {
-            return;
-        }
+//        if (getScrollY() + mHeight < curScreenY)
+//        {
+//            return;
+//        }
+//        if (curScreenY < getScrollY() - mHeight)
+//        {
+//            return;
+//        }
         float centerX = mWidth / 2;
         float centerY = (getScrollY() > curScreenY) ? curScreenY + mHeight : curScreenY;
         float degree = mAngle * (getScrollY() - curScreenY) / mHeight;
