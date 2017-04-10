@@ -13,7 +13,7 @@ import com.bumptech.glide.Glide;
 import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.Utill.GlideRoundTransform;
 import com.example.administrator.myapplication.Utill.JsoupUtil;
-import com.example.administrator.myapplication.adapter.GankDetailAdapter;
+import com.example.administrator.myapplication.adapter.GankAdapter.GankDetailAdapter;
 import com.example.administrator.myapplication.entity.Famous;
 import com.example.administrator.myapplication.entity.Gank;
 import com.example.administrator.myapplication.entity.GankAllData;

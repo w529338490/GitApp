@@ -2,39 +2,29 @@ package com.example.administrator.myapplication.ui.video;
 
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
-import android.provider.MediaStore;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 
 import com.example.administrator.myapplication.R;
-import com.example.administrator.myapplication.adapter.GankAdapter;
 import com.example.administrator.myapplication.adapter.VideoViewAdapter;
 import com.example.administrator.myapplication.entity.RandomData;
 import com.example.administrator.myapplication.entity.Video;
 
 import com.example.administrator.myapplication.net.Api;
 import com.example.administrator.myapplication.net.Service.GankService;
-import com.example.administrator.myapplication.net.Service.HttpService;
-import com.example.administrator.myapplication.ui.gank.GankActivity;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import fm.jiecao.jcvideoplayer_lib.JCFullScreenActivity;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerSimple;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;

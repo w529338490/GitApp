@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
 
 import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.Utill.JsoupUtil;
-import com.example.administrator.myapplication.adapter.GifRecyclerViewAdapter;
+import com.example.administrator.myapplication.adapter.ArtcleAdapter.GifRecyclerViewAdapter;
 import com.example.administrator.myapplication.common.Ip;
 import com.example.administrator.myapplication.entity.Gif;
 import com.example.administrator.myapplication.net.Service.HttpService;

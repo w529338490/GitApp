@@ -1,6 +1,5 @@
-package com.example.administrator.myapplication.adapter;
+package com.example.administrator.myapplication.adapter.ArtcleAdapter;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +9,6 @@ import android.widget.TextView;
 import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.common.myApplication;
 import com.example.administrator.myapplication.entity.Article;
-import com.example.administrator.myapplication.entity.RandomData;
 
 import java.util.List;
 
@@ -48,7 +46,7 @@ public class ArtcleAdapter extends RecyclerView.Adapter<ArtcleAdapter.Holder>
         holder.who.setText(results.get(position).author);
         holder.content.setText(results.get(position).description);
         int sum=position+1;
-        holder.tvPrecent.setText(holder.getPosition()+"/"+results.size());
+        holder.tvPrecent.setText(sum+"/"+results.size());
 
     }
 

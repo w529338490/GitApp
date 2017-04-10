@@ -46,7 +46,7 @@
         android:id="@+id/content"
         android:layout_width="170dp"
         android:layout_height="200dp"
-        android:textColor="@color/wirt"
+        android:textColor="@color/wirte"
         android:gravity="center"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"/>

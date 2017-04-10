@@ -13,7 +13,7 @@ import android.view.View;
 
 import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.Utill.ToastUtil;
-import com.example.administrator.myapplication.adapter.GankAdapter;
+import com.example.administrator.myapplication.adapter.GankAdapter.GankAdapter;
 import com.example.administrator.myapplication.entity.RandomData;
 import com.example.administrator.myapplication.eventbus.BeseEvent;
 import com.example.administrator.myapplication.eventbus.GankEvent;

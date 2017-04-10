@@ -6,25 +6,20 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
-import android.widget.Adapter;
 
 import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.Utill.JsoupUtil;
 import com.example.administrator.myapplication.Utill.layoutmanger.CardConfig;
 import com.example.administrator.myapplication.Utill.layoutmanger.OverLayCardLayoutManager;
-import com.example.administrator.myapplication.adapter.ArtcleAdapter;
+import com.example.administrator.myapplication.adapter.ArtcleAdapter.ArtcleAdapter;
 import com.example.administrator.myapplication.entity.Article;
-import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import rx.Observable;
-import rx.Scheduler;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -147,7 +142,7 @@ public class ArtcleActivity extends AppCompatActivity
                  * @param direction 滑动的方向
                  */
                 Object remove = results.remove(viewHolder.getLayoutPosition());
-                results.add(0, (Article) remove);
+               // results.add(0, (Article) remove);
                 adapter.notifyDataSetChanged();
             }
 
