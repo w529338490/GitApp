@@ -89,19 +89,6 @@ public class NewsFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             ((MyHolder) holder).tittle.setText(data.get(position).getTitle());
             ((MyHolder) holder).date.setText(data.get(position).getDate());
 
-           ((MyHolder) holder).pic.setOnClickListener(new View.OnClickListener()
-           {
-                @Override
-                public void onClick(View v)
-                {
-                    ObjectAnimator animator=ObjectAnimator.ofFloat(((MyHolder) holder).pic,"translationY",0.0f, 200.0f, 0f,-200f,0f);
-                    animator.setDuration(1500);
-                    animator.setRepeatCount(1);
-                    animator.start();
-                }
-            });
-
-
             ((MyHolder) holder).view.setOnClickListener(new View.OnClickListener()
             {
                 @Override
@@ -126,42 +113,8 @@ public class NewsFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
                 @Override
                 public void onClick(final View v)
-
                 {
-                    ValueAnimator animator =ValueAnimator.ofFloat( 180,0);
-                    animator.setDuration(2000);
-                    animator.setInterpolator(new AccelerateDecelerateInterpolator());
-
-                    animator.addListener(new AnimatorListenerAdapter() {
-
-                        @Override
-                        public void onAnimationStart(Animator animation) {
-                            super.onAnimationStart(animation);
-                            Glide.with(context)
-                                    .load(data.get(position).getThumbnail_pic_s())
-                                    .transform(new GlideRoundTransform(context,20))
-                                    .centerCrop()
-                                    .placeholder(R.mipmap.ic_mr)
-                                    .crossFade(1500)
-                                    .into(((MyHolder) holder).imag);
-                            ((MyHolder) holder).imag.setVisibility(View.VISIBLE);
-                        }
-
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            super.onAnimationEnd(animation);
-
-
-
-                            ((MyHolder) holder).view.setVisibility(View.INVISIBLE);
-
-
-                            listener.getData(position);
-                        }
-                    });
-                    animator.start();
-
-
+                    listener.getData(position);
 
                 }
             });

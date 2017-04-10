@@ -5,6 +5,7 @@ import android.util.Log;
 import com.example.administrator.myapplication.entity.Article;
 import com.example.administrator.myapplication.entity.Famous;
 import com.example.administrator.myapplication.entity.Gif;
+import com.example.administrator.myapplication.entity.Story;
 import com.orhanobut.logger.Logger;
 
 import org.jsoup.Jsoup;
@@ -14,9 +15,12 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 
 /**
@@ -172,6 +176,8 @@ public class JsoupUtil
      * 每日一文。爬取http://w.ihx.cc/meiriyiwen/1434.html
      * http://w.ihx.cc/category/meiriyiwen
      */
+
+
     public static ArrayList<Article> getArticle()
     {
         ArrayList<Article> articles = new ArrayList<>();
@@ -194,15 +200,11 @@ public class JsoupUtil
                 article.tittle = elements.get(i).getElementsByTag("title").text();
                 article.description = elements.get(i).getElementsByTag("description").text();
                 article.link = elements.get(i).getElementsByTag("link").text();
+
+                article.position = i;
                 String d = elements.get(i).getElementsByTag("pubDate").text();
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy年mm月dd日 ");
-                try
-                {
-                    article.pubDate = sdf.parse(d);
-                } catch (ParseException e)
-                {
-                    e.printStackTrace();
-                }
+                article.pubDate = convertDateFormat(d, "EEE, d MMM yyyy HH:mm:ss", "yyyy年MM月dd日 HH:mm");
+
                 articles.add(article);
             }
         } catch (IOException e)
@@ -224,16 +226,80 @@ public class JsoupUtil
         Document docs = null;
         try
         {
-            docs = Jsoup.parse(new URL("http://w.ihx.cc/meiriyiwen/1434.html"), 5000);
+
+            docs = Jsoup.parse(new URL(url), 5000);
             Elements elements = docs.getElementsByClass("article_text");
             content = elements.text();
-
         } catch (IOException e)
         {
             e.printStackTrace();
         }
-
-
         return content;
+    }
+
+
+    public static String convertDateFormat(String dateTime, String previousFormat,
+                                           String destinationFormat)
+    {
+        String formattedDateTime = null;
+        try
+        {
+            DateFormat dateFormat = new SimpleDateFormat(previousFormat, Locale.getDefault());
+            Date date = dateFormat.parse(dateTime);
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(destinationFormat, Locale.getDefault());
+            formattedDateTime = simpleDateFormat.format(date);
+        } catch (ParseException e)
+        {
+            e.printStackTrace();
+        }
+        return formattedDateTime;
+    }
+
+    /**
+     * 爬取小说
+     * http://book.zongheng.com/rank/male/r14/c1/q0/1.html  // 小说_ 奇幻玄幻</br>
+     * http://book.zongheng.com/rank/male/r7/c3/q0/1.html // 小说_ 武侠仙侠</br>
+     * http://book.zongheng.com/rank/male/r7/c6/q0/1.html // 小说_ 历史军事</br>
+     * http://book.zongheng.com/rank/male/r7/c9/q0/1.html // 小说_都市娱乐</br>
+     */
+    public static ArrayList<Story> getStory(String url)
+    {
+        Document docs = null;
+        ArrayList<Story> storyList = new ArrayList<>();
+        try
+        {
+            docs = Jsoup.parse(new URL(url), 5000);
+            Elements elts = docs.getElementsByClass("main_con");
+            Logger.e(elts.html());
+
+//            Logger.e("一共有" + elts.get(0).getElementsByTag("li").size()+"个节点");
+            for (int i = 0; i < elts.get(0).getElementsByTag("li").size(); i++)
+            {
+                Element et = elts.get(0).getElementsByTag("li").get(i); // 获取根节点的元素对象
+                Story story = new Story();
+                if (et.text() == null || "".equals(et.text()))
+                {
+                    continue;
+                } else
+                {
+                    story.setType(et.getElementsByClass("kind").text());
+                    story.setTitle(et.getElementsByClass("chap").get(0).getElementsByClass("fs14").attr("title"));
+                    story.setUri(et.getElementsByClass("chap").get(0).getElementsByClass("fs14").attr("href"));
+                    story.setContent(et.getElementsByClass("limit").get(0).text());
+                    story.setMark(et.getElementsByClass("mark").text());
+                    story.setHot(ConvertUtils.strToInt(et.getElementsByClass("bit").text()));
+                    story.setAuthor(et.getElementsByClass("author").text());
+                    story.setIndex(et.getElementsByClass("author").get(0).getElementsByTag("a").attr("href"));
+                    story.setUpdateTime(et.getElementsByClass("time").text());
+                    storyList.add(story);
+                }
+//                Logger.e("猜猜拿到了什么：" + storyList.toString());
+            }
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+        return storyList;
     }
 }

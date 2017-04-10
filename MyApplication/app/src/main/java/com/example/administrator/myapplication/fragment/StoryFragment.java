@@ -1,7 +1,5 @@
 package com.example.administrator.myapplication.fragment;
 
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,21 +12,24 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.example.administrator.myapplication.R;
+import com.example.administrator.myapplication.Utill.JsoupUtil;
 import com.example.administrator.myapplication.adapter.StoryRecyclerViewAdapter;
 import com.example.administrator.myapplication.common.Ip;
-import com.example.administrator.myapplication.entity.Result;
-import com.example.administrator.myapplication.net.Service.HttpService;
-import com.example.administrator.myapplication.ui.comm.WebActivity;
+import com.example.administrator.myapplication.entity.Story;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
+import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 /**
- * Created by Administrator on 2017/2/22.
+ * Created by k9579 on 2017/2/25.
  */
-
 public class StoryFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener
 {
     static StoryFragment instance;
@@ -37,28 +38,23 @@ public class StoryFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     RecyclerView recyview;
     SwipeRefreshLayout fresh;
     LinearLayout parent;
-    HttpService service;
 
-    List<String> datas = new ArrayList<>();
-    List<Result.ResultBean.DataBean> data = new ArrayList<>();
-
+    List<Story> storyList = new ArrayList<>();
     LinearLayoutManager manager;
     StoryRecyclerViewAdapter adapter;
 
     boolean reflash = false;
-    int type=0;
 
-    String str[] = new String[]{Ip.url_gif_dongtai, Ip.url_gif_xiegif, Ip.url_gif_gaoxiao};
-    String url;
+    String url = "";
+    String str[] = new String[]{Ip.url_story_qihuan, Ip.url_story_wuxia, Ip.url_story_history, Ip.url_story_yule};
+//    String str[] = new String[]{Ip.url_story_qihuan};
 
     public static StoryFragment newInstance(int type)
     {
-
         instance = new StoryFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("type", type);
         instance.setArguments(bundle);
-
         return instance;
     }
 
@@ -66,13 +62,10 @@ public class StoryFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-
-        view = inflater.inflate(R.layout.gif_fragment, container, false);
-
-        recyview = (RecyclerView) view.findViewById(R.id.recyview);
-        fresh = (SwipeRefreshLayout) view.findViewById(R.id.fresh);
-        manager = new LinearLayoutManager(StoryFragment.this.getContext());
-        parent = (LinearLayout) view.findViewById(R.id.parent);
+        view = inflater.inflate(R.layout.story_fragment, container, false);
+        recyview = (RecyclerView) view.findViewById(R.id.rv_list);
+        fresh = (SwipeRefreshLayout) view.findViewById(R.id.story_fresh);
+        manager = new LinearLayoutManager(getActivity());
         url = str[getArguments().getInt("type")];
         initView();
         getData(url, reflash);
@@ -80,36 +73,8 @@ public class StoryFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     }
 
     /**
-     *
-     * @param type
-     * @param reflash
+     * 初始化控件
      */
-    private void initData(int type, final boolean reflash)
-    {
-
-    }
-
-    private void getData(final String url, boolean reflash)
-    {
-    }
-
-    // 更新UI
-    private void updataui(final List<Result.ResultBean.DataBean> data)
-    {
-        adapter = new StoryRecyclerViewAdapter(StoryFragment.this.getContext(), data);
-        recyview.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
-        adapter.setOnItemClickListener(new StoryRecyclerViewAdapter.OnItemClickListener()
-        {
-            @Override
-            public void onItemClick(int position)
-            {
-                Intent intent = new Intent(StoryFragment.this.getContext(), WebActivity.class);
-                intent.putExtra("url", data.get(position).getUrl());
-            }
-        });
-    }
-
     private void initView()
     {
         fresh.setOnRefreshListener(this);
@@ -118,15 +83,58 @@ public class StoryFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         recyview.setLayoutManager(manager);
     }
 
-    @Override
-    public void onRefresh()
+    /**
+     * @param url
+     * @param reflash
+     */
+    private void getData(final String url, boolean reflash)
     {
-        reflash=true;
-        initData(type,reflash);
+        //使用RxJava 异步网络请求
+        Observable<Integer> observable = Observable.create(new rx.Observable.OnSubscribe<Integer>()
+        {
+            @Override
+            public void call(Subscriber<? super Integer> subscriber)
+            {
+                storyList= JsoupUtil.getStory(url);
+                subscriber.onNext(1);
+            }
+        });
+        observable.subscribeOn(Schedulers.io())//指定获取数据在io子线程
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())//处理结果回调 在UI 主线程
+                .subscribe(new Action1<Integer>()
+                {
+                    @Override
+                    public void call(Integer integer)
+                    {
+                        if (integer == 1)
+                        {
+                            updateUi();
+                        }
+                    }
+                });
+    }
+
+    // 更新UI
+    private void updateUi()
+    {
+        adapter=new StoryRecyclerViewAdapter(getContext(),storyList);
+        recyview.setLayoutManager(manager);
+        recyview.setAdapter(adapter);
     }
 
     @Override
-    public void onDestroyView() {
+    public void onRefresh()
+    {
+        reflash = true;
+        updateUi();
+        adapter.notifyDataSetChanged();
+        fresh.setRefreshing(false);
+    }
+
+    @Override
+    public void onDestroyView()
+    {
         super.onDestroyView();
         ButterKnife.reset(this);
     }
@@ -136,7 +144,7 @@ public class StoryFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         super.setUserVisibleHint(isVisibleToUser);
         if(isVisibleToUser)
         {
-            initData(type,reflash);
+            getData(url,reflash);
         }
     }
 }

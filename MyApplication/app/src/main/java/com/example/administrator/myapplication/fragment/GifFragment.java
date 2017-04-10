@@ -42,7 +42,6 @@ public class GifFragment extends Fragment implements SwipeRefreshLayout.OnRefres
     RecyclerView recyview;
     SwipeRefreshLayout fresh;
     LinearLayout parent;
-    HttpService service;
 
     List<Gif> list=new ArrayList<>();
 
@@ -50,6 +49,7 @@ public class GifFragment extends Fragment implements SwipeRefreshLayout.OnRefres
     GifRecyclerViewAdapter adapter;
 
     boolean reflash=false;
+    HttpService service;
 
     String str[]= new String[]{ Ip.url_gif_dongtai, Ip.url_gif_xiegif, Ip.url_gif_gaoxiao};
     String url;

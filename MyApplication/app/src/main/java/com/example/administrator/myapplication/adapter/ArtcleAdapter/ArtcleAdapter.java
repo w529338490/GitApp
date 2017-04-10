@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.administrator.myapplication.R;
+import com.example.administrator.myapplication.adapter.GankAdapter.GankAdapter;
 import com.example.administrator.myapplication.common.myApplication;
 import com.example.administrator.myapplication.entity.Article;
 
@@ -21,6 +22,7 @@ public class ArtcleAdapter extends RecyclerView.Adapter<ArtcleAdapter.Holder>
 
     List<Article> results;
     LayoutInflater inflater;
+    GankAdapter.OnItemViewClickLisnter onItemViewClickLisnter;  //点击每个item监听事件
 
     public ArtcleAdapter(List<Article> results)
     {
@@ -41,13 +43,21 @@ public class ArtcleAdapter extends RecyclerView.Adapter<ArtcleAdapter.Holder>
     }
 
     @Override
-    public void onBindViewHolder(ArtcleAdapter.Holder holder, int position)
+    public void onBindViewHolder(ArtcleAdapter.Holder holder, final int position)
     {
         holder.who.setText(results.get(position).author);
         holder.content.setText(results.get(position).description);
-        int sum=position+1;
+          int sum=results.get(position).position+1;
         holder.tvPrecent.setText(sum+"/"+results.size());
 
+        holder.pView.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                onItemViewClickLisnter.getItemViewPosition(position);
+            }
+        });
     }
 
     @Override
@@ -61,13 +71,23 @@ public class ArtcleAdapter extends RecyclerView.Adapter<ArtcleAdapter.Holder>
         TextView who;
         TextView  content;
         TextView tvPrecent;
+        View pView;
         public Holder(View view)
         {
             super(view);
             who= (TextView) view.findViewById(R.id.who);
             content= (TextView) view.findViewById(R.id.content);
             tvPrecent= (TextView) view.findViewById(R.id.tvPrecent);
-
+            pView=view;
         }
+    }
+
+    public  void setOnItemViewClickLisnter (GankAdapter.OnItemViewClickLisnter lisnter)
+    {
+        this.onItemViewClickLisnter=lisnter;
+    }
+    public interface OnItemViewClickLisnter
+    {
+        void getItemViewPosition(int Postion);
     }
 }

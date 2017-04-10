@@ -53,9 +53,15 @@
         <activity
             android:name=".ui.comm.StoryActivity"
             android:label="@string/title_activity_music"/>
+        <activity android:name=".ui.story.SearchActivity"/>
         <activity
             android:name=".ui.article.ArtcleActivity"
             android:label="@string/title_activity_artcle"
+            android:theme="@style/AppTheme">
+        </activity>
+        <activity
+            android:name=".ui.article.ArtcleContetnActivity"
+            android:label="@string/title_activity_artcle_contetn"
             android:theme="@style/AppTheme">
         </activity>
     </application>
