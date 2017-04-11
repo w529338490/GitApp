@@ -198,14 +198,14 @@ public class My3DGrop extends ViewGroup implements GestureDetector.OnGestureList
 
         int curScreenY = getMeasuredHeight() * i;
         //屏幕中不显示的部分不进行绘制
-//        if (getScrollY() + mHeight < curScreenY)
-//        {
-//            return;
-//        }
-//        if (curScreenY < getScrollY() - mHeight)
-//        {
-//            return;
-//        }
+        if (getScrollY() + mHeight < curScreenY)
+        {
+            return;
+        }
+        if (curScreenY < getScrollY() - mHeight)
+        {
+            return;
+        }
         float centerX = mWidth / 2;
         float centerY = (getScrollY() > curScreenY) ? curScreenY + mHeight : curScreenY;
         float degree = mAngle * (getScrollY() - curScreenY) / mHeight;
