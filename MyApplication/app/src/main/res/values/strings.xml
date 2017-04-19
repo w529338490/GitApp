@@ -12,5 +12,8 @@
     <string name="flexible_title">this is tittle</string>
     <string name="title_activity_artcle">ARtcleActivity</string>
     <string name="title_activity_artcle_contetn">ArtcleContetnActivity</string>
+    <string name="title_activity_story_introduce">StoryIntroduce</string>
+    <string name="hello_round">Hello Round World!</string>
+    <string name="hello_square">Hello Square World!</string>
 
 </resources>

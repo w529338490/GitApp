@@ -16,4 +16,5 @@ public class Ip {
     public static String url_story_wuxia = "http://book.zongheng.com/rank/male/r7/c3/q0/1.html"; // 小说_ 武侠仙侠
     public static String url_story_history = "http://book.zongheng.com/rank/male/r7/c6/q0/1.html"; // 小说_ 历史军事
     public static String url_story_yule = "http://book.zongheng.com/rank/male/r7/c9/q0/1.html"; // 小说_都市娱乐
+    public static String url_story_kehuan = "http://book.zongheng.com/rank/male/r14/c15/q0/1.html"; // 小说_科幻游戏
 }

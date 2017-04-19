@@ -23,6 +23,8 @@ import com.example.administrator.myapplication.ui.Fan.FanActivity;
 import com.example.administrator.myapplication.ui.article.ArtcleActivity;
 import com.example.administrator.myapplication.ui.gank.GankActivity;
 import com.example.administrator.myapplication.ui.gif.GifActivity;
+import com.example.administrator.myapplication.ui.story.MusicActivity;
+import com.example.administrator.myapplication.ui.story.StoryActivity;
 import com.example.administrator.myapplication.ui.video.VideoActivity;
 
 import java.util.ArrayList;

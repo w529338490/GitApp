@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.Utill.MarqueeTextView;
-import com.example.administrator.myapplication.Utill.ToastUtil;
 import com.example.administrator.myapplication.entity.Story;
 
 import java.util.List;
@@ -18,7 +17,7 @@ import java.util.List;
  * Created by k9579 on 2017/3/28.
  */
 
-public class StoryRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
+public class StoryRecyclerViewAdapter extends RecyclerView.Adapter<StoryRecyclerViewAdapter.MyHolder>
 {
     Context context;
     LayoutInflater inflater;
@@ -38,9 +37,9 @@ public class StoryRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
+    public MyHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
-        RecyclerView.ViewHolder holder = null;
+        MyHolder holder = null;
         switch (viewType)
         {
             case NOFOOT:
@@ -54,23 +53,24 @@ public class StoryRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
     }
 
     @Override
-    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position)
+    public void onBindViewHolder(final MyHolder holder, final int position)
     {
-        if (holder instanceof MyHolder)
-        {
-            ((MyHolder) holder).type.setText(list.get(position).getType());
-            ((MyHolder) holder).tittle.setText(list.get(position).getTitle());
-            ((MyHolder) holder).update.setText("更新时间："+list.get(position).getUpdateTime());
-            ((MyHolder) holder).content.setText("最新更新概览："+list.get(position).getContent());
-            ((MyHolder) holder).author.setText("作者："+list.get(position).getAuthor());
-            ((MyHolder) holder).score.setText("人气"+list.get(position).getHot());
+        holder.type.setText(list.get(position).getType());
+        holder.tittle.setText(list.get(position).getTitle());
+        holder.update.setText("更新时间：" + list.get(position).getUpdateTime());
+        holder.content.setText("最新更新概览：" + list.get(position).getContent());
+        holder.author.setText("作者：" + list.get(position).getAuthor());
+        holder.score.setText("人气" + list.get(position).getHot());
 
-            ((MyHolder) holder).itemView.setOnClickListener(new View.OnClickListener()
+        if (itemClickListener != null)
+        {
+            final int pos = holder.getLayoutPosition();
+            holder.itemView.setOnClickListener(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)
                 {
-                    ToastUtil.show(list.get(position).getUri());
+                    itemClickListener.onItemClick(holder.itemView, list.get(pos));
                 }
             });
         }
@@ -111,11 +111,11 @@ public class StoryRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
 
     public interface OnItemClickListener
     {
-        void onItemClick(int position);
+        void onItemClick(View view,  Story story);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener)
     {
-        this.itemClickListener=listener;
+        this.itemClickListener = listener;
     }
 }

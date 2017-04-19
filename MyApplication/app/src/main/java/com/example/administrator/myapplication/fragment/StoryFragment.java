@@ -1,5 +1,6 @@
 package com.example.administrator.myapplication.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,13 +10,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.Utill.JsoupUtil;
 import com.example.administrator.myapplication.adapter.StoryRecyclerViewAdapter;
 import com.example.administrator.myapplication.common.Ip;
 import com.example.administrator.myapplication.entity.Story;
+import com.example.administrator.myapplication.ui.story.StoryIntroduce;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,8 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
+import static com.example.administrator.myapplication.common.Ip.url_story_kehuan;
+
 /**
  * Created by k9579 on 2017/2/25.
  */
@@ -37,7 +40,6 @@ public class StoryFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
     RecyclerView recyview;
     SwipeRefreshLayout fresh;
-    LinearLayout parent;
 
     List<Story> storyList = new ArrayList<>();
     LinearLayoutManager manager;
@@ -46,8 +48,7 @@ public class StoryFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     boolean reflash = false;
 
     String url = "";
-    String str[] = new String[]{Ip.url_story_qihuan, Ip.url_story_wuxia, Ip.url_story_history, Ip.url_story_yule};
-//    String str[] = new String[]{Ip.url_story_qihuan};
+    String str[] = new String[]{Ip.url_story_qihuan, Ip.url_story_wuxia, Ip.url_story_history, Ip.url_story_yule, url_story_kehuan};
 
     public static StoryFragment newInstance(int type)
     {
@@ -121,6 +122,14 @@ public class StoryFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         adapter=new StoryRecyclerViewAdapter(getContext(),storyList);
         recyview.setLayoutManager(manager);
         recyview.setAdapter(adapter);
+        adapter.setOnItemClickListener(new StoryRecyclerViewAdapter.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(View view, Story story)
+            {
+                startActivity(new Intent(getActivity(), StoryIntroduce.class).putExtra("uri", story.getUri()));
+            }
+        });
     }
 
     @Override

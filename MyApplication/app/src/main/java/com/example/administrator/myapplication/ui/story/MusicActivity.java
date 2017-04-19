@@ -1,4 +1,4 @@
-package com.example.administrator.myapplication.ui.comm;
+package com.example.administrator.myapplication.ui.story;
 
 import android.app.Activity;
 import android.os.Bundle;
