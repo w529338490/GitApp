@@ -2,9 +2,9 @@ package com.example.administrator.myapplication.ui.video;
 
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -15,16 +15,13 @@ import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.adapter.VideoViewAdapter;
 import com.example.administrator.myapplication.entity.RandomData;
 import com.example.administrator.myapplication.entity.Video;
-
 import com.example.administrator.myapplication.net.Api;
 import com.example.administrator.myapplication.net.Service.GankService;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import fm.jiecao.jcvideoplayer_lib.JCFullScreenActivity;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerSimple;
-import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -33,7 +30,7 @@ import rx.schedulers.Schedulers;
 public class VideoActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener
 {
 
-    List<Video.Data.DataBean> listData;
+
     Toolbar toolbar;
     SwipeRefreshLayout fresh;
     GankService service;
@@ -43,6 +40,7 @@ public class VideoActivity extends AppCompatActivity implements SwipeRefreshLayo
 
     int page_num = 20;
     List<RandomData.Gank> list = new ArrayList<>();
+    List<Video.DataBean.DataBeans>  listData=new ArrayList();
 
 
 
@@ -65,9 +63,9 @@ public class VideoActivity extends AppCompatActivity implements SwipeRefreshLayo
         manager=new LinearLayoutManager(this);
         // init();
 
-        JCFullScreenActivity.toActivity(this,
-                "http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4",
-                JCVideoPlayerStandard.class, "嫂子真牛逼");
+//        JCFullScreenActivity.toActivity(this,
+//                "http://ic.snssdk.com/neihan/video/playback/1492765735.68/?video_id=b1ccd3632f6949a1accf519a80898b8a&quality=480p&line=0&is_gif=0&device_platform=android.mp4",
+//                JCVideoPlayerStandard.class, "嫂子真牛逼");
 
         getData();
 
@@ -78,14 +76,14 @@ public class VideoActivity extends AppCompatActivity implements SwipeRefreshLayo
     {
 
         service =  Api.getInstance().apiGank();
-        Observable<RandomData> obsVideo = service.getRandomData("休息视频", page_num);
-     obsVideo .subscribeOn(Schedulers.io())//指定获取数据在io子线程
+        Observable<Video> obsVideo = service.getVideo();
+        obsVideo .subscribeOn(Schedulers.io())//指定获取数据在io子线程
               .unsubscribeOn(Schedulers.io())
               .observeOn(AndroidSchedulers.mainThread())
-              .subscribe(new Action1<RandomData>()
+              .subscribe(new Action1<Video>()
               {
                   @Override
-                  public void call(RandomData randomData)
+                  public void call(Video randomData)
                   {
                       UpDataUi(randomData);
                   }
@@ -94,14 +92,13 @@ public class VideoActivity extends AppCompatActivity implements SwipeRefreshLayo
               }) ;
     }
 
-    public void UpDataUi(RandomData randomData)
+    public void UpDataUi(Video randomData)
     {
-        if (randomData.isError() == false && randomData.getResults() != null)
+        if (randomData.getMessage().equals("success"))
         {
-            list = randomData.getResults();
+            listData = randomData.data.data;
         }
-        adapter=new VideoViewAdapter(list);
-
+        adapter = new VideoViewAdapter(listData);
         recyview.setLayoutManager(manager);
         recyview.setAdapter(adapter);
 
