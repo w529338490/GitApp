@@ -19,19 +19,64 @@ public class Story
     private Integer hot; // 人气
     private String mark; // 是否签约
     private String updateTime; // 更新时间
+    private String readUrl; // 开始阅读链接
+    private String storyPic; // 封面
+    private String words; // 字数
+    private List<Story.StoryCatalog> catalogList; // 小说目录列表
 
-    public Story(){};
-    public Story(String type, String title, String uri,String content, String author,String index,  Integer hot, String mark, String updateTime)
+    public static class StoryCatalog
     {
-        this.type = type;
-        this.title = title;
-        this.uri = uri;
-        this.content = content;
-        this.author = author;
-        this.index = index;
-        this.hot = hot;
-        this.mark = mark;
-        this.updateTime = updateTime;
+        private String catalog;
+        private String url;
+
+        public String getCatalog()
+        {
+            return catalog;
+        }
+
+        public void setCatalog(String catalog)
+        {
+            this.catalog = catalog;
+        }
+
+        public String getUrl()
+        {
+            return url;
+        }
+
+        public void setUrl(String url)
+        {
+            this.url = url;
+        }
+
+        @Override
+        public String toString()
+        {
+            return "StoryCatalog{" +
+                    "catalog='" + catalog + '\'' +
+                    ", url='" + url + '\'' +
+                    '}';
+        }
+    }
+
+    public String getWords()
+    {
+        return words;
+    }
+
+    public void setWords(String words)
+    {
+        this.words = words;
+    }
+
+    public String getStoryPic()
+    {
+        return storyPic;
+    }
+
+    public void setStoryPic(String storyPic)
+    {
+        this.storyPic = storyPic;
     }
 
     public List<Story> getStoryList()
@@ -132,6 +177,26 @@ public class Story
     public void setIndex(String index)
     {
         this.index = index;
+    }
+
+    public String getReadUrl()
+    {
+        return readUrl;
+    }
+
+    public void setReadUrl(String readUrl)
+    {
+        this.readUrl = readUrl;
+    }
+
+    public List<StoryCatalog> getCatalogList()
+    {
+        return catalogList;
+    }
+
+    public void setCatalogList(List<StoryCatalog> catalogList)
+    {
+        this.catalogList = catalogList;
     }
 
     @Override
