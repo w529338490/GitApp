@@ -21,6 +21,7 @@ import com.example.administrator.myapplication.net.Service.GankService;
 import java.util.ArrayList;
 import java.util.List;
 
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerSimple;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -29,8 +30,6 @@ import rx.schedulers.Schedulers;
 
 public class VideoActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener
 {
-
-
     Toolbar toolbar;
     SwipeRefreshLayout fresh;
     GankService service;
@@ -61,6 +60,8 @@ public class VideoActivity extends AppCompatActivity implements SwipeRefreshLayo
     {
         recyview= (RecyclerView) findViewById(R.id.recyview);
         manager=new LinearLayoutManager(this);
+
+
         // init();
 
 //        JCFullScreenActivity.toActivity(this,
@@ -98,7 +99,7 @@ public class VideoActivity extends AppCompatActivity implements SwipeRefreshLayo
         {
             listData = randomData.data.data;
         }
-        adapter = new VideoViewAdapter(listData);
+        adapter = new VideoViewAdapter(listData,VideoActivity.this);
         recyview.setLayoutManager(manager);
         recyview.setAdapter(adapter);
 
@@ -131,5 +132,20 @@ public class VideoActivity extends AppCompatActivity implements SwipeRefreshLayo
 
 
     }
+    @Override
+    public void onBackPressed() {
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JCVideoPlayer.releaseAllVideos();
+    }
 }
