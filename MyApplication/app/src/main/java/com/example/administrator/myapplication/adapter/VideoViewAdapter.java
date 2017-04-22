@@ -9,11 +9,15 @@ import android.widget.TextView;
 
 import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.common.myApplication;
-import com.example.administrator.myapplication.entity.RandomData;
+import com.example.administrator.myapplication.entity.Video;
+import com.orhanobut.logger.Logger;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerSimple;
+import fm.jiecao.jcvideoplayer_lib.JCMediaManager;
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 
 /**
  * Created by Administrator on 2017/3/27.
@@ -22,14 +26,17 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerSimple;
 public class VideoViewAdapter extends RecyclerView.Adapter<VideoViewAdapter.Holder>
 {
 
-    List<RandomData.Gank> results;
+    List<Video.DataBean.DataBeans> results;
 
     LayoutInflater inflater;
+    JCMediaManager mediaManager;
+    private Context context;
 
-    public VideoViewAdapter(List<RandomData.Gank> results)
+    public VideoViewAdapter(List<Video.DataBean.DataBeans> results,Context context)
     {
         this.results = results;
-        this.inflater= LayoutInflater.from(myApplication.context);
+        this.inflater= LayoutInflater.from(context);
+        this.context=context;
     }
 
     @Override
@@ -45,11 +52,24 @@ public class VideoViewAdapter extends RecyclerView.Adapter<VideoViewAdapter.Hold
     }
 
     @Override
-    public void onBindViewHolder(Holder holder, int position)
+    public void onBindViewHolder(final Holder holder, int position)
     {
-        holder.tittle.setText(results.get(position).getDesc());
-        holder.custom_videoplayer.setUp(results.get(position).getUrl());
 
+        if(results!=null&&results.get(position)!=null&&results.get(position).group!=null)
+        {
+            holder.custom_videoplayer.setUp(
+                    results.get(position).group.mp4_url,
+                    JCVideoPlayer.SCREEN_LAYOUT_LIST,
+                    results.get(position).getGroup().text
+            );
+            Logger.e(results.get(position).group.mp4_url);
+
+      //      holder.tittle.setText(results.get(position).getGroup().text+"");
+            Picasso.with(myApplication.context)
+                    .load(String.valueOf(results.get(position).getGroup().medium_cover.getUrl_list().get(0).url))
+                    .into(holder.custom_videoplayer.thumbImageView);
+
+        }
     }
 
     @Override
@@ -61,12 +81,13 @@ public class VideoViewAdapter extends RecyclerView.Adapter<VideoViewAdapter.Hold
     public class Holder extends RecyclerView.ViewHolder
     {
         TextView tittle;
-        JCVideoPlayerSimple custom_videoplayer;
+        JCVideoPlayerStandard custom_videoplayer;
         public Holder(View view)
         {
             super(view);
             tittle= (TextView) view.findViewById(R.id.tittle);
-            custom_videoplayer= (JCVideoPlayerSimple) view.findViewById(R.id.custom_videoplayer);
+            custom_videoplayer= (JCVideoPlayerStandard) view.findViewById(R.id.custom_videoplayer);
+
         }
     }
 }
