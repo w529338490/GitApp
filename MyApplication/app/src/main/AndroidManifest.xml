@@ -58,7 +58,6 @@
         <activity
             android:name=".ui.story.StoryActivity"
             android:label="@string/title_activity_music"/>
-        <activity android:name=".ui.story.SearchActivity"/>
         <activity
             android:name=".ui.article.ArtcleActivity"
             android:label="@string/title_activity_artcle"
@@ -74,11 +73,6 @@
         <activity
             android:name=".ui.story.StoryIntroduce"
             android:label="@string/title_activity_story_introduce">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
     </application>
 

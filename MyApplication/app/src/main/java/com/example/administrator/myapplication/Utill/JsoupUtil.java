@@ -87,7 +87,7 @@ public class JsoupUtil
         {
 
             doc = Jsoup.parse(new URL(urls), 5000);
-            Logger.e(doc.nodeName());
+//            Logger.e(doc.nodeName());
 
             Elements es_item = doc.getElementsByClass("item");
 
@@ -192,11 +192,11 @@ public class JsoupUtil
             {
                 Article article = new Article();
                 //  Logger.e(elements.get(i).getElementsByTag("a").first().attr("href"));
-                Logger.e(elements.get(i).getElementsByTag("title").outerHtml());
-                Logger.e(elements.get(i).getElementsByTag("link").outerHtml());
-                Logger.e(elements.get(i).getElementsByTag("pubDate").outerHtml());
-                Logger.e(elements.get(i).getElementsByTag("description").outerHtml());
-                Logger.e(elements.get(i).getElementsByTag("category").eq(2).outerHtml());
+//                Logger.e(elements.get(i).getElementsByTag("title").outerHtml());
+//                Logger.e(elements.get(i).getElementsByTag("link").outerHtml());
+//                Logger.e(elements.get(i).getElementsByTag("pubDate").outerHtml());
+//                Logger.e(elements.get(i).getElementsByTag("description").outerHtml());
+//                Logger.e(elements.get(i).getElementsByTag("category").eq(2).outerHtml());
 
                 article.author = elements.get(i).getElementsByTag("category").eq(2).text();
                 article.tittle = elements.get(i).getElementsByTag("title").text();
@@ -272,7 +272,7 @@ public class JsoupUtil
         {
             docs = Jsoup.parse(new URL(url), 5000);
             Elements elts = docs.getElementsByClass("main_con");
-            Logger.e(elts.html());
+//            Logger.e(elts.html());
 
 //            Logger.e("一共有" + elts.get(0).getElementsByTag("li").size()+"个节点");
             for (int i = 0; i < elts.get(0).getElementsByTag("li").size(); i++)
@@ -319,7 +319,7 @@ public class JsoupUtil
         {
             docs = Jsoup.parse(new URL(url), 5000);
             Elements elts = docs.getElementsByClass("book_main");
-            Logger.e(elts.outerHtml());
+//            Logger.e(elts.outerHtml());
             Element et = elts.get(0).getElementsByTag("p").get(0);
             story.setTitle(et.getElementsByTag("img").get(0).attr("alt"));
             story.setStoryPic(et.getElementsByTag("img").get(0).attr("src"));

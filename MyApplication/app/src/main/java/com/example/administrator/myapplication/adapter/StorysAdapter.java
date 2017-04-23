@@ -29,7 +29,7 @@ import java.util.List;
  */
 
 
-public class StorysAdapter extends RecyclerView.Adapter<StorysAdapter.MyHolder>
+public class StorysAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
 {
 
@@ -38,8 +38,6 @@ public class StorysAdapter extends RecyclerView.Adapter<StorysAdapter.MyHolder>
     List<Story> list;
 
     RecyclerView parent;
-    final int NOFOOT = 1;
-    final int YESFOOT = 2;
 
     public OnItemClickListener itemClickListener = null;
 
@@ -47,34 +45,24 @@ public class StorysAdapter extends RecyclerView.Adapter<StorysAdapter.MyHolder>
     {
         this.context = context;
         this.list = list;
-        inflater = LayoutInflater.from(context);
     }
 
     @Override
-    public MyHolder onCreateViewHolder(ViewGroup parent, int viewType)
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
-        MyHolder holder = null;
-        switch (viewType)
-        {
-            case NOFOOT:
-                holder = new MyHolder(inflater.inflate(R.layout.item_story_adapter, parent, false));
-                this.parent = (RecyclerView) parent;
-                break;
-            case YESFOOT:
-                break;
-        }
+        MyHolder holder  = new MyHolder(LayoutInflater.from(context).inflate(R.layout.item_story_adapter, parent, false));
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(final MyHolder holder, final int position)
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position)
     {
-        holder.type.setText(list.get(position).getType());
-        holder.tittle.setText(list.get(position).getTitle());
-        holder.update.setText("更新时间：" + list.get(position).getUpdateTime());
-        holder.content.setText("最新更新概览：" + list.get(position).getContent());
-        holder.author.setText("作者：" + list.get(position).getAuthor());
-        holder.score.setText("人气" + list.get(position).getHot());
+        ((MyHolder) holder).type.setText(list.get(position).getType());
+        ((MyHolder) holder).tittle.setText(list.get(position).getTitle());
+        ((MyHolder) holder).update.setText("更新时间：" + list.get(position).getUpdateTime());
+        ((MyHolder) holder).content.setText("最新更新概览：" + list.get(position).getContent());
+        ((MyHolder) holder).author.setText("作者：" + list.get(position).getAuthor());
+        ((MyHolder) holder).score.setText("人气" + list.get(position).getHot());
 
         if (itemClickListener != null)
         {
@@ -104,7 +92,6 @@ public class StorysAdapter extends RecyclerView.Adapter<StorysAdapter.MyHolder>
 
     class MyHolder extends RecyclerView.ViewHolder
     {
-
         TextView type;
         MarqueeTextView tittle;
         TextView update;
