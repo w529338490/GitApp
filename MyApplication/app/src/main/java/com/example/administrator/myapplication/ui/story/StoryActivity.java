@@ -1,19 +1,14 @@
 package com.example.administrator.myapplication.ui.story;
 
-import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.adapter.PaperAdapter;
@@ -70,31 +65,5 @@ public class StoryActivity extends AppCompatActivity
                 finish();
             }
         });
-    }
-
-    @TargetApi(11)
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        super.onCreateOptionsMenu(menu);
-        getMenuInflater().inflate(R.menu.story_menu, menu);
-        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search)); // 在菜单中找到对应控件的item
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener()
-        {
-            @Override
-            public boolean onQueryTextSubmit(String s)
-            {
-                Toast.makeText(StoryActivity.this, "刚刚输入的是" + s, Toast.LENGTH_SHORT).show();
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String s)
-            {
-                Toast.makeText(StoryActivity.this, "keyboard opend", Toast.LENGTH_LONG).show();
-                return false;
-            }
-        });
-        return true;
     }
 }
