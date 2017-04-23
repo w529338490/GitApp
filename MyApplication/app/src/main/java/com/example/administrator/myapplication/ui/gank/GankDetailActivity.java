@@ -22,6 +22,7 @@ import com.example.administrator.myapplication.net.Api;
 import com.example.administrator.myapplication.net.Service.GankService;
 import com.example.administrator.myapplication.ui.view.GifImageView;
 import com.orhanobut.logger.Logger;
+import com.trello.rxlifecycle.components.RxActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -36,19 +37,18 @@ import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
- *  Gank细节页面
- *  //布局页面 使用CoordinatorLayout
- *  参考 http://blog.csdn.net/xyz_lmn/article/details/48055919
- *
+ * Gank细节页面
+ * //布局页面 使用CoordinatorLayout
+ * 参考 http://blog.csdn.net/xyz_lmn/article/details/48055919
  */
-public class GankDetailActivity extends Activity
+public class GankDetailActivity extends RxActivity
 {
     GankEvent gankDetail;
     GifImageView tittle_img;
     Toolbar toolbar;
     CollapsingToolbarLayout collapsing;
-    List<Famous>list =new ArrayList<>();
-    List<Gank>list_Gank =new ArrayList<>();
+    List<Famous> list = new ArrayList<>();
+    List<Gank> list_Gank = new ArrayList<>();
     GankDetailAdapter adapter;
     String date;
     GankService service;
@@ -70,11 +70,11 @@ public class GankDetailActivity extends Activity
 
     private void initView()
     {
-        tittle_img= (GifImageView) findViewById(R.id.tittle_img);
-        toolbar= (Toolbar) findViewById(R.id.toolbar);
-        collapsing= (CollapsingToolbarLayout) findViewById(R.id.collapsing);
-        recyview= (RecyclerView) findViewById(R.id.recyview);
-        manager=new LinearLayoutManager(this);
+        tittle_img = (GifImageView) findViewById(R.id.tittle_img);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        collapsing = (CollapsingToolbarLayout) findViewById(R.id.collapsing);
+        recyview = (RecyclerView) findViewById(R.id.recyview);
+        manager = new LinearLayoutManager(this);
         initData();
     }
 
@@ -83,7 +83,7 @@ public class GankDetailActivity extends Activity
 
         Glide.with(GankDetailActivity.this)
                 .load(gankDetail.getGankDetail().getUrl())
-                .transform(new GlideRoundTransform(this,20))
+                .transform(new GlideRoundTransform(this, 20))
                 .centerCrop()
                 .placeholder(R.mipmap.ic_mr)
                 .crossFade(1500)
@@ -93,29 +93,35 @@ public class GankDetailActivity extends Activity
          *
          */
 
-        new Thread() {
-            @Override
-            public void run() {
-                super.run();
-                   list = JsoupUtil.getFamous("");
-
-                if (list.size() > 0) {
-                    if (GankDetailActivity.this != null) {
-                        GankDetailActivity.this.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                int max=list.size();
-                                int min=0;
-                                Random random = new Random();
-                                int s = random.nextInt(max)%(max-min+1) + min;
-                                collapsing.setTitle(list.get(s).getFamous());
-                            }
-                        });
-                    }
-                }
-
-            }
-        }.start();
+//        new Thread()
+//        {
+//            @Override
+//            public void run()
+//            {
+//                super.run();
+//                list = JsoupUtil.getFamous("");
+//
+//                if (list.size() > 0)
+//                {
+//                    if (GankDetailActivity.this != null)
+//                    {
+//                        GankDetailActivity.this.runOnUiThread(new Runnable()
+//                        {
+//                            @Override
+//                            public void run()
+//                            {
+//                                int max = list.size();
+//                                int min = 0;
+//                                Random random = new Random();
+//                                int s = random.nextInt(max) % (max - min + 1) + min;
+//                                collapsing.setTitle(list.get(s).getFamous());
+//                            }
+//                        });
+//                    }
+//                }
+//
+//            }
+//        }.start();
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener()
         {
@@ -128,13 +134,14 @@ public class GankDetailActivity extends Activity
         });
 
     }
-    public void onEventMainThread (GankEvent event)
-{
-    gankDetail=event;
-    date=new SimpleDateFormat("yyyy/MM/dd").format(gankDetail.getGankDetail().getCreatedAt());
-    getAllData();
 
-}
+    public void onEventMainThread(GankEvent event)
+    {
+        gankDetail = event;
+        date = new SimpleDateFormat("yyyy/MM/dd").format(gankDetail.getGankDetail().getCreatedAt());
+        getAllData();
+
+    }
 
     @Override
     protected void onDestroy()
@@ -147,11 +154,12 @@ public class GankDetailActivity extends Activity
     public void getAllData()
     {
         service = Api.getInstance().apiGank();
-             Observable<GankAllData>  obAll=service.getAllData(date);
+        Observable<GankAllData> obAll = service.getAllData(date);
 
-           obAll.subscribeOn(Schedulers.io())//指定获取数据在io子线程
+        obAll.subscribeOn(Schedulers.io())//指定获取数据在io子线程
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .compose(this.<GankAllData>bindToLifecycle())
                 .subscribe(new Action1<GankAllData>()
                 {
                     @Override
@@ -175,7 +183,7 @@ public class GankDetailActivity extends Activity
     private void addview(final GankAllData gankAllData)
     {
 
-        Observable<Gank> obAndroid=Observable.from(gankAllData.getResults().getAndroid());
+        Observable<Gank> obAndroid = Observable.from(gankAllData.getResults().getAndroid());
         obAndroid.map(new Func1<Gank, Gank>()
         {
             @Override
@@ -192,7 +200,7 @@ public class GankDetailActivity extends Activity
                 list_Gank.add(gank);
             }
         });
-        Observable<Gank> obIos=Observable.from(gankAllData.getResults().getiOS());
+        Observable<Gank> obIos = Observable.from(gankAllData.getResults().getiOS());
         obIos.map(new Func1<Gank, Gank>()
         {
             @Override
@@ -209,7 +217,7 @@ public class GankDetailActivity extends Activity
                 list_Gank.add(gank);
             }
         });
-        Observable<Gank> obmore=Observable.from(gankAllData.getResults().get拓展资源());
+        Observable<Gank> obmore = Observable.from(gankAllData.getResults().get拓展资源());
         obmore.map(new Func1<Gank, Gank>()
         {
             @Override
@@ -228,7 +236,7 @@ public class GankDetailActivity extends Activity
             }
         });
 
-        adapter=new GankDetailAdapter(list_Gank);
+        adapter = new GankDetailAdapter(list_Gank);
         recyview.setLayoutManager(manager);
         recyview.setAdapter(adapter);
 

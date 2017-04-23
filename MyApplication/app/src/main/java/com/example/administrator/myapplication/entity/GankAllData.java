@@ -331,7 +331,7 @@ public class GankAllData
              * _id : 56cc6d23421aa95caa707c68
              * createdAt : 2015-08-06T13:06:17.211Z
              * desc : 听到就心情大好的歌，简直妖魔哈哈哈哈哈，原地址
-             http://v.youku.com/v_show/id_XMTQxODA5NDM2.html
+             * http://v.youku.com/v_show/id_XMTQxODA5NDM2.html
              * publishedAt : 2015-08-07T03:57:48.104Z
              * type : 休息视频
              * url : http://www.zhihu.com/question/21778055/answer/19905413?utm_source=weibo&utm_medium=weibo_share&utm_content=share_answer&utm_campaign=share_button

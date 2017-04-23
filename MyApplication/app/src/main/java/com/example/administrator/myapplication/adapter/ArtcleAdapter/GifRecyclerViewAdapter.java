@@ -27,20 +27,21 @@ public class GifRecyclerViewAdapter extends RecyclerView.Adapter<GifRecyclerView
     List<Gif> list;
     OnViewClickListener listener;
 
-    public GifRecyclerViewAdapter(Context context, List<Gif> list) {
+    public GifRecyclerViewAdapter(Context context, List<Gif> list)
+    {
         this.context = context;
         this.list = list;
-        this.inflater=LayoutInflater.from(myApplication.context);
+        this.inflater = LayoutInflater.from(myApplication.context);
 
     }
 
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType)
     {
-        Holder holder=null;
-        if(holder==null)
+        Holder holder = null;
+        if (holder == null)
         {
-            holder=new Holder(inflater.inflate(R.layout.gif_adapter,parent,false));
+            holder = new Holder(inflater.inflate(R.layout.gif_adapter, parent, false));
         }
         return holder;
     }
@@ -87,17 +88,20 @@ public class GifRecyclerViewAdapter extends RecyclerView.Adapter<GifRecyclerView
         TextView tv;
         ImageView mv;
         View parent;
+
         public Holder(View view)
         {
             super(view);
-            tv= (TextView) view.findViewById(R.id.gtittle);
-            mv= (ImageView) view.findViewById(R.id.gpic);
-            parent=view;
+            tv = (TextView) view.findViewById(R.id.gtittle);
+            mv = (ImageView) view.findViewById(R.id.gpic);
+            parent = view;
         }
+
         public void setImg(String imgUrl, final int position)
         {
 
-            if (!imgUrl.contains("http")) {
+            if (!imgUrl.contains("http"))
+            {
                 imgUrl = "http://www.zbjuran.com" + imgUrl;
                 //Log.i("imgUrl", imgUrl);
             }
@@ -105,11 +109,10 @@ public class GifRecyclerViewAdapter extends RecyclerView.Adapter<GifRecyclerView
 //            final ImageView wr_iv = wr.get();
 
 
-
-
         }
 
     }
+
     public interface OnViewClickListener
     {
         void onItemViewClickListener(int position);

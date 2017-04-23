@@ -6,7 +6,7 @@
             android:id="@+id/nav_gif"
             android:checkable="false"
             android:icon="@drawable/ic_png"
-            android:title="动图" />
+            android:title="动图"/>
     </group>
 
     <group android:id="@+id/group_vedio">
@@ -14,7 +14,7 @@
             android:id="@+id/nav_video"
             android:checkable="false"
             android:icon="@drawable/ic_video"
-            android:title="视频" />
+            android:title="视频"/>
 
     </group>
     <group android:id="@+id/gankIo">
@@ -22,7 +22,7 @@
             android:id="@+id/gank"
             android:checkable="false"
             android:icon="@drawable/ic_video"
-            android:title="Gank" />
+            android:title="Gank"/>
     </group>
 
     <group android:id="@+id/group_story">

@@ -6,11 +6,13 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.TextView;
 
 import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.Utill.JsoupUtil;
 import com.example.administrator.myapplication.entity.Article;
+import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 import rx.Observable;
 import rx.Scheduler;
@@ -19,13 +21,13 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
-public class ArtcleContetnActivity extends AppCompatActivity
+public class ArtcleContetnActivity extends RxAppCompatActivity
 {
 
     TextView tittle;
     TextView date;
     TextView who;
-    TextView content;
+    WebView content;
     Article art;
 
 
@@ -37,13 +39,13 @@ public class ArtcleContetnActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        art= (Article) this.getIntent().getSerializableExtra("Art");
+        art = (Article) this.getIntent().getSerializableExtra("Art");
 
-        tittle= (TextView) findViewById(R.id.tittle);
-        date= (TextView) findViewById(R.id.date);
-        who= (TextView) findViewById(R.id.who);
-        content= (TextView) findViewById(R.id.content);
-          initData();
+        tittle = (TextView) findViewById(R.id.tittle);
+        date = (TextView) findViewById(R.id.date);
+        who = (TextView) findViewById(R.id.who);
+        content = (WebView) findViewById(R.id.content);
+        initData();
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener()
         {
@@ -61,24 +63,40 @@ public class ArtcleContetnActivity extends AppCompatActivity
         tittle.setText(art.tittle);
         date.setText(art.pubDate);
         who.setText(art.author);
-        Observable<String> obs=Observable.create(new Observable.OnSubscribe<String>()
+        Observable< String[]> obs = Observable.create(new Observable.OnSubscribe< String[]>()
         {
             @Override
-            public void call(Subscriber<? super String> subscriber)
+            public void call(Subscriber<? super  String[]> subscriber)
             {
-                String contet= JsoupUtil.getArtcleContent(art.link);
+                String[] contet = JsoupUtil.getArtcleContent(art.link);
                 subscriber.onNext(contet);
             }
         });
 
-            obs .subscribeOn(Schedulers.io())
+        obs.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<String>()
+                .compose(this.< String[]>bindToLifecycle())
+                .subscribe(new Action1< String[]>()
                 {
                     @Override
-                    public void call(String s)
+                    public void call( String[] s)
                     {
-                        content.setText( s);
+                        content.setVerticalScrollBarEnabled(false);
+
+                        String cotetnt=
+                                "<![CDATA"+
+                                "<html>" +
+                                " <head>" +
+                                        "<style type=\"text/css\">\n" +
+                                        "  p {text-align:justify;font-size:18px;color:#323232;text-indent:2em;}\n" +
+                                        "</style>"+
+                                        "</head>" +
+
+                                " <body style=\"background-color:#F5F5F5;\">" + s[2] +
+                                "      </body>\n" +
+                                "</html>\n" ;
+                        content.loadDataWithBaseURL("",cotetnt, "text/html", "utf-8","");
+                     //   content.setText(s);
                     }
                 });
 

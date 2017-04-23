@@ -1,7 +1,6 @@
 package com.example.administrator.myapplication.entity;
 
 
-
 import java.util.List;
 import java.util.Objects;
 

@@ -24,6 +24,7 @@ public class Story
     private String words; // 字数
     private List<Story.StoryCatalog> catalogList; // 小说目录列表
 
+
     public static class StoryCatalog
     {
         private String catalog;

@@ -17,14 +17,14 @@
             android:layout_marginTop="18dp"
             android:textColor="@color/black"
             android:textSize="15dp"
-            android:text="Base simple ui example" />
+            android:text="Base simple ui example"/>
 
 
-            <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
-                android:id="@+id/custom_videoplayer"
-                android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:visibility="visible"/>
+        <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
+            android:id="@+id/custom_videoplayer"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:visibility="visible"/>
 
     </LinearLayout>
 

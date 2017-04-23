@@ -48,7 +48,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @InjectView(R.id.nv)
     NavigationView nv;
     ArrayList<Fragment> list = new ArrayList<>();
-    private final String[] mTitles = {"头条","科技", "社会", "国内", "娱乐"};
+    private final String[] mTitles = {"头条", "科技", "社会", "国内", "娱乐"};
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -67,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View v)
             {
-               mDrawerLayout.openDrawer(GravityCompat.START);
+                mDrawerLayout.openDrawer(GravityCompat.START);
 
             }
         });
@@ -76,13 +77,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 this, mDrawerLayout, bar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-        for(int i=0;i<mTitles.length;i++)
+        for (int i = 0; i < mTitles.length; i++)
         {
-            NewsFragment newsf= NewsFragment.newInstance(i);
-               list.add(newsf);
+            NewsFragment newsf = NewsFragment.newInstance(i);
+            list.add(newsf);
 
         }
-        adapter=new PaperAdapter(getSupportFragmentManager(),list,mTitles);
+        adapter = new PaperAdapter(getSupportFragmentManager(), list, mTitles);
         pager.setAdapter(adapter);
 
     }
@@ -93,16 +94,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch (item.getItemId())
         {
-            case  R.id.nav_gif:
-                Intent intent=new Intent(MainActivity.this, GifActivity.class);
+            case R.id.nav_gif:
+                Intent intent = new Intent(MainActivity.this, GifActivity.class);
                 startActivity(intent);
                 break;
-            case  R.id.nav_video:
-                Intent intent2=new Intent(MainActivity.this, VideoActivity.class);
+            case R.id.nav_video:
+                Intent intent2 = new Intent(MainActivity.this, VideoActivity.class);
                 startActivity(intent2);
                 break;
             case R.id.gank:
-                Intent intentGandk=new Intent(MainActivity.this, GankActivity.class);
+                Intent intentGandk = new Intent(MainActivity.this, GankActivity.class);
                 startActivity(intentGandk);
                 break;
             case R.id.nav_story:
@@ -110,8 +111,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_music:
                 startActivity(new Intent(MainActivity.this, MusicActivity.class));
+                break;
             case R.id.nav_artcle:
                 startActivity(new Intent(MainActivity.this, ArtcleActivity.class));
+                break;
             case R.id.nav_fan:
 
                 startActivity(new Intent(MainActivity.this, FanActivity.class));
@@ -121,23 +124,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     long nowTime;
+
     @Override
     public void onBackPressed()
 
     {
-        if(mDrawerLayout.isDrawerOpen(nv))
+        if (mDrawerLayout.isDrawerOpen(nv))
         {
             mDrawerLayout.closeDrawer(nv);
             return;
         }
 
-        if(System.currentTimeMillis()-nowTime>2000)
+        if (System.currentTimeMillis() - nowTime > 2000)
         {
-            nowTime=System.currentTimeMillis();
+            nowTime = System.currentTimeMillis();
             Snackbar snackbar = Snackbar.make(mDrawerLayout, "再按一次返回键退出程序", Snackbar.LENGTH_SHORT);
             snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorPrimary));
             snackbar.show();
-        }else
+        } else
         {
             finish();
         }

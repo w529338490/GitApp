@@ -3,7 +3,8 @@ package com.example.administrator.myapplication.common;
 /**
  * Created by jiangzehui on 16/11/9.
  */
-public class Ip {
+public class Ip
+{
 
     public static String url = "http://www.zbjuran.com/";
     public static String url_gif_dongtai = "http://www.zbjuran.com/dongtai/";

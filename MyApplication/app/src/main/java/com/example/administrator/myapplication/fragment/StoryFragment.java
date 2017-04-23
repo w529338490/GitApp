@@ -96,7 +96,7 @@ public class StoryFragment extends Fragment implements SwipeRefreshLayout.OnRefr
             @Override
             public void call(Subscriber<? super Integer> subscriber)
             {
-                storyList= JsoupUtil.getStory(url);
+                storyList = JsoupUtil.getStory(url);
                 subscriber.onNext(1);
             }
         });
@@ -119,6 +119,7 @@ public class StoryFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     // 更新UI
     private void updateUi()
     {
+
         adapter=new StorysAdapter(getContext(),storyList);
         recyview.setLayoutManager(manager);
         recyview.setAdapter(adapter);
@@ -149,11 +150,12 @@ public class StoryFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     }
 
     @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
+    public void setUserVisibleHint(boolean isVisibleToUser)
+    {
         super.setUserVisibleHint(isVisibleToUser);
-        if(isVisibleToUser)
+        if (isVisibleToUser)
         {
-            getData(url,reflash);
+            getData(url, reflash);
         }
     }
 }

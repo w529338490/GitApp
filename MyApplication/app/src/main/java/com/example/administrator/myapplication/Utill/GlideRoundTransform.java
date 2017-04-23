@@ -14,28 +14,35 @@ import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 /**
  * Created by Administrator on 2017/2/22.
  */
-public class GlideRoundTransform extends BitmapTransformation {
+public class GlideRoundTransform extends BitmapTransformation
+{
     private static float radius = 0f;
 
-    public GlideRoundTransform(Context context) {
+    public GlideRoundTransform(Context context)
+    {
         this(context, 4);
     }
 
-    public GlideRoundTransform(Context context, int dp) {
+    public GlideRoundTransform(Context context, int dp)
+    {
         super(context);
         this.radius = Resources.getSystem().getDisplayMetrics().density * dp;
     }
 
     @Override
-    protected Bitmap transform(BitmapPool pool, Bitmap toTransform, int outWidth, int outHeight) {
+    protected Bitmap transform(BitmapPool pool, Bitmap toTransform, int outWidth, int outHeight)
+    {
         return roundCrop(pool, toTransform);
     }
 
-    private static Bitmap roundCrop(BitmapPool pool, Bitmap source) {
-        if (source == null) return null;
+    private static Bitmap roundCrop(BitmapPool pool, Bitmap source)
+    {
+        if (source == null)
+            return null;
 
         Bitmap result = pool.get(source.getWidth(), source.getHeight(), Bitmap.Config.ARGB_8888);
-        if (result == null) {
+        if (result == null)
+        {
             result = Bitmap.createBitmap(source.getWidth(), source.getHeight(), Bitmap.Config.ARGB_8888);
         }
 

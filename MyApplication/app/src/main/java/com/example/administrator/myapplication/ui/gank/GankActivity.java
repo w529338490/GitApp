@@ -46,13 +46,12 @@ public class GankActivity extends RxAppCompatActivity
     List<RandomData.Gank> list = new ArrayList<>();
     ItemTouchHelper helper;   //实现recyview拖拽动画
     GifImageView error_bgimg;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gank);
-
-        Log.e("onCreate","======================");
         initView();
         initData();
     }
@@ -61,8 +60,8 @@ public class GankActivity extends RxAppCompatActivity
     {
         recyview = (RecyclerView) findViewById(R.id.recyview);
         fresh = (SwipeRefreshLayout) findViewById(R.id.fresh);
-        error_bgimg= (GifImageView) findViewById(R.id.error_bgimg);
-        staggeredGridLayoutManager=new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
+        error_bgimg = (GifImageView) findViewById(R.id.error_bgimg);
+        staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
 
         parent = new GridLayoutManager(this, 2);
 
@@ -98,7 +97,7 @@ public class GankActivity extends RxAppCompatActivity
 
             }
         })
-        .subscribeOn(Schedulers.io())//指定获取数据在io子线程
+                .subscribeOn(Schedulers.io())//指定获取数据在io子线程
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())//处理结果回调 在UI 主线程
                 .compose(this.<RandomData>bindToLifecycle())   //RxJava与Activity生命周期一起绑定，节约内存
@@ -135,7 +134,7 @@ public class GankActivity extends RxAppCompatActivity
 
         adapter = new GankAdapter(GankActivity.this, list);
 
-       // recyview.setLayoutManager(staggeredGridLayoutManager);//瀑布流模式
+        // recyview.setLayoutManager(staggeredGridLayoutManager);//瀑布流模式
         error_bgimg.setVisibility(View.GONE);
         recyview.setLayoutManager(staggeredGridLayoutManager);
         recyview.setAdapter(adapter);
@@ -143,15 +142,15 @@ public class GankActivity extends RxAppCompatActivity
         adapter.setOnImageViewLisnter(new GankAdapter.OnImageViewLisnter()
         {
             @Override
-            public void getImgPath(String url,View imgView)
+            public void getImgPath(String url, View imgView)
             {
 
                 // 发布Sticky事件
                 EventBus.getDefault().postSticky(new BeseEvent(url));
 
                 // 跳转到B页面  使用Android 转场动画,并且共享View  参考 http://www.cnblogs.com/lenve/p/5865897.html
-                startActivity(new Intent(GankActivity.this,ImageActivity.class),
-                        ActivityOptions.makeSceneTransitionAnimation(GankActivity.this,imgView,"shareimg").toBundle());
+                startActivity(new Intent(GankActivity.this, ImageActivity.class),
+                        ActivityOptions.makeSceneTransitionAnimation(GankActivity.this, imgView, "shareimg").toBundle());
 
 
             }
@@ -163,11 +162,11 @@ public class GankActivity extends RxAppCompatActivity
             public void getItemViewPosition(int Postion)
             {
                 //获得单个Item的实体类
-                RandomData.Gank gankDetail=   list.get(Postion);
+                RandomData.Gank gankDetail = list.get(Postion);
 
                 EventBus.getDefault().postSticky(new GankEvent(gankDetail));
 
-                Intent intent=new Intent(GankActivity.this,GankDetailActivity.class);
+                Intent intent = new Intent(GankActivity.this, GankDetailActivity.class);
                 startActivity(intent);
 
             }
@@ -205,7 +204,7 @@ public class GankActivity extends RxAppCompatActivity
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target)
             {
                 //更新集合位置，从新排布顺序
-              //  Collections.swap(list, viewHolder.getAdapterPosition(), target.getAdapterPosition());
+                //  Collections.swap(list, viewHolder.getAdapterPosition(), target.getAdapterPosition());
                 adapter.notifyItemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition());
                 return true;
 
@@ -249,6 +248,7 @@ public class GankActivity extends RxAppCompatActivity
             super(callback);
         }
     }
+
     @Override
     protected void onDestroy()
     {

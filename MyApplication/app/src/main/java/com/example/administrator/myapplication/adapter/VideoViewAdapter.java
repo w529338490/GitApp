@@ -32,21 +32,21 @@ public class VideoViewAdapter extends RecyclerView.Adapter<VideoViewAdapter.Hold
     JCMediaManager mediaManager;
     private Context context;
 
-    public VideoViewAdapter(List<Video.DataBean.DataBeans> results,Context context)
+    public VideoViewAdapter(List<Video.DataBean.DataBeans> results, Context context)
     {
         this.results = results;
-        this.inflater= LayoutInflater.from(context);
-        this.context=context;
+        this.inflater = LayoutInflater.from(context);
+        this.context = context;
     }
 
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType)
     {
 
-        Holder holder=null;
-        if(holder==null)
+        Holder holder = null;
+        if (holder == null)
         {
-            holder=new Holder(inflater.inflate(R.layout.videoview_adapter,parent,false));
+            holder = new Holder(inflater.inflate(R.layout.videoview_adapter, parent, false));
         }
         return holder;
     }
@@ -55,7 +55,7 @@ public class VideoViewAdapter extends RecyclerView.Adapter<VideoViewAdapter.Hold
     public void onBindViewHolder(final Holder holder, int position)
     {
 
-        if(results!=null&&results.get(position)!=null&&results.get(position).group!=null)
+        if (results != null && results.get(position) != null && results.get(position).group != null)
         {
             holder.custom_videoplayer.setUp(
                     results.get(position).group.mp4_url,
@@ -64,7 +64,7 @@ public class VideoViewAdapter extends RecyclerView.Adapter<VideoViewAdapter.Hold
             );
             Logger.e(results.get(position).group.mp4_url);
 
-      //      holder.tittle.setText(results.get(position).getGroup().text+"");
+            //      holder.tittle.setText(results.get(position).getGroup().text+"");
             Picasso.with(myApplication.context)
                     .load(String.valueOf(results.get(position).getGroup().medium_cover.getUrl_list().get(0).url))
                     .into(holder.custom_videoplayer.thumbImageView);
@@ -82,11 +82,12 @@ public class VideoViewAdapter extends RecyclerView.Adapter<VideoViewAdapter.Hold
     {
         TextView tittle;
         JCVideoPlayerStandard custom_videoplayer;
+
         public Holder(View view)
         {
             super(view);
-            tittle= (TextView) view.findViewById(R.id.tittle);
-            custom_videoplayer= (JCVideoPlayerStandard) view.findViewById(R.id.custom_videoplayer);
+            tittle = (TextView) view.findViewById(R.id.tittle);
+            custom_videoplayer = (JCVideoPlayerStandard) view.findViewById(R.id.custom_videoplayer);
 
         }
     }

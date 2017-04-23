@@ -25,7 +25,9 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+
     compile 'com.android.support:appcompat-v7:25.3.1'
+
     //design
     compile 'com.android.support:design:24.2.1'
     //注解
@@ -36,7 +38,7 @@ dependencies {
     //数据抓取
     compile 'org.jsoup:jsoup:1.10.1'
     //ijkplayer视频播放
- //     compile 'fm.jiecao:jiecaovideoplayer:3.1'
+    //     compile 'fm.jiecao:jiecaovideoplayer:3.1'
     //RxJava RxAndroid
     compile 'com.trello:rxlifecycle:0.4.0'
     compile 'com.trello:rxlifecycle-components:0.4.0'

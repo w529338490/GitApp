@@ -20,7 +20,7 @@ public class CardConfig
         MAX_SHOW_COUNT = 4;
         SCALE_GAP = 0.05f;
         TRANS_Y_GAP = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 15, context.getResources().getDisplayMetrics());
-        Logger.e(TRANS_Y_GAP+"");
+        Logger.e(TRANS_Y_GAP + "");
 
     }
 }

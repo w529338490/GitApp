@@ -32,16 +32,16 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.Holder>
     {
         this.context = context;
         this.results = results;
-        inflater=LayoutInflater.from(context);
+        inflater = LayoutInflater.from(context);
     }
 
     @Override
     public GankAdapter.Holder onCreateViewHolder(ViewGroup parent, int viewType)
     {
         GankAdapter.Holder holder = null;
-        if(holder==null)
+        if (holder == null)
         {
-            holder=new Holder(inflater.inflate(R.layout.gankadapter,parent,false));
+            holder = new Holder(inflater.inflate(R.layout.gankadapter, parent, false));
 
         }
         return holder;
@@ -67,13 +67,13 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.Holder>
         ;
         holder.desc.setText(results.get(position).getDesc());
 
-       // 点击图片跳转IamgeActivity
+        // 点击图片跳转IamgeActivity
         holder.img.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
-                lisnter.getImgPath(results.get(position).getUrl(),view);
+                lisnter.getImgPath(results.get(position).getUrl(), view);
 
             }
         });
@@ -89,6 +89,7 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.Holder>
 
 
     }
+
     @Override
     public int getItemCount()
     {
@@ -107,26 +108,29 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.Holder>
         public Holder(View view)
         {
             super(view);
-            img= (ImageView) view.findViewById(R.id.img);
-            desc= (TextView) view.findViewById(R.id.desc);
-            date= (TextView) view.findViewById(R.id.date);
-            parent=view;
+            img = (ImageView) view.findViewById(R.id.img);
+            desc = (TextView) view.findViewById(R.id.desc);
+            date = (TextView) view.findViewById(R.id.date);
+            parent = view;
 
         }
     }
 
-    public  void setOnImageViewLisnter (OnImageViewLisnter lisnter)
+    public void setOnImageViewLisnter(OnImageViewLisnter lisnter)
     {
-        this.lisnter=lisnter;
+        this.lisnter = lisnter;
     }
-    public  void setOnItemViewClickLisnter (OnItemViewClickLisnter lisnter)
+
+    public void setOnItemViewClickLisnter(OnItemViewClickLisnter lisnter)
     {
-        this.onItemViewClickLisnter=lisnter;
+        this.onItemViewClickLisnter = lisnter;
     }
+
     public interface OnImageViewLisnter
     {
-        void getImgPath(String url,View v);
+        void getImgPath(String url, View v);
     }
+
     public interface OnItemViewClickLisnter
     {
         void getItemViewPosition(int Postion);

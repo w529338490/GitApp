@@ -12,13 +12,25 @@ public class Video
 
     public DataBean data;
 
-    public String getMessage() { return message;}
+    public String getMessage()
+    {
+        return message;
+    }
 
-    public void setMessage(String message) { this.message = message;}
+    public void setMessage(String message)
+    {
+        this.message = message;
+    }
 
-    public DataBean getData() { return data;}
+    public DataBean getData()
+    {
+        return data;
+    }
 
-    public void setData(DataBean data) { this.data = data;}
+    public void setData(DataBean data)
+    {
+        this.data = data;
+    }
 
     public static class DataBean
     {
@@ -37,29 +49,65 @@ public class Video
 
         public List<DataBeans> data;
 
-        public boolean isHas_more() { return has_more;}
+        public boolean isHas_more()
+        {
+            return has_more;
+        }
 
-        public void setHas_more(boolean has_more) { this.has_more = has_more;}
+        public void setHas_more(boolean has_more)
+        {
+            this.has_more = has_more;
+        }
 
-        public String getTip() { return tip;}
+        public String getTip()
+        {
+            return tip;
+        }
 
-        public void setTip(String tip) { this.tip = tip;}
+        public void setTip(String tip)
+        {
+            this.tip = tip;
+        }
 
-        public boolean isHas_new_message() { return has_new_message;}
+        public boolean isHas_new_message()
+        {
+            return has_new_message;
+        }
 
-        public void setHas_new_message(boolean has_new_message) { this.has_new_message = has_new_message;}
+        public void setHas_new_message(boolean has_new_message)
+        {
+            this.has_new_message = has_new_message;
+        }
 
-        public double getMax_time() { return max_time;}
+        public double getMax_time()
+        {
+            return max_time;
+        }
 
-        public void setMax_time(double max_time) { this.max_time = max_time;}
+        public void setMax_time(double max_time)
+        {
+            this.max_time = max_time;
+        }
 
-        public int getMin_time() { return min_time;}
+        public int getMin_time()
+        {
+            return min_time;
+        }
 
-        public void setMin_time(int min_time) { this.min_time = min_time;}
+        public void setMin_time(int min_time)
+        {
+            this.min_time = min_time;
+        }
 
-        public List<DataBeans> getData() { return data;}
+        public List<DataBeans> getData()
+        {
+            return data;
+        }
 
-        public void setData(List<DataBeans> data) { this.data = data;}
+        public void setData(List<DataBeans> data)
+        {
+            this.data = data;
+        }
 
         public static class DataBeans
         {
@@ -136,13 +184,25 @@ public class Video
             public int type;
 
 
-            public GroupBean getGroup() { return group;}
+            public GroupBean getGroup()
+            {
+                return group;
+            }
 
-            public void setGroup(GroupBean group) { this.group = group;}
+            public void setGroup(GroupBean group)
+            {
+                this.group = group;
+            }
 
-            public int getType() { return type;}
+            public int getType()
+            {
+                return type;
+            }
 
-            public void setType(int type) { this.type = type;}
+            public void setType(int type)
+            {
+                this.type = type;
+            }
 
 
             public static class GroupBean
@@ -202,120 +262,283 @@ public class Video
                 public OriginVideoBean origin_video;
                 public String cover_image_url;
                 public long group_id;
+
                 /**
                  * type : 1
                  * id : 338
                  * title : 体育运动
                  */
 
-                public String getVideo_id() { return video_id;}
+                public String getVideo_id()
+                {
+                    return video_id;
+                }
 
-                public void setVideo_id(String video_id) { this.video_id = video_id;}
+                public void setVideo_id(String video_id)
+                {
+                    this.video_id = video_id;
+                }
 
-                public String getMp4_url() { return mp4_url;}
+                public String getMp4_url()
+                {
+                    return mp4_url;
+                }
 
-                public void setMp4_url(String mp4_url) { this.mp4_url = mp4_url;}
+                public void setMp4_url(String mp4_url)
+                {
+                    this.mp4_url = mp4_url;
+                }
 
-                public String getText() { return text;}
+                public String getText()
+                {
+                    return text;
+                }
 
-                public void setText(String text) { this.text = text;}
+                public void setText(String text)
+                {
+                    this.text = text;
+                }
 
-                public long getId() { return id;}
+                public long getId()
+                {
+                    return id;
+                }
 
-                public void setId(long id) { this.id = id;}
+                public void setId(long id)
+                {
+                    this.id = id;
+                }
 
-                public int getFavorite_count() { return favorite_count;}
+                public int getFavorite_count()
+                {
+                    return favorite_count;
+                }
 
-                public void setFavorite_count(int favorite_count) { this.favorite_count = favorite_count;}
+                public void setFavorite_count(int favorite_count)
+                {
+                    this.favorite_count = favorite_count;
+                }
 
-                public String getM3u8_url() { return m3u8_url;}
+                public String getM3u8_url()
+                {
+                    return m3u8_url;
+                }
 
-                public void setM3u8_url(String m3u8_url) { this.m3u8_url = m3u8_url;}
+                public void setM3u8_url(String m3u8_url)
+                {
+                    this.m3u8_url = m3u8_url;
+                }
 
 
-                public int getUser_favorite() { return user_favorite;}
+                public int getUser_favorite()
+                {
+                    return user_favorite;
+                }
 
-                public void setUser_favorite(int user_favorite) { this.user_favorite = user_favorite;}
+                public void setUser_favorite(int user_favorite)
+                {
+                    this.user_favorite = user_favorite;
+                }
 
-                public int getShare_type() { return share_type;}
+                public int getShare_type()
+                {
+                    return share_type;
+                }
 
-                public void setShare_type(int share_type) { this.share_type = share_type;}
+                public void setShare_type(int share_type)
+                {
+                    this.share_type = share_type;
+                }
 
-                public String getTitle() { return title;}
+                public String getTitle()
+                {
+                    return title;
+                }
 
-                public void setTitle(String title) { this.title = title;}
+                public void setTitle(String title)
+                {
+                    this.title = title;
+                }
 
-                public String getContent() { return content;}
+                public String getContent()
+                {
+                    return content;
+                }
 
-                public void setContent(String content) { this.content = content;}
+                public void setContent(String content)
+                {
+                    this.content = content;
+                }
 
-                public int getComment_count() { return comment_count;}
+                public int getComment_count()
+                {
+                    return comment_count;
+                }
 
-                public void setComment_count(int comment_count) { this.comment_count = comment_count;}
+                public void setComment_count(int comment_count)
+                {
+                    this.comment_count = comment_count;
+                }
 
-                public String getCover_image_uri() { return cover_image_uri;}
+                public String getCover_image_uri()
+                {
+                    return cover_image_uri;
+                }
 
-                public void setCover_image_uri(String cover_image_uri) { this.cover_image_uri = cover_image_uri;}
+                public void setCover_image_uri(String cover_image_uri)
+                {
+                    this.cover_image_uri = cover_image_uri;
+                }
 
-                public String getId_str() { return id_str;}
+                public String getId_str()
+                {
+                    return id_str;
+                }
 
-                public void setId_str(String id_str) { this.id_str = id_str;}
+                public void setId_str(String id_str)
+                {
+                    this.id_str = id_str;
+                }
 
-                public int getMedia_type() { return media_type;}
+                public int getMedia_type()
+                {
+                    return media_type;
+                }
 
-                public void setMedia_type(int media_type) { this.media_type = media_type;}
+                public void setMedia_type(int media_type)
+                {
+                    this.media_type = media_type;
+                }
 
-                public int getShare_count() { return share_count;}
+                public int getShare_count()
+                {
+                    return share_count;
+                }
 
-                public void setShare_count(int share_count) { this.share_count = share_count;}
+                public void setShare_count(int share_count)
+                {
+                    this.share_count = share_count;
+                }
 
-                public int getStatus() { return status;}
+                public int getStatus()
+                {
+                    return status;
+                }
 
-                public void setStatus(int status) { this.status = status;}
+                public void setStatus(int status)
+                {
+                    this.status = status;
+                }
 
-                public int getGo_detail_count() { return go_detail_count;}
+                public int getGo_detail_count()
+                {
+                    return go_detail_count;
+                }
 
-                public void setGo_detail_count(int go_detail_count) { this.go_detail_count = go_detail_count;}
+                public void setGo_detail_count(int go_detail_count)
+                {
+                    this.go_detail_count = go_detail_count;
+                }
 
-                public int getPlay_count() { return play_count;}
+                public int getPlay_count()
+                {
+                    return play_count;
+                }
 
-                public void setPlay_count(int play_count) { this.play_count = play_count;}
+                public void setPlay_count(int play_count)
+                {
+                    this.play_count = play_count;
+                }
 
-                public int getUser_repin() { return user_repin;}
+                public int getUser_repin()
+                {
+                    return user_repin;
+                }
 
-                public void setUser_repin(int user_repin) { this.user_repin = user_repin;}
+                public void setUser_repin(int user_repin)
+                {
+                    this.user_repin = user_repin;
+                }
 
-                public boolean isQuick_comment() { return quick_comment;}
+                public boolean isQuick_comment()
+                {
+                    return quick_comment;
+                }
 
-                public void setQuick_comment(boolean quick_comment) { this.quick_comment = quick_comment;}
+                public void setQuick_comment(boolean quick_comment)
+                {
+                    this.quick_comment = quick_comment;
+                }
 
-                public MediumCoverBean getMedium_cover() { return medium_cover;}
+                public MediumCoverBean getMedium_cover()
+                {
+                    return medium_cover;
+                }
 
-                public void setMedium_cover(MediumCoverBean medium_cover) { this.medium_cover = medium_cover;}
+                public void setMedium_cover(MediumCoverBean medium_cover)
+                {
+                    this.medium_cover = medium_cover;
+                }
 
-                public String getCategory_name() { return category_name;}
+                public String getCategory_name()
+                {
+                    return category_name;
+                }
 
-                public void setCategory_name(String category_name) { this.category_name = category_name;}
+                public void setCategory_name(String category_name)
+                {
+                    this.category_name = category_name;
+                }
 
-                public String getFlash_url() { return flash_url;}
+                public String getFlash_url()
+                {
+                    return flash_url;
+                }
 
-                public void setFlash_url(String flash_url) { this.flash_url = flash_url;}
+                public void setFlash_url(String flash_url)
+                {
+                    this.flash_url = flash_url;
+                }
 
-                public String getUri() { return uri;}
+                public String getUri()
+                {
+                    return uri;
+                }
 
-                public void setUri(String uri) { this.uri = uri;}
+                public void setUri(String uri)
+                {
+                    this.uri = uri;
+                }
 
-                public OriginVideoBean getOrigin_video() { return origin_video;}
+                public OriginVideoBean getOrigin_video()
+                {
+                    return origin_video;
+                }
 
-                public void setOrigin_video(OriginVideoBean origin_video) { this.origin_video = origin_video;}
+                public void setOrigin_video(OriginVideoBean origin_video)
+                {
+                    this.origin_video = origin_video;
+                }
 
-                public String getCover_image_url() { return cover_image_url;}
+                public String getCover_image_url()
+                {
+                    return cover_image_url;
+                }
 
-                public void setCover_image_url(String cover_image_url) { this.cover_image_url = cover_image_url;}
+                public void setCover_image_url(String cover_image_url)
+                {
+                    this.cover_image_url = cover_image_url;
+                }
 
-                public long getGroup_id() { return group_id;}
+                public long getGroup_id()
+                {
+                    return group_id;
+                }
 
-                public void setGroup_id(long group_id) { this.group_id = group_id;}
+                public void setGroup_id(long group_id)
+                {
+                    this.group_id = group_id;
+                }
 
 
                 public static class MediumCoverBean
@@ -327,21 +550,39 @@ public class Video
 
                     public List<UrlListBean> url_list;
 
-                    public String getUri() { return uri;}
+                    public String getUri()
+                    {
+                        return uri;
+                    }
 
-                    public void setUri(String uri) { this.uri = uri;}
+                    public void setUri(String uri)
+                    {
+                        this.uri = uri;
+                    }
 
-                    public List<UrlListBean> getUrl_list() { return url_list;}
+                    public List<UrlListBean> getUrl_list()
+                    {
+                        return url_list;
+                    }
 
-                    public void setUrl_list(List<UrlListBean> url_list) { this.url_list = url_list;}
+                    public void setUrl_list(List<UrlListBean> url_list)
+                    {
+                        this.url_list = url_list;
+                    }
 
                     public static class UrlListBean
                     {
                         public String url;
 
-                        public String getUrl() { return url;}
+                        public String getUrl()
+                        {
+                            return url;
+                        }
 
-                        public void setUrl(String url) { this.url = url;}
+                        public void setUrl(String url)
+                        {
+                            this.url = url;
+                        }
                     }
                 }
 
@@ -356,29 +597,59 @@ public class Video
 
                     public List<UrlListBean> url_list;
 
-                    public int getWidth() { return width;}
+                    public int getWidth()
+                    {
+                        return width;
+                    }
 
-                    public void setWidth(int width) { this.width = width;}
+                    public void setWidth(int width)
+                    {
+                        this.width = width;
+                    }
 
-                    public String getUri() { return uri;}
+                    public String getUri()
+                    {
+                        return uri;
+                    }
 
-                    public void setUri(String uri) { this.uri = uri;}
+                    public void setUri(String uri)
+                    {
+                        this.uri = uri;
+                    }
 
-                    public int getHeight() { return height;}
+                    public int getHeight()
+                    {
+                        return height;
+                    }
 
-                    public void setHeight(int height) { this.height = height;}
+                    public void setHeight(int height)
+                    {
+                        this.height = height;
+                    }
 
-                    public List<UrlListBean> getUrl_list() { return url_list;}
+                    public List<UrlListBean> getUrl_list()
+                    {
+                        return url_list;
+                    }
 
-                    public void setUrl_list(List<UrlListBean> url_list) { this.url_list = url_list;}
+                    public void setUrl_list(List<UrlListBean> url_list)
+                    {
+                        this.url_list = url_list;
+                    }
 
                     public static class UrlListBean
                     {
                         public String url;
 
-                        public String getUrl() { return url;}
+                        public String getUrl()
+                        {
+                            return url;
+                        }
 
-                        public void setUrl(String url) { this.url = url;}
+                        public void setUrl(String url)
+                        {
+                            this.url = url;
+                        }
                     }
                 }
 
@@ -388,17 +659,35 @@ public class Video
                     public int id;
                     public String title;
 
-                    public int getType() { return type;}
+                    public int getType()
+                    {
+                        return type;
+                    }
 
-                    public void setType(int type) { this.type = type;}
+                    public void setType(int type)
+                    {
+                        this.type = type;
+                    }
 
-                    public int getId() { return id;}
+                    public int getId()
+                    {
+                        return id;
+                    }
 
-                    public void setId(int id) { this.id = id;}
+                    public void setId(int id)
+                    {
+                        this.id = id;
+                    }
 
-                    public String getTitle() { return title;}
+                    public String getTitle()
+                    {
+                        return title;
+                    }
 
-                    public void setTitle(String title) { this.title = title;}
+                    public void setTitle(String title)
+                    {
+                        this.title = title;
+                    }
                 }
             }
         }

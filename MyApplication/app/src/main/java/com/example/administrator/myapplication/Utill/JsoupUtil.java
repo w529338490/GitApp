@@ -177,6 +177,7 @@ public class JsoupUtil
     /**
      * 每日一文。爬取http://w.ihx.cc/meiriyiwen/1434.html
      * http://w.ihx.cc/category/meiriyiwen
+     * https://meiriyiwen.com/
      */
 
 
@@ -222,16 +223,21 @@ public class JsoupUtil
      * @param url 文章链接
      * @return f返回文章内容
      */
-    public static String getArtcleContent(String url)
+    public static String[] getArtcleContent(String url)
     {
-        String content = "";
+        String[] content = new String[3];
         Document docs = null;
         try
         {
 
             docs = Jsoup.parse(new URL(url), 5000);
             Elements elements = docs.getElementsByClass("article_text");
-            content = elements.text();
+
+            String tille=docs.getElementsByTag("title").text().toString().trim();
+            Logger.e(tille.replace("|","=").split("=")[0].split("--")[0]);
+            content[0]=tille.replace("|","=").split("=")[0].split("--")[0];
+            content[1]=tille.replace("|","=").split("=")[0].split("--")[1];
+            content[2]= elements.outerHtml();
         } catch (IOException e)
         {
             e.printStackTrace();

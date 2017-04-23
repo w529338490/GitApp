@@ -63,6 +63,7 @@ public class StoryIntroduce extends AppCompatActivity
     private Activity activity = StoryIntroduce.this;
     private StoryCatalogsAdapter mAdapter;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
