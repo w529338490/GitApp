@@ -12,5 +12,6 @@
     <color name="gary">#10000000</color>
     <color name="common_text">#333333</color>
     <color name="common_text_light">#999999</color>
+    <color name="activity_background">#F2F6F9</color>
 
 </resources>

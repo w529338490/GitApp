@@ -1,24 +1,38 @@
 package com.example.administrator.myapplication.adapter;
 
+
 import android.content.Context;
+
 import android.support.v7.widget.RecyclerView;
+
 import android.view.LayoutInflater;
+
 import android.view.View;
+
 import android.view.ViewGroup;
+
 import android.widget.TextView;
 
+
 import com.example.administrator.myapplication.R;
+
 import com.example.administrator.myapplication.Utill.MarqueeTextView;
+
 import com.example.administrator.myapplication.entity.Story;
 
+
 import java.util.List;
+
 
 /**
  * Created by k9579 on 2017/3/28.
  */
 
-public class StoryRecyclerViewAdapter extends RecyclerView.Adapter<StoryRecyclerViewAdapter.MyHolder>
+
+public class StorysAdapter extends RecyclerView.Adapter<StorysAdapter.MyHolder>
+
 {
+
     Context context;
     LayoutInflater inflater;
     List<Story> list;
@@ -29,7 +43,7 @@ public class StoryRecyclerViewAdapter extends RecyclerView.Adapter<StoryRecycler
 
     public OnItemClickListener itemClickListener = null;
 
-    public StoryRecyclerViewAdapter(Context context, List<Story> list)
+    public StorysAdapter(Context context, List<Story> list)
     {
         this.context = context;
         this.list = list;
@@ -90,6 +104,7 @@ public class StoryRecyclerViewAdapter extends RecyclerView.Adapter<StoryRecycler
 
     class MyHolder extends RecyclerView.ViewHolder
     {
+
         TextView type;
         MarqueeTextView tittle;
         TextView update;

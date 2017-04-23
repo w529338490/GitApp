@@ -6,6 +6,7 @@ import com.example.administrator.myapplication.entity.Article;
 import com.example.administrator.myapplication.entity.Famous;
 import com.example.administrator.myapplication.entity.Gif;
 import com.example.administrator.myapplication.entity.Story;
+import com.example.administrator.myapplication.entity.Story.StoryCatalog;
 import com.orhanobut.logger.Logger;
 
 import org.jsoup.Jsoup;
@@ -14,6 +15,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -307,5 +309,63 @@ public class JsoupUtil
             return null;
         }
         return storyList;
+    }
+
+    /**
+     * 小说概览
+     *
+     * @param url
+     * @return
+     */
+    public static Story getStoryDetail(String url)
+    {
+        Document docs = null;
+        Story story = new Story();
+        try
+        {
+            docs = Jsoup.parse(new URL(url), 5000);
+            Elements elts = docs.getElementsByClass("book_main");
+            Logger.e(elts.outerHtml());
+            Element et = elts.get(0).getElementsByTag("p").get(0);
+            story.setTitle(et.getElementsByTag("img").get(0).attr("alt"));
+            story.setStoryPic(et.getElementsByTag("img").get(0).attr("src"));
+            story.setAuthor(elts.get(0).getElementsByClass("booksub").get(0).getElementsByTag("a").get(0).text());
+            story.setType(elts.get(0).getElementsByClass("booksub").get(0).getElementsByTag("a").get(1).text());
+            story.setWords(elts.get(0).getElementsByClass("booksub").get(0).getElementsByTag("span").text());
+            story.setContent(elts.get(0).getElementsByClass("info_con").get(0).getElementsByTag("p").text());
+            story.setReadUrl(elts.get(0).getElementsByClass("book_btn").get(0).getElementsByTag("a").get(0).attr("href"));
+            story.setCatalogList(getStoryCatalogs(elts.get(0).getElementsByClass("book_btn").get(0).getElementsByClass("btn_as list").get(0).getElementsByTag("a").get(0).attr("href")));
+        } catch (MalformedURLException e)
+        {
+            e.printStackTrace();
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        return story;
+    }
+
+    public static ArrayList<Story.StoryCatalog> getStoryCatalogs(String url)
+    {
+        Document docs = null;
+        ArrayList<Story.StoryCatalog> catalogs = new ArrayList<>();
+        try
+        {
+            docs = Jsoup.parse(new URL(url), 5000);
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        Elements elts = docs.getElementsByClass("booklist tomeBean");
+//        Logger.e(elts.outerHtml());
+        Elements catalogList = elts.get(0).getElementsByTag("td");
+        for (int i = 0; i < catalogList.size(); i++)
+        {
+            StoryCatalog catalog = new StoryCatalog();
+            catalog.setCatalog(catalogList.get(i).text());
+            catalog.setUrl(catalogList.get(i).getElementsByTag("a").get(0).attr("href"));
+            catalogs.add(catalog);
+        }
+        return catalogs;
     }
 }

@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 
 import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.Utill.JsoupUtil;
-import com.example.administrator.myapplication.adapter.StoryRecyclerViewAdapter;
+import com.example.administrator.myapplication.adapter.StorysAdapter;
 import com.example.administrator.myapplication.common.Ip;
 import com.example.administrator.myapplication.entity.Story;
 import com.example.administrator.myapplication.ui.story.StoryIntroduce;
@@ -43,7 +43,7 @@ public class StoryFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
     List<Story> storyList = new ArrayList<>();
     LinearLayoutManager manager;
-    StoryRecyclerViewAdapter adapter;
+    StorysAdapter adapter;
 
     boolean reflash = false;
 
@@ -119,10 +119,11 @@ public class StoryFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     // 更新UI
     private void updateUi()
     {
-        adapter = new StoryRecyclerViewAdapter(getContext(), storyList);
+
+        adapter=new StorysAdapter(getContext(),storyList);
         recyview.setLayoutManager(manager);
         recyview.setAdapter(adapter);
-        adapter.setOnItemClickListener(new StoryRecyclerViewAdapter.OnItemClickListener()
+        adapter.setOnItemClickListener(new StorysAdapter.OnItemClickListener()
         {
             @Override
             public void onItemClick(View view, Story story)

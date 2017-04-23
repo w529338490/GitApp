@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@color/wirte"
+                                    android:elevation="4dp"
+                                    android:layout_marginBottom="1dp"
+                                    app:cardCornerRadius="4dp">
+
+    <TextView
+        android:id="@+id/tv_catalogs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lines="1"
+        android:padding="10dp"
+        android:textSize="18sp"/>
+
+</android.support.v7.widget.CardView>
