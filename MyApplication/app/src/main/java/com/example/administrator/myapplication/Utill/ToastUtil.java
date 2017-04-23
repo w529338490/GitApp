@@ -10,10 +10,11 @@ import com.orhanobut.logger.Logger;
  * Created by Administrator on 2017/3/26.
  */
 
-public  class ToastUtil
+public class ToastUtil
 {
     private Context context;
-    public static void  show(String str)
+
+    public static void show(String str)
     {
 
         if (str != null && str.trim().length() != 0)

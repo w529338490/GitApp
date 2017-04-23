@@ -20,28 +20,34 @@ public class GifImageView extends ImageView implements Animator.AnimatorListener
     private boolean scale = false;
 
 
-    public GifImageView(Context context) {
+    public GifImageView(Context context)
+    {
         this(context, null);
     }
 
 
-    public GifImageView(Context context, AttributeSet attrs) {
+    public GifImageView(Context context, AttributeSet attrs)
+    {
         this(context, attrs, 0);
     }
 
 
-    public GifImageView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public GifImageView(Context context, AttributeSet attrs, int defStyleAttr)
+    {
         super(context, attrs, defStyleAttr);
         nextAnimation();
     }
 
 
-    private void nextAnimation() {
+    private void nextAnimation()
+    {
         AnimatorSet anim = new AnimatorSet();
-        if (scale) {
+        if (scale)
+        {
             anim.playTogether(ObjectAnimator.ofFloat(this, "scaleX", 1.5f, 1f),
                     ObjectAnimator.ofFloat(this, "scaleY", 1.5f, 1f));
-        } else {
+        } else
+        {
             anim.playTogether(ObjectAnimator.ofFloat(this, "scaleX", 1, 1.5f),
                     ObjectAnimator.ofFloat(this, "scaleY", 1, 1.5f));
         }
@@ -50,8 +56,6 @@ public class GifImageView extends ImageView implements Animator.AnimatorListener
         anim.start();
         scale = !scale;
     }
-
-
 
 
     @Override

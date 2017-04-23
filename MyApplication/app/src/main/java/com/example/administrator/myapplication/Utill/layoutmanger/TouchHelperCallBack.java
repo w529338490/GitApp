@@ -39,7 +39,6 @@ public class TouchHelperCallBack extends ItemTouchHelper.SimpleCallback
     }
 
     /**
-     *
      * @param c
      * @param recyclerView
      * @param viewHolder
@@ -47,8 +46,6 @@ public class TouchHelperCallBack extends ItemTouchHelper.SimpleCallback
      * @param dY
      * @param actionState
      * @param isCurrentlyActive
-     *
-     *
      */
     @Override
     public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive)

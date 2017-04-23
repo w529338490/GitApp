@@ -10,19 +10,20 @@ import com.example.administrator.myapplication.Utill.ToastUtil;
 
 public class FanActivity extends AppCompatActivity implements View.OnClickListener
 {
-   ImageView My3DGrop_v1_img;
-   ImageView My3DGrop_v2_img;
-   ImageView My3DGrop_v3_img;
-   ImageView My3DGrop_v4_img;
+    ImageView My3DGrop_v1_img;
+    ImageView My3DGrop_v2_img;
+    ImageView My3DGrop_v3_img;
+    ImageView My3DGrop_v4_img;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fan);
-        My3DGrop_v1_img= (ImageView) findViewById(R.id.My3DGrop_v1_img);
-        My3DGrop_v2_img= (ImageView) findViewById(R.id.My3DGrop_v2_img);
-        My3DGrop_v3_img= (ImageView) findViewById(R.id.My3DGrop_v3_img);
-        My3DGrop_v4_img= (ImageView) findViewById(R.id.My3DGrop_v4_img);
+        My3DGrop_v1_img = (ImageView) findViewById(R.id.My3DGrop_v1_img);
+        My3DGrop_v2_img = (ImageView) findViewById(R.id.My3DGrop_v2_img);
+        My3DGrop_v3_img = (ImageView) findViewById(R.id.My3DGrop_v3_img);
+        My3DGrop_v4_img = (ImageView) findViewById(R.id.My3DGrop_v4_img);
         My3DGrop_v1_img.setOnClickListener(this);
         My3DGrop_v2_img.setOnClickListener(this);
         My3DGrop_v3_img.setOnClickListener(this);

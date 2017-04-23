@@ -19,10 +19,8 @@ public class OverLayCardLayoutManager extends RecyclerView.LayoutManager
     }
 
     /**
-     *
-     * @param recycler  以recycler放松回收,不显示的布局
-     * @param state
-     * 指定子布局的 状态
+     * @param recycler 以recycler放松回收,不显示的布局
+     * @param state    指定子布局的 状态
      */
     @Override
     public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state)
@@ -40,12 +38,13 @@ public class OverLayCardLayoutManager extends RecyclerView.LayoutManager
         if (itemCount < CardConfig.MAX_SHOW_COUNT)
         {
             bottomPosition = 0;
-        } else {
+        } else
+        {
             bottomPosition = itemCount - CardConfig.MAX_SHOW_COUNT;
         }
 
         //从可见的最底层View开始layout，依次层叠上去 每一个 item 放大
-        for(int position = bottomPosition; position < itemCount; position++)
+        for (int position = bottomPosition; position < itemCount; position++)
         {
             //从回收堆中取出相应的子view
             View view = recycler.getViewForPosition(position);
@@ -54,8 +53,8 @@ public class OverLayCardLayoutManager extends RecyclerView.LayoutManager
             //测量子布局
             measureChildWithMargins(view, 0, 0);
             //获得实际的宽 高
-            int widthSpace=getWidth()-getDecoratedMeasuredWidth(view);
-            int heightSpace=getHeight() - getDecoratedMeasuredHeight(view);
+            int widthSpace = getWidth() - getDecoratedMeasuredWidth(view);
+            int heightSpace = getHeight() - getDecoratedMeasuredHeight(view);
 
             //我们在布局时，将childView居中处理，这里也可以改为只水平居中
             layoutDecoratedWithMargins(view, widthSpace / 2, heightSpace / 2,
@@ -63,18 +62,18 @@ public class OverLayCardLayoutManager extends RecyclerView.LayoutManager
                     heightSpace / 2 + getDecoratedMeasuredHeight(view));
             //缩放比比例，从最底层开始，一层比一层大,最底层是0；最上层是itemCount；
 
-            int level=itemCount-position-1;
-            if(level>0)
+            int level = itemCount - position - 1;
+            if (level > 0)
             {
                 view.setScaleX(1 - CardConfig.SCALE_GAP * level);
                 //前N层，依次向下位移和Y方向的缩小
-                if(level<CardConfig.MAX_SHOW_COUNT)
+                if (level < CardConfig.MAX_SHOW_COUNT)
                 {
 
                     view.setTranslationY(CardConfig.TRANS_Y_GAP * level);
 
                     view.setScaleY(1 - CardConfig.SCALE_GAP * level);
-                }else
+                } else
                 {
                     //第N层在 向下位移和Y方向的缩小的成都与 N-1层保持一致
                     view.setTranslationY(CardConfig.TRANS_Y_GAP * (level - 1));

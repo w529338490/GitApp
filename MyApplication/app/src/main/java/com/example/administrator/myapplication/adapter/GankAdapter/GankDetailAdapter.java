@@ -25,7 +25,7 @@ public class GankDetailAdapter extends RecyclerView.Adapter<GankDetailAdapter.Ho
     public GankDetailAdapter(List<Gank> results)
     {
         this.results = results;
-        this.inflater=LayoutInflater.from(myApplication.context);
+        this.inflater = LayoutInflater.from(myApplication.context);
 
     }
 
@@ -33,10 +33,10 @@ public class GankDetailAdapter extends RecyclerView.Adapter<GankDetailAdapter.Ho
     @Override
     public GankDetailAdapter.Holder onCreateViewHolder(ViewGroup parent, int viewType)
     {
-        Holder holder=null;
-        if(holder==null)
+        Holder holder = null;
+        if (holder == null)
         {
-            holder=new Holder(inflater.inflate(R.layout.gank_detail_adapter,parent,false));
+            holder = new Holder(inflater.inflate(R.layout.gank_detail_adapter, parent, false));
 
         }
         return holder;
@@ -47,19 +47,18 @@ public class GankDetailAdapter extends RecyclerView.Adapter<GankDetailAdapter.Ho
     {
 
 
-        if(position==0)
+        if (position == 0)
         {
             holder.category.setVisibility(View.VISIBLE);
             holder.category.setText(results.get(0).getCategory());
 
-        }
-        else if(position>0&&!results.get(position).getCategory().equals(results.get(position-1).getCategory()))
+        } else if (position > 0 && !results.get(position).getCategory().equals(results.get(position - 1).getCategory()))
         {
             Logger.e(results.get(position).getCategory());
             holder.category.setVisibility(View.VISIBLE);
             holder.category.setText(results.get(position).getCategory());
 
-        }else
+        } else
         {
             holder.category.setVisibility(View.GONE);
         }
@@ -78,17 +77,17 @@ public class GankDetailAdapter extends RecyclerView.Adapter<GankDetailAdapter.Ho
     public class Holder extends RecyclerView.ViewHolder
     {
         TextView category;
-        LinearLayout  gank_layout;
+        LinearLayout gank_layout;
         TextView desc;
         TextView who;
 
         public Holder(View view)
         {
             super(view);
-            category= (TextView) view.findViewById(R.id.category);
-            gank_layout= (LinearLayout) view.findViewById(R.id.gank_layout);
-            desc= (TextView) view.findViewById(R.id.desc);
-            who= (TextView) view.findViewById(R.id.who);
+            category = (TextView) view.findViewById(R.id.category);
+            gank_layout = (LinearLayout) view.findViewById(R.id.gank_layout);
+            desc = (TextView) view.findViewById(R.id.desc);
+            who = (TextView) view.findViewById(R.id.who);
         }
     }
 }

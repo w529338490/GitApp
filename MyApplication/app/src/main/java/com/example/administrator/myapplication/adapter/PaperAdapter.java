@@ -13,35 +13,42 @@ import java.util.List;
 
 public class PaperAdapter extends FragmentPagerAdapter
 {
-    List<Fragment>list;
+    List<Fragment> list;
     String[] mTitles;
 
-    public PaperAdapter(FragmentManager fm, List<Fragment> list, String[] mTitles) {
+    public PaperAdapter(FragmentManager fm, List<Fragment> list, String[] mTitles)
+    {
         super(fm);
         this.list = list;
         this.mTitles = mTitles;
     }
 
-    public PaperAdapter(FragmentManager fm) {
+    public PaperAdapter(FragmentManager fm)
+    {
         super(fm);
     }
 
     @Override
-    public Fragment getItem(int position) {
+    public Fragment getItem(int position)
+    {
         return list.get(position);
     }
 
     @Override
-    public int getCount() {
+    public int getCount()
+    {
         return list.size();
     }
+
     @Override
-    public CharSequence getPageTitle(int position) {
+    public CharSequence getPageTitle(int position)
+    {
         return mTitles[position];
     }
 
     @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {//不销毁
+    public void destroyItem(ViewGroup container, int position, Object object)
+    {//不销毁
 
     }
 }

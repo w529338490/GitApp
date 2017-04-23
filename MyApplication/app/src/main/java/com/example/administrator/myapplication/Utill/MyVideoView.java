@@ -12,7 +12,8 @@ public class MyVideoView extends VideoView
 {
 
 
-    public MyVideoView(Context context) {
+    public MyVideoView(Context context)
+    {
         super(context);
     }
 
@@ -32,14 +33,14 @@ public class MyVideoView extends VideoView
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
     {
 
-        int widthMode=MeasureSpec.getMode(widthMeasureSpec);
-        int widthSize=MeasureSpec.getSize(widthMeasureSpec);
-        int heigthSize=MeasureSpec.getSize(heightMeasureSpec);
-        int heigMode=MeasureSpec.getSize(widthMeasureSpec);
-        if(widthMode == MeasureSpec.EXACTLY && heigMode == MeasureSpec.EXACTLY)
+        int widthMode = MeasureSpec.getMode(widthMeasureSpec);
+        int widthSize = MeasureSpec.getSize(widthMeasureSpec);
+        int heigthSize = MeasureSpec.getSize(heightMeasureSpec);
+        int heigMode = MeasureSpec.getSize(widthMeasureSpec);
+        if (widthMode == MeasureSpec.EXACTLY && heigMode == MeasureSpec.EXACTLY)
         {
             setMeasuredDimension(widthSize, heigthSize);
-        }else
+        } else
         {
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         }

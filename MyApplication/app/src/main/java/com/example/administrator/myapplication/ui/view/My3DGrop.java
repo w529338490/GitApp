@@ -46,7 +46,7 @@ public class My3DGrop extends ViewGroup implements GestureDetector.OnGestureList
         scroller = new Scroller(context);
         mCamera = new Camera();
         mMatrix = new Matrix();
-        detector = new GestureDetector(context,this);
+        detector = new GestureDetector(context, this);
         Log.e("attrs", "================");
     }
 
@@ -96,7 +96,7 @@ public class My3DGrop extends ViewGroup implements GestureDetector.OnGestureList
                 break;
             case MotionEvent.ACTION_MOVE:
                 //如果滑动距离<20像素,则视为点击事件,不拦截
-                if(Math.abs(mLastMotionY-ev.getY()) < 20)
+                if (Math.abs(mLastMotionY - ev.getY()) < 20)
                 {
                     scrolling = false;
                     break;
@@ -107,7 +107,7 @@ public class My3DGrop extends ViewGroup implements GestureDetector.OnGestureList
                     scrolling = true;
                 }
                 //默认,为true　拦截滑动事件
-                 scrolling = true;
+                scrolling = true;
                 Log.e("onInterceptTouchEvent", "=====================ACTION_MOVE");
 
                 break;
@@ -132,7 +132,7 @@ public class My3DGrop extends ViewGroup implements GestureDetector.OnGestureList
             case MotionEvent.ACTION_MOVE:
 
                 int detaY = (int) (mLastMotionY - ev.getY());
-                scrollBy(0,detaY );
+                scrollBy(0, detaY);
                 mLastMotionY = ev.getY();
 
                 //向下 滑动
@@ -162,7 +162,7 @@ public class My3DGrop extends ViewGroup implements GestureDetector.OnGestureList
                 break;
         }
 
-        return  true ;
+        return true;
     }
 
 
@@ -182,12 +182,13 @@ public class My3DGrop extends ViewGroup implements GestureDetector.OnGestureList
     }
 
     @Override
-    protected void dispatchDraw(Canvas canvas) {
+    protected void dispatchDraw(Canvas canvas)
+    {
 
-            for (int i = 0; i < getChildCount(); i++)
-            {
-                drawScreen(canvas, i, getDrawingTime());
-            }
+        for (int i = 0; i < getChildCount(); i++)
+        {
+            drawScreen(canvas, i, getDrawingTime());
+        }
 
     }
 
@@ -273,14 +274,18 @@ public class My3DGrop extends ViewGroup implements GestureDetector.OnGestureList
         float beginY = e1.getY();
         float endY = e2.getY();
 
-        if(beginX-endX>minMove&& Math.abs(velocityX)>minVelocity){   //左滑
-            Toast.makeText(context,velocityX+"左滑", Toast.LENGTH_SHORT).show();
-        }else if(endX-beginX>minMove&& Math.abs(velocityX)>minVelocity){   //右滑
-            Toast.makeText(context,velocityX+"右滑", Toast.LENGTH_SHORT).show();
-        }else if(beginY-endY>minMove&& Math.abs(velocityY)>minVelocity){   //上滑
-            Toast.makeText(context,velocityX+"上滑", Toast.LENGTH_SHORT).show();
-        }else if(endY-beginY>minMove&& Math.abs(velocityY)>minVelocity){   //下滑
-            Toast.makeText(context,velocityX+"下滑", Toast.LENGTH_SHORT).show();
+        if (beginX - endX > minMove && Math.abs(velocityX) > minVelocity)
+        {   //左滑
+            Toast.makeText(context, velocityX + "左滑", Toast.LENGTH_SHORT).show();
+        } else if (endX - beginX > minMove && Math.abs(velocityX) > minVelocity)
+        {   //右滑
+            Toast.makeText(context, velocityX + "右滑", Toast.LENGTH_SHORT).show();
+        } else if (beginY - endY > minMove && Math.abs(velocityY) > minVelocity)
+        {   //上滑
+            Toast.makeText(context, velocityX + "上滑", Toast.LENGTH_SHORT).show();
+        } else if (endY - beginY > minMove && Math.abs(velocityY) > minVelocity)
+        {   //下滑
+            Toast.makeText(context, velocityX + "下滑", Toast.LENGTH_SHORT).show();
         }
 
         return false;

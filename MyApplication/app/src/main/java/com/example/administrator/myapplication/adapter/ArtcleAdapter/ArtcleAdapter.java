@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.TextView;
 
 import com.example.administrator.myapplication.R;
@@ -27,16 +28,16 @@ public class ArtcleAdapter extends RecyclerView.Adapter<ArtcleAdapter.Holder>
     public ArtcleAdapter(List<Article> results)
     {
         this.results = results;
-        this.inflater=LayoutInflater.from(myApplication.context);
+        this.inflater = LayoutInflater.from(myApplication.context);
     }
 
     @Override
     public ArtcleAdapter.Holder onCreateViewHolder(ViewGroup parent, int viewType)
     {
-        Holder holder=null;
-        if(holder==null)
+        Holder holder = null;
+        if (holder == null)
         {
-            holder=new Holder(inflater.inflate(R.layout.item_gallery,parent,false));
+            holder = new Holder(inflater.inflate(R.layout.item_gallery, parent, false));
 
         }
         return holder;
@@ -46,9 +47,10 @@ public class ArtcleAdapter extends RecyclerView.Adapter<ArtcleAdapter.Holder>
     public void onBindViewHolder(ArtcleAdapter.Holder holder, final int position)
     {
         holder.who.setText(results.get(position).author);
+
         holder.content.setText(results.get(position).description);
-          int sum=results.get(position).position+1;
-        holder.tvPrecent.setText(sum+"/"+results.size());
+        int sum = results.get(position).position + 1;
+        holder.tvPrecent.setText(sum + "/" + results.size());
 
         holder.pView.setOnClickListener(new View.OnClickListener()
         {
@@ -69,23 +71,25 @@ public class ArtcleAdapter extends RecyclerView.Adapter<ArtcleAdapter.Holder>
     public class Holder extends RecyclerView.ViewHolder
     {
         TextView who;
-        TextView  content;
+        TextView content;
         TextView tvPrecent;
         View pView;
+
         public Holder(View view)
         {
             super(view);
-            who= (TextView) view.findViewById(R.id.who);
-            content= (TextView) view.findViewById(R.id.content);
-            tvPrecent= (TextView) view.findViewById(R.id.tvPrecent);
-            pView=view;
+            who = (TextView) view.findViewById(R.id.who);
+            content = (TextView) view.findViewById(R.id.content);
+            tvPrecent = (TextView) view.findViewById(R.id.tvPrecent);
+            pView = view;
         }
     }
 
-    public  void setOnItemViewClickLisnter (GankAdapter.OnItemViewClickLisnter lisnter)
+    public void setOnItemViewClickLisnter(GankAdapter.OnItemViewClickLisnter lisnter)
     {
-        this.onItemViewClickLisnter=lisnter;
+        this.onItemViewClickLisnter = lisnter;
     }
+
     public interface OnItemViewClickLisnter
     {
         void getItemViewPosition(int Postion);

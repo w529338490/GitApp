@@ -20,8 +20,13 @@ public class Story
     private String mark; // 是否签约
     private String updateTime; // 更新时间
 
-    public Story(){};
-    public Story(String type, String title, String uri,String content, String author,String index,  Integer hot, String mark, String updateTime)
+    public Story()
+    {
+    }
+
+    ;
+
+    public Story(String type, String title, String uri, String content, String author, String index, Integer hot, String mark, String updateTime)
     {
         this.type = type;
         this.title = title;

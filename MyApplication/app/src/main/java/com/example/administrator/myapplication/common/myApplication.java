@@ -13,14 +13,15 @@ public class myApplication extends Application
 {
 
     public static Context context;
+
     @Override
     public void onCreate()
     {
         super.onCreate();
         Logger.init("Myapp")               // default tag : PRETTYLOGGER or use just init()
-              .hideThreadInfo();           // default it is shown
+                .hideThreadInfo();           // default it is shown
 
-        this.context=getApplicationContext();  //获得全局 的Context;
+        this.context = getApplicationContext();  //获得全局 的Context;
 
     }
 

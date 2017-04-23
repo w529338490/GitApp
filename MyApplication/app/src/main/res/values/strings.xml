@@ -15,5 +15,17 @@
     <string name="title_activity_story_introduce">StoryIntroduce</string>
     <string name="hello_round">Hello Round World!</string>
     <string name="hello_square">Hello Square World!</string>
+    <string name="webText">
+<![CDATA[
+<html>
+ <head></head>
+ <body style="background-color:#F5F5F5;">
+    <p style="text-align:justify;font-size:18px;color:#323232;text-indent:2em;">
+    Android一词的本义指“机器人”，同时也是Google于2007年11月5日 宣布的基于Linux平台的开源手机操作系统的名称，该平台由操作系统、中间件、用户界面和应用软件组成。
+    </p>
+      </body>
+</html>
+]]>
+    </string>
 
 </resources>

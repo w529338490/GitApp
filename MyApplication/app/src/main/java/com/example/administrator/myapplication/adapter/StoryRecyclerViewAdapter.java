@@ -111,7 +111,7 @@ public class StoryRecyclerViewAdapter extends RecyclerView.Adapter<StoryRecycler
 
     public interface OnItemClickListener
     {
-        void onItemClick(View view,  Story story);
+        void onItemClick(View view, Story story);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener)

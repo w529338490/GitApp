@@ -17,6 +17,7 @@ import com.example.administrator.myapplication.Utill.layoutmanger.OverLayCardLay
 import com.example.administrator.myapplication.adapter.ArtcleAdapter.ArtcleAdapter;
 import com.example.administrator.myapplication.adapter.GankAdapter.GankAdapter;
 import com.example.administrator.myapplication.entity.Article;
+import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,15 +29,16 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
-public class ArtcleActivity extends AppCompatActivity
+public class ArtcleActivity extends RxAppCompatActivity
 {
 
     OverLayCardLayoutManager manager;
     RecyclerView recyview;
     ArtcleAdapter adapter;
-    List<Article> results=new ArrayList<>();
+    List<Article> results = new ArrayList<>();
 
     ItemTouchHelper helper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -60,26 +62,27 @@ public class ArtcleActivity extends AppCompatActivity
     private void initView()
     {
         CardConfig.initConfig(this);
-        manager=new OverLayCardLayoutManager();
-        recyview= (RecyclerView) findViewById(R.id.recyview);
+        manager = new OverLayCardLayoutManager();
+        recyview = (RecyclerView) findViewById(R.id.recyview);
     }
 
     private void initData()
     {
-        Observable<Integer > getArtcle=  Observable.create(new Observable.OnSubscribe<Integer>()
+        Observable<Integer> getArtcle = Observable.create(new Observable.OnSubscribe<Integer>()
         {
             @Override
             public void call(Subscriber<? super Integer> subscriber)
             {
-                results=  JsoupUtil.getArticle();
+                results = JsoupUtil.getArticle();
                 Collections.reverse(results);
                 subscriber.onNext(1);
 
             }
         });
-        getArtcle .subscribeOn(Schedulers.io())
-                  .observeOn(AndroidSchedulers.mainThread())
-                  .subscribe(new Action1<Integer>()
+        getArtcle.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                 .compose(this.<Integer>bindToLifecycle())
+                .subscribe(new Action1<Integer>()
                 {
                     @Override
                     public void call(Integer s)
@@ -94,7 +97,7 @@ public class ArtcleActivity extends AppCompatActivity
     private void upDateUI()
     {
 
-        adapter=new ArtcleAdapter(results);
+        adapter = new ArtcleAdapter(results);
         recyview.setLayoutManager(manager);
         recyview.setAdapter(adapter);
         adapter.setOnItemViewClickLisnter(new GankAdapter.OnItemViewClickLisnter()
@@ -102,7 +105,7 @@ public class ArtcleActivity extends AppCompatActivity
             @Override
             public void getItemViewPosition(int Postion)
             {
-                Intent intent=new Intent(ArtcleActivity.this,ArtcleContetnActivity.class);
+                Intent intent = new Intent(ArtcleActivity.this, ArtcleContetnActivity.class);
                 intent.putExtra("Art", results.get(Postion));
                 startActivity(intent);
 
@@ -123,7 +126,7 @@ public class ArtcleActivity extends AppCompatActivity
                  * @return
                  */
 
-                int dragFlags,swipeFlags;
+                int dragFlags, swipeFlags;
                 RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();
                 if (manager instanceof GridLayoutManager || manager instanceof OverLayCardLayoutManager)
                 {
@@ -132,7 +135,7 @@ public class ArtcleActivity extends AppCompatActivity
                 {
                     dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN;
                 }
-                 swipeFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
+                swipeFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
 
                 return makeMovementFlags(dragFlags, swipeFlags);
 
@@ -144,7 +147,7 @@ public class ArtcleActivity extends AppCompatActivity
             {
                 //更新集合位置，从新排布顺序
                 //  Collections.swap(list, viewHolder.getAdapterPosition(), target.getAdapterPosition());
-              //  adapter.notifyItemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition());
+                //  adapter.notifyItemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition());
                 return true;
 
             }
@@ -158,7 +161,7 @@ public class ArtcleActivity extends AppCompatActivity
                  * @param direction 滑动的方向
                  */
                 Object remove = results.remove(viewHolder.getLayoutPosition());
-               // results.add(0, (Article) remove);
+                 results.add(0, (Article) remove);
                 adapter.notifyDataSetChanged();
             }
 

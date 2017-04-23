@@ -14,16 +14,21 @@ import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
  * Created by Administrator on 2017/2/22.
  */
 
-public class CircleTransform extends BitmapTransformation {
-    public CircleTransform(Context context) {
+public class CircleTransform extends BitmapTransformation
+{
+    public CircleTransform(Context context)
+    {
         super(context);
     }
 
     @Override
-    protected Bitmap transform(BitmapPool pool, Bitmap toTransform, int outWidth, int outHeight) {
-        return circleCrop(pool,toTransform);
+    protected Bitmap transform(BitmapPool pool, Bitmap toTransform, int outWidth, int outHeight)
+    {
+        return circleCrop(pool, toTransform);
     }
-    private  Bitmap circleCrop(BitmapPool pool, Bitmap source) {
+
+    private Bitmap circleCrop(BitmapPool pool, Bitmap source)
+    {
 
         int size = Math.min(source.getWidth(), source.getHeight());
 
@@ -31,7 +36,8 @@ public class CircleTransform extends BitmapTransformation {
         int height = (source.getHeight() - size) / 2;
 
         Bitmap bitmap = pool.get(size, size, Bitmap.Config.ARGB_8888);
-        if (bitmap == null) {
+        if (bitmap == null)
+        {
             bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
         }
 
@@ -39,7 +45,8 @@ public class CircleTransform extends BitmapTransformation {
         Paint paint = new Paint();
         BitmapShader shader =
                 new BitmapShader(source, BitmapShader.TileMode.CLAMP, BitmapShader.TileMode.CLAMP);
-        if (width != 0 || height != 0) {
+        if (width != 0 || height != 0)
+        {
             // source isn't square, move viewport to center
             Matrix matrix = new Matrix();
             matrix.setTranslate(-width, -height);
@@ -55,7 +62,8 @@ public class CircleTransform extends BitmapTransformation {
     }
 
     @Override
-    public String getId() {
+    public String getId()
+    {
         return getClass().getName();
     }
 }

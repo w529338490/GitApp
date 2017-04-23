@@ -15,8 +15,9 @@ import rx.Observable;
  * Created by Administrator on 2017/2/21.
  */
 
-public interface HttpService {
+public interface HttpService
+{
     @GET("index?key=9e05423f7ac6acf6d0dce3425c4ea9fe")
     Call<Result> getNews(@Query("type") String type);
-//    Observable<Result>getNews(@Query("type") String type);
+  //  Observable<Result>getNews(@Query("type") String type);
 }

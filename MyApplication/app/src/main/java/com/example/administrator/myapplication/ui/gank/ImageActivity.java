@@ -46,6 +46,7 @@ public class ImageActivity extends RxActivity implements View.OnClickListener
     Bitmap saveImageBitmap;
     File cachepath;
     Bitmap bitmap;
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -56,14 +57,15 @@ public class ImageActivity extends RxActivity implements View.OnClickListener
         initView();
         initData();
     }
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void initData()
     {
         ViewCompat.setTransitionName(imgs, "shareimg");
 
-           Glide.with(ImageActivity.this)
+        Glide.with(ImageActivity.this)
                 .load(imgPath)
-                .transform(new GlideRoundTransform(this,20))
+                .transform(new GlideRoundTransform(this, 20))
                 .centerCrop()
                 .placeholder(R.mipmap.ic_mr)
                 .into(imgs);
@@ -75,7 +77,7 @@ public class ImageActivity extends RxActivity implements View.OnClickListener
             @Override
             public void onClick(View v)
             {
-                Observable<String> ob=Observable.create(new Observable.OnSubscribe<String>()
+                Observable<String> ob = Observable.create(new Observable.OnSubscribe<String>()
                 {
                     @Override
                     public void call(Subscriber<? super String> subscriber)
@@ -87,67 +89,68 @@ public class ImageActivity extends RxActivity implements View.OnClickListener
                     }
                 });
                 ob.subscribeOn(Schedulers.io())//指定获取数据在io子线程
-                    .unsubscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Action1<String>()
-                    {
-                        @Override
-                        public void call(String s)
-                        {
+                        .unsubscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
 
-                        }
-                    });
+                        .subscribe(new Action1<String>()
+                        {
+                            @Override
+                            public void call(String s)
+                            {
+
+                            }
+                        });
             }
         });
         toolbar.findViewById(R.id.img_share).setOnClickListener(new View.OnClickListener()
-    {
-        @Override
-        public void onClick(View view)
         {
-
-            //由文件得到uri
-
-            if(cachepath!=null)
+            @Override
+            public void onClick(View view)
             {
-                Uri uri=Uri.fromFile(cachepath);
-                Intent shareIntent = new Intent();
-                shareIntent.setAction(Intent.ACTION_SEND);
-                shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
-                shareIntent.setType("image/jpeg");
-                ImageActivity.this.startActivity(Intent.createChooser(shareIntent, "一张美图"));
 
-            }else
-            {
-                ToastUtil.show("请先保存图片");
+                //由文件得到uri
+
+                if (cachepath != null)
+                {
+                    Uri uri = Uri.fromFile(cachepath);
+                    Intent shareIntent = new Intent();
+                    shareIntent.setAction(Intent.ACTION_SEND);
+                    shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+                    shareIntent.setType("image/jpeg");
+                    ImageActivity.this.startActivity(Intent.createChooser(shareIntent, "一张美图"));
+
+                } else
+                {
+                    ToastUtil.show("请先保存图片");
+                }
+
             }
-
-        }
-    });
+        });
 
 
         toolbar.findViewById(R.id.img_save).setOnClickListener(new View.OnClickListener()
-    {
-        @Override
-        public void onClick(View view)
         {
-            observerImg();
-        }
-    });
+            @Override
+            public void onClick(View view)
+            {
+                observerImg();
+            }
+        });
 
     }
 
     private void initView()
     {
-        imgs= (ImageView) findViewById(R.id.imgs);
-        toolbar=(Toolbar) findViewById(R.id.toolbar);
+        imgs = (ImageView) findViewById(R.id.imgs);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         imgs.setOnClickListener(this);
-      //  back.setOnClickListener(this);
+        //  back.setOnClickListener(this);
         initData();
     }
 
     //5、接收消息
-   // 接收消息时，我们使用EventBus中最常用的onEventMainThread（）函数来接收消息，
+    // 接收消息时，我们使用EventBus中最常用的onEventMainThread（）函数来接收消息，
     // 具体为什么用这个，我们下篇再讲，
 
     public void onEventMainThread(BeseEvent event)
@@ -158,11 +161,10 @@ public class ImageActivity extends RxActivity implements View.OnClickListener
     }
 
 
-
     public void observerImg()
     {
 
-        Observable<Bitmap>observable=Observable.create(new Observable.OnSubscribe<Bitmap>()
+        Observable<Bitmap> observable = Observable.create(new Observable.OnSubscribe<Bitmap>()
         {
             @Override
             public void call(Subscriber<? super Bitmap> subscriber)
@@ -182,23 +184,24 @@ public class ImageActivity extends RxActivity implements View.OnClickListener
         });
 
         observable.subscribeOn(Schedulers.io())//指定获取数据在io子线程
-                  .unsubscribeOn(Schedulers.io())
-                  .observeOn(AndroidSchedulers.mainThread())
-                  .compose(this.<Bitmap>bindToLifecycle())
-                  .subscribe(new Action1<Bitmap>()
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .compose(this.<Bitmap>bindToLifecycle())
+                .subscribe(new Action1<Bitmap>()
                 {
                     @Override
                     public void call(Bitmap bitmap)
                     {
-                        Log.e("String","==============="+bitmap);
+                        Log.e("String", "===============" + bitmap);
 
-                        Toast.makeText(ImageActivity.this,"保存成功",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ImageActivity.this, "保存成功", Toast.LENGTH_SHORT).show();
 
                     }
                 });
 
 
     }
+
     private void saveCroppedImage(Bitmap bmp)
     {
         String path = null;
@@ -220,12 +223,11 @@ public class ImageActivity extends RxActivity implements View.OnClickListener
             bmp.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
             outputStream.flush();
             outputStream.close();
-            cachepath=saveIamge;
+            cachepath = saveIamge;
 
-        }
-         catch (IOException e)
+        } catch (IOException e)
         {
-            Log.e("cap","");
+            Log.e("cap", "");
             e.printStackTrace();
         }
 
@@ -239,7 +241,7 @@ public class ImageActivity extends RxActivity implements View.OnClickListener
     protected void onDestroy()
     {
         super.onDestroy();
-       // onDestroy的时候 销毁 EvenBus
+        // onDestroy的时候 销毁 EvenBus
         EventBus.getDefault().unregister(this);//反注册EventBus
     }
 

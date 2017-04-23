@@ -14,6 +14,7 @@ public class StoryIntroduce extends AppCompatActivity
 {
 
     String intentUri = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {

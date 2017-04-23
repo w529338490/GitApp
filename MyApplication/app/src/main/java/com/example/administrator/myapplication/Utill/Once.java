@@ -32,15 +32,18 @@ public class Once
     Context mContext;
 
 
-    public Once(Context context) {
+    public Once(Context context)
+    {
         mSharedPreferences = context.getSharedPreferences("once", Context.MODE_PRIVATE);
         mContext = context;
     }
 
 
-    public void show(String tagKey, OnceCallback callback) {
+    public void show(String tagKey, OnceCallback callback)
+    {
         boolean isSecondTime = mSharedPreferences.getBoolean(tagKey, false);
-        if (!isSecondTime) {
+        if (!isSecondTime)
+        {
             callback.onOnce();
             SharedPreferences.Editor editor = mSharedPreferences.edit();
             editor.putBoolean(tagKey, true);
@@ -49,12 +52,14 @@ public class Once
     }
 
 
-    public void show(int tagKeyResId, OnceCallback callback) {
+    public void show(int tagKeyResId, OnceCallback callback)
+    {
         show(mContext.getString(tagKeyResId), callback);
     }
 
 
-    public interface OnceCallback {
+    public interface OnceCallback
+    {
         void onOnce();
     }
 }

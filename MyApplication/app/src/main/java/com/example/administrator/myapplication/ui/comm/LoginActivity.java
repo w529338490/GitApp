@@ -34,7 +34,8 @@ public class LoginActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+        {
             Window window = getWindow();
             window.setFlags(
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
@@ -44,25 +45,27 @@ public class LoginActivity extends AppCompatActivity
 //                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
         setContentView(R.layout.activity_login);
-        mVideoView= (VideoView) findViewById(R.id.videoView);
-        textView= (TextView) findViewById(R.id.mytv);
-        go= (TextView) findViewById(R.id.go);
+        mVideoView = (VideoView) findViewById(R.id.videoView);
+        textView = (TextView) findViewById(R.id.mytv);
+        go = (TextView) findViewById(R.id.go);
         //获取资源文件路径
         File videoFile = getFileStreamPath(VIDEO_NAME);
-        if(!videoFile.exists())
+        if (!videoFile.exists())
         {
 
-            try {
-                videoFile=getVideoFile();
-            } catch (IOException e) {
+            try
+            {
+                videoFile = getVideoFile();
+            } catch (IOException e)
+            {
                 e.printStackTrace();
             }
         }
 
-       Start(videoFile.getPath());
+        Start(videoFile.getPath());
     }
 
-    private void Start( String videoFile)
+    private void Start(String videoFile)
     {
 
         go.setOnClickListener(new View.OnClickListener()
@@ -70,25 +73,27 @@ public class LoginActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                Intent intent=new Intent(LoginActivity.this,MainActivity.class);
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
-                if( mVideoView.isPlaying())
-            {
-                mVideoView.stopPlayback();
-            }
+                if (mVideoView.isPlaying())
+                {
+                    mVideoView.stopPlayback();
+                }
 
                 finish();
 
             }
         });
-       // mVideoView.setVideoPath(videoFile);
-        mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+         mVideoView.setVideoPath(videoFile);
+        mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener()
+        {
 
             @Override
-            public void onPrepared(MediaPlayer mediaPlayer) {
+            public void onPrepared(MediaPlayer mediaPlayer)
+            {
                 mediaPlayer.setLooping(true);
                 mediaPlayer.start();
-                ObjectAnimator ani=ObjectAnimator.ofFloat(textView,"alpha",0,1);
+                ObjectAnimator ani = ObjectAnimator.ofFloat(textView, "alpha", 0, 1);
                 ani.setDuration(2000);
                 ani.setRepeatCount(-1);
                 ani.setRepeatMode(ObjectAnimator.REVERSE);
@@ -98,13 +103,12 @@ public class LoginActivity extends AppCompatActivity
         });
 
 
-
-
     }
 
-    public File getVideoFile() throws IOException {
-        File videoFile=null;
-        FileOutputStream fos=openFileOutput(VIDEO_NAME, MODE_PRIVATE);
+    public File getVideoFile() throws IOException
+    {
+        File videoFile = null;
+        FileOutputStream fos = openFileOutput(VIDEO_NAME, MODE_PRIVATE);
 
         InputStream in = getResources().openRawResource(welcome_video);
 

@@ -11,10 +11,10 @@ import static com.example.administrator.myapplication.R.id.date;
 
 public class Article implements Serializable
 {
-    public  String tittle;
-    public  String link;
-    public  String description;  //描述
-    public  String author;
-    public  String pubDate;
+    public String tittle;
+    public String link;
+    public String description;  //描述
+    public String author;
+    public String pubDate;
     public int position;
 }

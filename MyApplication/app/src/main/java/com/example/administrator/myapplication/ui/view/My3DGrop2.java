@@ -26,7 +26,7 @@ public class My3DGrop2 extends LinearLayout implements GestureDetector.OnGesture
     //定义手势检测器实例
     GestureDetector detector;
     float mLastMotionY = 0;
-    float mLastMotionX=0;
+    float mLastMotionX = 0;
     private Context context;
     private Scroller scroller;
     private boolean scrolling = false; //拦截子类的滑动事件，不拦截子类的点击事件
@@ -37,11 +37,11 @@ public class My3DGrop2 extends LinearLayout implements GestureDetector.OnGesture
     //在滑动菜单的时候，有时需要快速的滑动条件下，才显示菜单
     private VelocityTracker mVelocityTracker = null;
 
-    boolean up_down=false,left_right=false;
-    boolean  completed=false;
-    int leftOrientation=0;
-    int updownOrientation=1;
-    private List<View> list=new ArrayList<>();
+    boolean up_down = false, left_right = false;
+    boolean completed = false;
+    int leftOrientation = 0;
+    int updownOrientation = 1;
+    private List<View> list = new ArrayList<>();
 
     public My3DGrop2(Context context)
     {
@@ -101,7 +101,6 @@ public class My3DGrop2 extends LinearLayout implements GestureDetector.OnGesture
 //    }
 
 
-
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev)
     {
@@ -110,13 +109,13 @@ public class My3DGrop2 extends LinearLayout implements GestureDetector.OnGesture
         {
             case MotionEvent.ACTION_DOWN:
                 mLastMotionY = ev.getY();
-                mLastMotionX=ev.getX();
+                mLastMotionX = ev.getX();
                 Log.e("onInterceptTouchEvent", "=====================ACTION_DOWN");
                 break;
             case MotionEvent.ACTION_MOVE:
                 //如果滑动距离<20像素,则视为点击事件,不拦截
                 if (Math.abs(mLastMotionY - ev.getY()) < 20 ||
-                    Math.abs(mLastMotionX - ev.getX()) < 10)
+                        Math.abs(mLastMotionX - ev.getX()) < 10)
                 {
                     scrolling = false;
                     break;
@@ -147,51 +146,52 @@ public class My3DGrop2 extends LinearLayout implements GestureDetector.OnGesture
                 break;
 
             case MotionEvent.ACTION_MOVE:
-                if (!scroller.isFinished()) {
+                if (!scroller.isFinished())
+                {
                     // 终止滑动
                     scroller.abortAnimation();
                 }
                 int detaY = (int) (mLastMotionY - ev.getY());
-                int detaX=(int)(mLastMotionX-ev.getX());
-                if(up_down)
+                int detaX = (int) (mLastMotionX - ev.getX());
+                if (up_down)
                 {
-                 upAnddowm(detaY,ev);
+                    upAnddowm(detaY, ev);
                 }
                 if (left_right)
                 {
-                leftAndRight(detaX,ev);
+                    leftAndRight(detaX, ev);
                 }
 
                 break;
             case MotionEvent.ACTION_UP:
 
-            if(up_down)
-            {
-                int distance = getScrollY();
-                if (distance > 0)
-                { // 向上滑动
-                    if (distance < getMeasuredHeight() / 3)
-                    {
+                if (up_down)
+                {
+                    int distance = getScrollY();
+                    if (distance > 0)
+                    { // 向上滑动
+                        if (distance < getMeasuredHeight() / 3)
+                        {
 
-                        // 回到原来位置
-                        scroller.startScroll(0, getScrollY(), 0, -distance);
+                            // 回到原来位置
+                            scroller.startScroll(0, getScrollY(), 0, -distance);
+                        } else
+                        {
+                            // 滚到屏幕的剩余位置
+                            scroller.startScroll(0, getScrollY(), 0, getMeasuredHeight() - distance);
+                        }
                     } else
-                    {
-                        // 滚到屏幕的剩余位置
-                        scroller.startScroll(0, getScrollY(), 0, getMeasuredHeight() - distance);
-                    }
-                } else
-                {             // 向下滑动
-                    if (-distance < getMeasuredHeight() / 3)
-                    {
-                        scroller.startScroll(0, getScrollY(), 0, -distance);
-                    } else
-                    {
-                        scroller.startScroll(0, getScrollY(), 0, -getMeasuredHeight() - distance);
+                    {             // 向下滑动
+                        if (-distance < getMeasuredHeight() / 3)
+                        {
+                            scroller.startScroll(0, getScrollY(), 0, -distance);
+                        } else
+                        {
+                            scroller.startScroll(0, getScrollY(), 0, -getMeasuredHeight() - distance);
+                        }
                     }
                 }
-            }
-                if(left_right)
+                if (left_right)
                 {
                     int distance = getScrollX();
                     if (distance > 0)
@@ -204,16 +204,16 @@ public class My3DGrop2 extends LinearLayout implements GestureDetector.OnGesture
                         } else
                         {
                             // 滚到屏幕的剩余位置
-                           scroller.startScroll(getScrollX(), 0, getMeasuredWidth() - distance,0 );
+                            scroller.startScroll(getScrollX(), 0, getMeasuredWidth() - distance, 0);
                         }
                     } else
                     {             // 向下滑动
                         if (-distance < getMeasuredWidth() / 3)
                         {
-                            scroller.startScroll(getScrollX(), 0, -distance,0 );
+                            scroller.startScroll(getScrollX(), 0, -distance, 0);
                         } else
                         {
-                            scroller.startScroll(getScrollX(), 0, -getMeasuredWidth() - distance,0);
+                            scroller.startScroll(getScrollX(), 0, -getMeasuredWidth() - distance, 0);
                         }
                     }
 
@@ -236,7 +236,8 @@ public class My3DGrop2 extends LinearLayout implements GestureDetector.OnGesture
     public void computeScroll()
     {
 
-        if (scroller.computeScrollOffset()) {
+        if (scroller.computeScrollOffset())
+        {
             scrollTo(scroller.getCurrX(), scroller.getCurrY());
             postInvalidate();
         }
@@ -258,43 +259,43 @@ public class My3DGrop2 extends LinearLayout implements GestureDetector.OnGesture
     {
         int mHeight = getMeasuredHeight();
         int mWidth = getMeasuredWidth();
-        float degree=0;
-        float centerX=0;
-        float centerY=0;
+        float degree = 0;
+        float centerX = 0;
+        float centerY = 0;
 
         int curScreenX = getMeasuredWidth() * i;
         int curScreenY = getMeasuredHeight() * i;
 
-     if(up_down)
-     {
-         // 屏幕中不显示的部分不进行绘制
-         if (getScrollY() + mHeight < curScreenY)
-         {
-             return;
-         }
-         if (curScreenY < getScrollY() - mHeight)
-         {
-             return;
-         }
-          centerX = mWidth / 2;
+        if (up_down)
+        {
+            // 屏幕中不显示的部分不进行绘制
+            if (getScrollY() + mHeight < curScreenY)
+            {
+                return;
+            }
+            if (curScreenY < getScrollY() - mHeight)
+            {
+                return;
+            }
+            centerX = mWidth / 2;
 
-         if (getScrollY() > curScreenY)
-         {
-             centerY = curScreenY + mHeight;
-         } else
-         {
-             centerY = curScreenY;
-         }
-          degree = mAngle * (getScrollY() - curScreenY) / mHeight;
-     }
-        if(left_right)
+            if (getScrollY() > curScreenY)
+            {
+                centerY = curScreenY + mHeight;
+            } else
+            {
+                centerY = curScreenY;
+            }
+            degree = mAngle * (getScrollY() - curScreenY) / mHeight;
+        }
+        if (left_right)
         {
             // 屏幕中不显示的部分不进行绘制
             if (getScrollX() + mWidth < curScreenX)
             {
                 return;
             }
-            if (curScreenX <getScrollX() - mWidth)
+            if (curScreenX < getScrollX() - mWidth)
             {
                 return;
             }
@@ -307,7 +308,7 @@ public class My3DGrop2 extends LinearLayout implements GestureDetector.OnGesture
             {
                 centerX = curScreenX;
             }
-            degree =(-mAngle) * (getScrollX() - curScreenX) / mWidth;
+            degree = (-mAngle) * (getScrollX() - curScreenX) / mWidth;
 
         }
 
@@ -317,11 +318,11 @@ public class My3DGrop2 extends LinearLayout implements GestureDetector.OnGesture
         }
         canvas.save();
         mCamera.save();
-        if(up_down)
+        if (up_down)
         {
             mCamera.rotateX(degree);
 
-        }else
+        } else
         {
             mCamera.rotateY(degree);
 
@@ -378,68 +379,68 @@ public class My3DGrop2 extends LinearLayout implements GestureDetector.OnGesture
         float endY = e2.getY();
 
         int detaY = (int) (mLastMotionY - e2.getY());
-        int detaX=(int)(mLastMotionX-e2.getX());
+        int detaX = (int) (mLastMotionX - e2.getX());
 
-        if(Math.abs(beginX - endX) > Math.abs(beginY - endY ))
+        if (Math.abs(beginX - endX) > Math.abs(beginY - endY))
         {
-            leftOrientation=getOrientation();
-            if(leftOrientation!=0)
+            leftOrientation = getOrientation();
+            if (leftOrientation != 0)
             {
-                mLastMotionX=e2.getX();
+                mLastMotionX = e2.getX();
                 list.clear();
-                for(int b=0;b<getChildCount();b++)
+                for (int b = 0; b < getChildCount(); b++)
                 {
                     list.add(getChildAt(b));
 
                 }
-                 setOrientation(HORIZONTAL);
+                setOrientation(HORIZONTAL);
 
 
                 removeAllViews();
-                for(int i=0;i<list.size();i++)
+                for (int i = 0; i < list.size(); i++)
                 {
-                   addView(list.get(i));
+                    addView(list.get(i));
 
                 }
 
                 ValueAnimator valueAnimator;
-                valueAnimator = ValueAnimator.ofInt(0,21);
+                valueAnimator = ValueAnimator.ofInt(0, 21);
                 valueAnimator.setDuration(1000);
                 valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener()
                 {
                     @Override
                     public void onAnimationUpdate(ValueAnimator valueAnimator)
                     {
-                        int dey= (int) valueAnimator.getAnimatedValue();
+                        int dey = (int) valueAnimator.getAnimatedValue();
                         scrollBy(dey, 0);
                     }
                 });
                 valueAnimator.start();
-             //   postInvalidateDelayed(getDrawingTime());
+                //   postInvalidateDelayed(getDrawingTime());
             }
 
-            up_down=false;
-            left_right=true;
-            leftAndRight(detaX,e2);
+            up_down = false;
+            left_right = true;
+            leftAndRight(detaX, e2);
 
-        }else
+        } else
         {
-            updownOrientation =getOrientation();
-            if(updownOrientation!=1)
+            updownOrientation = getOrientation();
+            if (updownOrientation != 1)
             {
-                mLastMotionY=e2.getY();
+                mLastMotionY = e2.getY();
                 list.clear();
-                for(int b=0;b<getChildCount();b++)
+                for (int b = 0; b < getChildCount(); b++)
                 {
                     list.add(getChildAt(b));
 
                 }
-              //  up_down=false;
+                //  up_down=false;
                 setOrientation(VERTICAL);
 
                 removeAllViews();
 
-                for(int i=0;i<list.size();i++)
+                for (int i = 0; i < list.size(); i++)
                 {
 
                     addView(list.get(i));
@@ -447,71 +448,66 @@ public class My3DGrop2 extends LinearLayout implements GestureDetector.OnGesture
                 }
 
                 ValueAnimator valueAnimator;
-                valueAnimator = ValueAnimator.ofInt(0,21);
+                valueAnimator = ValueAnimator.ofInt(0, 21);
                 valueAnimator.setDuration(1000);
                 valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener()
                 {
                     @Override
                     public void onAnimationUpdate(ValueAnimator valueAnimator)
                     {
-                       int dey= (int) valueAnimator.getAnimatedValue();
+                        int dey = (int) valueAnimator.getAnimatedValue();
                         scrollBy(0, (int) dey);
                     }
                 });
                 valueAnimator.start();
-              //  scrollBy(0, 2*(int) (mLastMotionY +e2.getY()));
+                //  scrollBy(0, 2*(int) (mLastMotionY +e2.getY()));
 
                 //   postInvalidateDelayed(getDrawingTime());
             }
 
-            up_down=true;
-            left_right=false;
-            upAnddowm(detaY,e2);
+            up_down = true;
+            left_right = false;
+            upAnddowm(detaY, e2);
         }
 
         if (Math.abs(beginX - endX) > minMove && Math.abs(velocityX) > minVelocity)
         {   //左右滑
-         //   Toast.makeText(context, velocityX + "左滑", Toast.LENGTH_SHORT).show();
+            //   Toast.makeText(context, velocityX + "左滑", Toast.LENGTH_SHORT).show();
 
             setOrientation(HORIZONTAL);
-            up_down=false;
-            left_right=true;
-        }
-
-        else if (Math.abs(beginY - endY ) > minMove && Math.abs(velocityY) > minVelocity)
+            up_down = false;
+            left_right = true;
+        } else if (Math.abs(beginY - endY) > minMove && Math.abs(velocityY) > minVelocity)
         {//上 下滑
 
             setOrientation(VERTICAL);
             Log.e("drawingtime", "=================" + getDrawingTime());
-            up_down=true;
-            left_right=false;
+            up_down = true;
+            left_right = false;
             //    Toast.makeText(context, velocityX + "上滑", Toast.LENGTH_SHORT).show();
-        }
-        else if (endX - beginX > minMove && Math.abs(velocityX) > minVelocity)
+        } else if (endX - beginX > minMove && Math.abs(velocityX) > minVelocity)
         {   //右滑
-        //    Toast.makeText(context, velocityX + "右滑", Toast.LENGTH_SHORT).show();
+            //    Toast.makeText(context, velocityX + "右滑", Toast.LENGTH_SHORT).show();
             setOrientation(HORIZONTAL);
 
-                up_down=false;
-                left_right=true;
-        }
-
-        else if (endY - beginY > minMove && Math.abs(velocityY) > minVelocity)
+            up_down = false;
+            left_right = true;
+        } else if (endY - beginY > minMove && Math.abs(velocityY) > minVelocity)
         {   //下滑
-        //    Toast.makeText(context, velocityX + "下滑", Toast.LENGTH_SHORT).show();
+            //    Toast.makeText(context, velocityX + "下滑", Toast.LENGTH_SHORT).show();
             setOrientation(VERTICAL);
-            up_down=true;
-            left_right=false;
+            up_down = true;
+            left_right = false;
         }
 
         return false;
     }
 
-    public  void upAnddowm(int detaY,MotionEvent ev  )
+    public void upAnddowm(int detaY, MotionEvent ev)
     {
-        if(up_down)
+        if (up_down)
         {
-            Log.e("up_down","============================");
+            Log.e("up_down", "============================");
             setOrientation(VERTICAL);
             scrollBy(0, detaY);
             mLastMotionY = ev.getY();
@@ -540,11 +536,11 @@ public class My3DGrop2 extends LinearLayout implements GestureDetector.OnGesture
 
     }
 
-    public  void leftAndRight(int detaX,MotionEvent ev )
+    public void leftAndRight(int detaX, MotionEvent ev)
     {
-        if(left_right)
+        if (left_right)
         {
-            scrollBy(detaX,0 );
+            scrollBy(detaX, 0);
             mLastMotionX = ev.getX();
 
             //向左 滑动
@@ -554,7 +550,7 @@ public class My3DGrop2 extends LinearLayout implements GestureDetector.OnGesture
                 View view = getChildAt(0);
                 removeViewAt(0);
                 addView(view, childCount - 1);
-                scrollBy( -getChildAt(0).getMeasuredWidth(),0);
+                scrollBy(-getChildAt(0).getMeasuredWidth(), 0);
 
             }
             //向右滑动

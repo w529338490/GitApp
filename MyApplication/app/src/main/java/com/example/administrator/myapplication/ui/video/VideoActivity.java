@@ -17,20 +17,20 @@ import com.example.administrator.myapplication.entity.RandomData;
 import com.example.administrator.myapplication.entity.Video;
 import com.example.administrator.myapplication.net.Api;
 import com.example.administrator.myapplication.net.Service.GankService;
+import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerSimple;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
-public class VideoActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener
+public class VideoActivity extends RxAppCompatActivity implements SwipeRefreshLayout.OnRefreshListener
 {
-
-
     Toolbar toolbar;
     SwipeRefreshLayout fresh;
     GankService service;
@@ -40,56 +40,52 @@ public class VideoActivity extends AppCompatActivity implements SwipeRefreshLayo
 
     int page_num = 20;
     List<RandomData.Gank> list = new ArrayList<>();
-    List<Video.DataBean.DataBeans>  listData=new ArrayList();
+    List<Video.DataBean.DataBeans> listData = new ArrayList();
 
-
-
-    JCVideoPlayerSimple jcVideoPlayerSimple;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video);
-//
-//        toolbar= (Toolbar) findViewById(R.id.toolbar);
-//        fresh= (SwipeRefreshLayout) findViewById(R.id.fresh);
-
-          init();
+        init();
     }
 
     private void init()
     {
-        recyview= (RecyclerView) findViewById(R.id.recyview);
-        manager=new LinearLayoutManager(this);
-        // init();
+        recyview = (RecyclerView) findViewById(R.id.recyview);
+        manager = new LinearLayoutManager(this);
+        fresh = (SwipeRefreshLayout)findViewById(R.id.fresh);
+        fresh.setOnRefreshListener(this);
 
-//        JCFullScreenActivity.toActivity(this,
-//                "http://ic.snssdk.com/neihan/video/playback/1492765735.68/?video_id=b1ccd3632f6949a1accf519a80898b8a&quality=480p&line=0&is_gif=0&device_platform=android.mp4",
-//                JCVideoPlayerStandard.class, "嫂子真牛逼");
-
+        fresh.setColorSchemeResources(android.R.color.holo_orange_light, android.R.color.holo_red_light, android.R.color.holo_green_light);
         getData();
 
-
-
     }
+
     public void getData()
     {
-
-        service =  Api.getInstance().apiGank();
+        service = Api.getInstance().apiGank();
         Observable<Video> obsVideo = service.getVideo();
-        obsVideo .subscribeOn(Schedulers.io())//指定获取数据在io子线程
-              .unsubscribeOn(Schedulers.io())
-              .observeOn(AndroidSchedulers.mainThread())
-              .subscribe(new Action1<Video>()
-              {
-                  @Override
-                  public void call(Video randomData)
-                  {
-                      UpDataUi(randomData);
-                  }
+        obsVideo.subscribeOn(Schedulers.io())//指定获取数据在io子线程
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .compose(this.<Video>bindToLifecycle())
+                .subscribe(new Action1<Video>()
+                {
+                    @Override
+                    public void call(Video randomData)
+                    {
+                        UpDataUi(randomData);
+                    }
 
+                }, new Action1<Throwable>()
+                {
+                    @Override
+                    public void call(Throwable throwable)
+                    {
 
-              }) ;
+                    }
+                });
     }
 
     public void UpDataUi(Video randomData)
@@ -97,39 +93,26 @@ public class VideoActivity extends AppCompatActivity implements SwipeRefreshLayo
         if (randomData.getMessage().equals("success"))
         {
             listData = randomData.data.data;
+            fresh.setRefreshing(false);
         }
-        adapter = new VideoViewAdapter(listData);
+        adapter = new VideoViewAdapter(listData, VideoActivity.this);
         recyview.setLayoutManager(manager);
         recyview.setAdapter(adapter);
 
     }
+
     @Override
-    public void onRefresh() {
+    public void onRefresh()
+    {
         getData();
 
     }
+
+
     @Override
-    public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                return true;
-            }
-        }
-        return super.onKeyUp(keyCode, event);
+    protected void onPause()
+    {
+        super.onPause();
+        JCVideoPlayer.releaseAllVideos();
     }
-
-    //当屏幕方向改变时候
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        if(newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE){
-            toolbar.setVisibility(View.GONE);
-        }else{
-            toolbar.setVisibility(View.VISIBLE);
-        }
-
-
-    }
-
 }

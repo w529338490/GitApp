@@ -59,7 +59,7 @@ public class NewsFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     {
         this.context = context;
         this.data = data;
-        inflaters=LayoutInflater.from(context);
+        inflaters = LayoutInflater.from(context);
     }
 
     @Override
@@ -69,12 +69,12 @@ public class NewsFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         switch (viewType)
         {
             case NOFOOT:
-                holder=new MyHolder(inflaters.inflate(R.layout.news_adapter,parent,false));
+                holder = new MyHolder(inflaters.inflate(R.layout.news_adapter, parent, false));
 
-               this.parent= (RecyclerView) parent;
+                this.parent = (RecyclerView) parent;
                 break;
 
-            case  YESFOOT:
+            case YESFOOT:
                 break;
 
         }
@@ -82,7 +82,8 @@ public class NewsFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     @Override
-    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position)
+    {
         if (holder instanceof MyHolder)
         {
             ((MyHolder) holder).tittle.setTextColor(context.getResources().getColor(R.color.colorAccent));
@@ -101,7 +102,7 @@ public class NewsFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
             Glide.with(context)
                     .load(data.get(position).getThumbnail_pic_s())
-                    .transform(new GlideRoundTransform(context,20))
+                    .transform(new GlideRoundTransform(context, 20))
                     .centerCrop()
                     .placeholder(R.mipmap.ic_mr)
                     .crossFade(1500)
@@ -124,7 +125,8 @@ public class NewsFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     @Override
-    public int getItemCount() {
+    public int getItemCount()
+    {
         return data.size();
     }
 
@@ -132,7 +134,7 @@ public class NewsFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public int getItemViewType(int position)
     {
 
-            return 1;
+        return 1;
 
     }
 
@@ -148,31 +150,35 @@ public class NewsFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         public MyHolder(View itemView)
         {
             super(itemView);
-            tittle= (TextView) itemView.findViewById(R.id.tittle);
-            date= (TextView) itemView.findViewById(R.id.date);
-            pic= (ImageView) itemView.findViewById(R.id.pic);
-            imag= (ImageView) itemView.findViewById(R.id.imag);
+            tittle = (TextView) itemView.findViewById(R.id.tittle);
+            date = (TextView) itemView.findViewById(R.id.date);
+            pic = (ImageView) itemView.findViewById(R.id.pic);
+            imag = (ImageView) itemView.findViewById(R.id.imag);
 
-            view= (LinearLayout) itemView.findViewById(R.id.cardview);
+            view = (LinearLayout) itemView.findViewById(R.id.cardview);
         }
 
     }
-    class MyHolder_foot extends RecyclerView.ViewHolder {
+
+    class MyHolder_foot extends RecyclerView.ViewHolder
+    {
 
 
-        public MyHolder_foot(View itemView) {
+        public MyHolder_foot(View itemView)
+        {
             super(itemView);
 
         }
     }
 
-    public  void setOnItemClickListener(OnItemClickListener listener)
+    public void setOnItemClickListener(OnItemClickListener listener)
     {
 
-        this.listener=listener;
+        this.listener = listener;
 
     }
-    public interface  OnItemClickListener
+
+    public interface OnItemClickListener
     {
         void getData(int position);
     }

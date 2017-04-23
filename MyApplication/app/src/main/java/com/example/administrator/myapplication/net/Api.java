@@ -47,14 +47,15 @@ public class Api
     private GankService gankService;
 
 
-
     public static Api getInstance()
     {
         builder = new OkHttpClient.Builder();
-          //打印请求
-        HttpLoggingInterceptor logging = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
+        //打印请求
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger()
+        {
             @Override
-            public void log(String message) {
+            public void log(String message)
+            {
                 Logger.d(message);
 //                Logger.json(message);
             }
@@ -75,12 +76,12 @@ public class Api
         return instances;
     }
 
-    public HttpService Api_News(  )
+    public HttpService Api_News()
     {
 
         Retrofit retrofit =
                 new Retrofit.Builder()
-                         .client(builder.build())
+                        .client(builder.build())
                         .baseUrl(uri_news)
                         .addConverterFactory(factory)
                         .build();
@@ -89,7 +90,8 @@ public class Api
         return service;
 
     }
-    public GankService apiGank( )
+
+    public GankService apiGank()
     {
 
         builder.connectTimeout(5, TimeUnit.SECONDS);
