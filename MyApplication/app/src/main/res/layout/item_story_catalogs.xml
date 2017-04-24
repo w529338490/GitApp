@@ -5,8 +5,7 @@
                                     android:layout_height="wrap_content"
                                     android:background="@color/wirte"
                                     android:elevation="4dp"
-                                    android:layout_marginBottom="1dp"
-                                    app:cardCornerRadius="4dp">
+                                    android:layout_marginBottom="1dp" >
 
     <TextView
         android:id="@+id/tv_catalogs"

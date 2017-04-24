@@ -22,8 +22,10 @@ public class Story
     private String readUrl; // 开始阅读链接
     private String storyPic; // 封面
     private String words; // 字数
+    private String text; // 小说内容
+    private String previous; // 上一章
+    private String next; // 下一章
     private List<Story.StoryCatalog> catalogList; // 小说目录列表
-
 
     public static class StoryCatalog
     {
@@ -49,50 +51,11 @@ public class Story
         {
             this.url = url;
         }
-
-        @Override
-        public String toString()
-        {
-            return "StoryCatalog{" +
-                    "catalog='" + catalog + '\'' +
-                    ", url='" + url + '\'' +
-                    '}';
-        }
-    }
-
-    public String getWords()
-    {
-        return words;
-    }
-
-    public void setWords(String words)
-    {
-        this.words = words;
-    }
-
-    public String getStoryPic()
-    {
-        return storyPic;
-    }
-
-    public void setStoryPic(String storyPic)
-    {
-        this.storyPic = storyPic;
     }
 
     public List<Story> getStoryList()
     {
         return storyList;
-    }
-
-    public String getContent()
-    {
-        return content;
-    }
-
-    public void setContent(String content)
-    {
-        this.content = content;
     }
 
     public void setStoryList(List<Story> storyList)
@@ -130,6 +93,16 @@ public class Story
         this.uri = uri;
     }
 
+    public String getContent()
+    {
+        return content;
+    }
+
+    public void setContent(String content)
+    {
+        this.content = content;
+    }
+
     public String getAuthor()
     {
         return author;
@@ -138,6 +111,16 @@ public class Story
     public void setAuthor(String author)
     {
         this.author = author;
+    }
+
+    public String getIndex()
+    {
+        return index;
+    }
+
+    public void setIndex(String index)
+    {
+        this.index = index;
     }
 
     public Integer getHot()
@@ -170,16 +153,6 @@ public class Story
         this.updateTime = updateTime;
     }
 
-    public String getIndex()
-    {
-        return index;
-    }
-
-    public void setIndex(String index)
-    {
-        this.index = index;
-    }
-
     public String getReadUrl()
     {
         return readUrl;
@@ -188,6 +161,56 @@ public class Story
     public void setReadUrl(String readUrl)
     {
         this.readUrl = readUrl;
+    }
+
+    public String getStoryPic()
+    {
+        return storyPic;
+    }
+
+    public void setStoryPic(String storyPic)
+    {
+        this.storyPic = storyPic;
+    }
+
+    public String getWords()
+    {
+        return words;
+    }
+
+    public void setWords(String words)
+    {
+        this.words = words;
+    }
+
+    public String getText()
+    {
+        return text;
+    }
+
+    public void setText(String text)
+    {
+        this.text = text;
+    }
+
+    public String getPrevious()
+    {
+        return previous;
+    }
+
+    public void setPrevious(String previous)
+    {
+        this.previous = previous;
+    }
+
+    public String getNext()
+    {
+        return next;
+    }
+
+    public void setNext(String next)
+    {
+        this.next = next;
     }
 
     public List<StoryCatalog> getCatalogList()
@@ -204,14 +227,23 @@ public class Story
     public String toString()
     {
         return "Story{" +
-                "type='" + type + '\'' +
+                "storyList=" + storyList +
+                ", type='" + type + '\'' +
                 ", title='" + title + '\'' +
                 ", uri='" + uri + '\'' +
+                ", content='" + content + '\'' +
                 ", author='" + author + '\'' +
                 ", index='" + index + '\'' +
                 ", hot=" + hot +
                 ", mark='" + mark + '\'' +
                 ", updateTime='" + updateTime + '\'' +
+                ", readUrl='" + readUrl + '\'' +
+                ", storyPic='" + storyPic + '\'' +
+                ", words='" + words + '\'' +
+                ", text='" + text + '\'' +
+                ", previous='" + previous + '\'' +
+                ", next='" + next + '\'' +
+                ", catalogList=" + catalogList +
                 '}';
     }
 }

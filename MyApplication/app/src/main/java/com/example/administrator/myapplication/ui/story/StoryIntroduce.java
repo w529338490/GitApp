@@ -3,7 +3,6 @@ package com.example.administrator.myapplication.ui.story;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,7 +18,6 @@ import com.example.administrator.myapplication.Utill.GlideRoundTransform;
 import com.example.administrator.myapplication.Utill.JsoupUtil;
 import com.example.administrator.myapplication.adapter.StoryCatalogsAdapter;
 import com.example.administrator.myapplication.entity.Story;
-import com.example.administrator.myapplication.ui.comm.WebActivity;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -57,12 +55,10 @@ public class StoryIntroduce extends AppCompatActivity
     @InjectView(R.id.bt_startRead)
     Button bt_read;
 
-    private boolean refresh;
     private Story story;
 
     private Activity activity = StoryIntroduce.this;
     private StoryCatalogsAdapter mAdapter;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -139,7 +135,7 @@ public class StoryIntroduce extends AppCompatActivity
             @Override
             public void onItemClick(View view, String uri)
             {
-                startActivity(new Intent(activity, WebActivity.class).putExtra("url", uri));
+                startActivity(new Intent(activity, StoryRead.class).putExtra("url", uri));
             }
         });
     }
@@ -150,8 +146,7 @@ public class StoryIntroduce extends AppCompatActivity
         switch (view.getId())
         {
             case R.id.bt_startRead:
-                Snackbar.make(view, "小乌龟", 1);
-                startActivity(new Intent(activity, WebActivity.class).putExtra("url", story.getReadUrl()));
+                startActivity(new Intent(activity, StoryRead.class).putExtra("url", story.getReadUrl()));
                 break;
         }
     }
