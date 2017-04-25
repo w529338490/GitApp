@@ -36,7 +36,6 @@ public class StoryCatalogsAdapter extends RecyclerView.Adapter<StoryCatalogsAdap
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
         ViewHolder viewHolder = new ViewHolder(inflater.inflate(R.layout.item_story_catalogs,parent,false));
-
         return viewHolder;
     }
 

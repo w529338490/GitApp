@@ -87,7 +87,7 @@ public class JsoupUtil
         {
 
             doc = Jsoup.parse(new URL(urls), 5000);
-            Logger.e(doc.nodeName());
+//            Logger.e(doc.nodeName());
 
             Elements es_item = doc.getElementsByClass("item");
 
@@ -193,16 +193,17 @@ public class JsoupUtil
             {
                 Article article = new Article();
                 //  Logger.e(elements.get(i).getElementsByTag("a").first().attr("href"));
-                Logger.e(elements.get(i).getElementsByTag("title").outerHtml());
-                Logger.e(elements.get(i).getElementsByTag("link").outerHtml());
-                Logger.e(elements.get(i).getElementsByTag("pubDate").outerHtml());
-                Logger.e(elements.get(i).getElementsByTag("description").outerHtml());
-                Logger.e(elements.get(i).getElementsByTag("category").eq(2).outerHtml());
+//                Logger.e(elements.get(i).getElementsByTag("title").outerHtml());
+//                Logger.e(elements.get(i).getElementsByTag("link").outerHtml());
+//                Logger.e(elements.get(i).getElementsByTag("pubDate").outerHtml());
+//                Logger.e(elements.get(i).getElementsByTag("description").outerHtml());
+//                Logger.e(elements.get(i).getElementsByTag("category").eq(2).outerHtml());
 
                 article.author = elements.get(i).getElementsByTag("category").eq(2).text();
                 article.tittle = elements.get(i).getElementsByTag("title").text();
                 article.description = elements.get(i).getElementsByTag("description").text();
                 article.link = elements.get(i).getElementsByTag("link").text();
+              //  article.link = "https://unsplash.it/400/800/?random";
 
                 article.position = i;
                 String d = elements.get(i).getElementsByTag("pubDate").text();
@@ -233,11 +234,13 @@ public class JsoupUtil
             docs = Jsoup.parse(new URL(url), 5000);
             Elements elements = docs.getElementsByClass("article_text");
 
-            String tille=docs.getElementsByTag("title").text().toString().trim();
-            Logger.e(tille.replace("|","=").split("=")[0].split("--")[0]);
-            content[0]=tille.replace("|","=").split("=")[0].split("--")[0];
-            content[1]=tille.replace("|","=").split("=")[0].split("--")[1];
-            content[2]= elements.outerHtml();
+
+            String tille = docs.getElementsByTag("title").text().toString().trim();
+            Logger.e(tille.replace("|", "=").split("=")[0].split("--")[0]);
+            content[0] = tille.replace("|", "=").split("=")[0].split("--")[0];
+            content[1] = tille.replace("|", "=").split("=")[0].split("--")[1];
+            content[2] = elements.outerHtml();
+
         } catch (IOException e)
         {
             e.printStackTrace();
@@ -278,7 +281,7 @@ public class JsoupUtil
         {
             docs = Jsoup.parse(new URL(url), 5000);
             Elements elts = docs.getElementsByClass("main_con");
-            Logger.e(elts.html());
+//            Logger.e(elts.html());
 
 //            Logger.e("一共有" + elts.get(0).getElementsByTag("li").size()+"个节点");
             for (int i = 0; i < elts.get(0).getElementsByTag("li").size(); i++)
@@ -325,7 +328,7 @@ public class JsoupUtil
         {
             docs = Jsoup.parse(new URL(url), 5000);
             Elements elts = docs.getElementsByClass("book_main");
-            Logger.e(elts.outerHtml());
+//            Logger.e(elts.outerHtml());
             Element et = elts.get(0).getElementsByTag("p").get(0);
             story.setTitle(et.getElementsByTag("img").get(0).attr("alt"));
             story.setStoryPic(et.getElementsByTag("img").get(0).attr("src"));
@@ -345,6 +348,12 @@ public class JsoupUtil
         return story;
     }
 
+    /**
+     * 目录
+     *
+     * @param url
+     * @return
+     */
     public static ArrayList<Story.StoryCatalog> getStoryCatalogs(String url)
     {
         Document docs = null;
@@ -352,20 +361,64 @@ public class JsoupUtil
         try
         {
             docs = Jsoup.parse(new URL(url), 5000);
+            Elements elts = docs.getElementsByClass("booklist tomeBean");
+            Elements catalogList = elts.get(0).getElementsByTag("td");
+            for (int i = 0; i < catalogList.size(); i++)
+            {
+                StoryCatalog catalog = new StoryCatalog();
+                catalog.setCatalog(catalogList.get(i).text());
+                catalog.setUrl(catalogList.get(i).getElementsByTag("a").get(0).attr("href"));
+                catalogs.add(catalog);
+            }
         } catch (IOException e)
         {
             e.printStackTrace();
         }
-        Elements elts = docs.getElementsByClass("booklist tomeBean");
 //        Logger.e(elts.outerHtml());
-        Elements catalogList = elts.get(0).getElementsByTag("td");
-        for (int i = 0; i < catalogList.size(); i++)
-        {
-            StoryCatalog catalog = new StoryCatalog();
-            catalog.setCatalog(catalogList.get(i).text());
-            catalog.setUrl(catalogList.get(i).getElementsByTag("a").get(0).attr("href"));
-            catalogs.add(catalog);
-        }
         return catalogs;
+    }
+
+    /**
+     * 小说正文
+     */
+    public static Story getStoryText(String url)
+    {
+        Document docs = null;
+        StringBuffer sb = new StringBuffer("\u3000\u3000");
+        Story story = new Story();
+        try
+        {
+            docs = Jsoup.parse(new URL(url), 5000);
+            Elements els = docs.getElementsByClass("tc quickkey");
+            Elements elements = els.get(0).getElementsByTag("a");
+            for (int i = 0; i < elements.size(); i++)
+            {
+                switch (elements.get(i).text())
+                {
+                    case "上一章":
+                        story.setPrevious(elements.get(i).attr("href")); // 上一章
+                        break;
+                    case "下一章":
+                        if (!"javascript:void(0);".equals(elements.get(i).attr("href")) || !elements.get(i).attr("href").contains("javascript"))
+                        {
+                            story.setNext(elements.get(i).attr("href")); // 下一章
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+            // 小说正文
+            Element el = docs.getElementById("chapterContent");
+            for (int i = 0; i < el.getElementsByTag("p").size(); i++)
+            {
+                sb.append(el.getElementsByTag("p").get(i).text() + "\n");
+            }
+            story.setText(sb.toString()); // 小说正文
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        return story;
     }
 }

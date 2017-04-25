@@ -3,7 +3,6 @@ package com.example.administrator.myapplication.ui.article;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.webkit.WebView;
@@ -15,7 +14,6 @@ import com.example.administrator.myapplication.entity.Article;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 import rx.Observable;
-import rx.Scheduler;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -25,11 +23,11 @@ public class ArtcleContetnActivity extends RxAppCompatActivity
 {
 
     TextView tittle;
-    TextView date;
     TextView who;
     WebView content;
     Article art;
-
+    Toolbar toobar;
+    TextView end,member;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -38,13 +36,16 @@ public class ArtcleContetnActivity extends RxAppCompatActivity
         setContentView(R.layout.activity_artcle_contetn);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         art = (Article) this.getIntent().getSerializableExtra("Art");
 
         tittle = (TextView) findViewById(R.id.tittle);
-        date = (TextView) findViewById(R.id.date);
         who = (TextView) findViewById(R.id.who);
+        member = (TextView) findViewById(R.id.member);
+        end = (TextView) findViewById(R.id.end);
         content = (WebView) findViewById(R.id.content);
+
+        toobar = (Toolbar) findViewById(R.id.toolbar);
         initData();
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener()
@@ -61,8 +62,14 @@ public class ArtcleContetnActivity extends RxAppCompatActivity
     private void initData()
     {
         tittle.setText(art.tittle);
-        date.setText(art.pubDate);
-        who.setText(art.author);
+        toobar.setNavigationOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                finish();
+            }
+        });
         Observable< String[]> obs = Observable.create(new Observable.OnSubscribe< String[]>()
         {
             @Override
@@ -82,7 +89,9 @@ public class ArtcleContetnActivity extends RxAppCompatActivity
                     public void call( String[] s)
                     {
                         content.setVerticalScrollBarEnabled(false);
-
+                        tittle.setText(s[0]);
+                        who.setText(s[1]);
+                        toobar.setTitle(s[0]);
                         String cotetnt=
                                 "<![CDATA"+
                                 "<html>" +
@@ -96,7 +105,8 @@ public class ArtcleContetnActivity extends RxAppCompatActivity
                                 "      </body>\n" +
                                 "</html>\n" ;
                         content.loadDataWithBaseURL("",cotetnt, "text/html", "utf-8","");
-                     //   content.setText(s);
+                        member.setText(cotetnt.length()+"字");
+                        end.setVisibility(View.VISIBLE);
                     }
                 });
 

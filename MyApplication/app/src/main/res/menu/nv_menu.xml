@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:id="@+id/group_gif">
-        <item
-            android:id="@+id/nav_gif"
-            android:checkable="false"
-            android:icon="@drawable/ic_png"
-            android:title="动图"/>
-    </group>
-
     <group android:id="@+id/group_vedio">
         <item
             android:id="@+id/nav_video"
@@ -55,6 +47,12 @@
             android:icon="@drawable/ic_png"
             android:title="Fan"/>
     </group>
-
+    <group android:id="@+id/user">
+        <item
+            android:id="@+id/nav_user"
+            android:checkable="false"
+            android:icon="@drawable/ic_png"
+            android:title="个人中心"/>
+    </group>
 
 </menu>
