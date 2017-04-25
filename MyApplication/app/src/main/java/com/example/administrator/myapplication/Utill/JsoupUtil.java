@@ -203,6 +203,7 @@ public class JsoupUtil
                 article.tittle = elements.get(i).getElementsByTag("title").text();
                 article.description = elements.get(i).getElementsByTag("description").text();
                 article.link = elements.get(i).getElementsByTag("link").text();
+              //  article.link = "https://unsplash.it/400/800/?random";
 
                 article.position = i;
                 String d = elements.get(i).getElementsByTag("pubDate").text();
@@ -232,7 +233,7 @@ public class JsoupUtil
 
             docs = Jsoup.parse(new URL(url), 5000);
             Elements elements = docs.getElementsByClass("article_text");
-
+            Logger.e(elements.outerHtml()+url);
             String tille=docs.getElementsByTag("title").text().toString().trim();
             Logger.e(tille.replace("|","=").split("=")[0].split("--")[0]);
             content[0]=tille.replace("|","=").split("=")[0].split("--")[0];
