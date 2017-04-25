@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +12,7 @@ import android.widget.TextView;
 import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.Utill.JsoupUtil;
 import com.example.administrator.myapplication.entity.Story;
+import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -23,7 +23,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
-public class StoryRead extends AppCompatActivity
+public class StoryRead extends RxAppCompatActivity
 {
     @InjectView(R.id.toolbar)
     Toolbar tb_bar;
@@ -83,6 +83,7 @@ public class StoryRead extends AppCompatActivity
             observable.subscribeOn(Schedulers.io())//指定获取数据在io子线程
                     .unsubscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())//处理结果回调 在UI 主线程
+                    .compose(this.<Integer>bindToLifecycle())
                     .subscribe(new Action1<Integer>()
                     {
                         @Override
@@ -117,13 +118,22 @@ public class StoryRead extends AppCompatActivity
                 }
                 break;
             case R.id.bt_next:
+            try
+            {
+
                 if (story.getNext() == null || "".equals(story.getNext()))
                 {
                     Snackbar.make(bt_next, "已经是最后一章了", Snackbar.LENGTH_SHORT).show();
                 } else
                 {
+
                     startActivity(new Intent(activity, StoryRead.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).putExtra("url", story.getNext()));
+
                 }
+            }catch (NullPointerException e)
+            {
+
+            }
                 break;
         }
     }

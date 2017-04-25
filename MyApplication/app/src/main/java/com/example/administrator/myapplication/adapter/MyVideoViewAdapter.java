@@ -2,25 +2,20 @@ package com.example.administrator.myapplication.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.administrator.myapplication.R;
-import com.example.administrator.myapplication.Utill.ToastUtil;
 import com.example.administrator.myapplication.common.myApplication;
 import com.example.administrator.myapplication.DB.DbDao.VideoDao;
 import com.example.administrator.myapplication.DB.DatabaseHelper;
 import com.example.administrator.myapplication.DB.DbBean.VideoBean;
-import com.example.administrator.myapplication.entity.Video;
-import com.orhanobut.logger.Logger;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import fm.jiecao.jcvideoplayer_lib.JCMediaManager;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 
@@ -28,17 +23,16 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
  * Created by Administrator on 2017/3/27.
  */
 
-public class VideoViewAdapter extends RecyclerView.Adapter<VideoViewAdapter.Holder>
+public class MyVideoViewAdapter extends RecyclerView.Adapter<MyVideoViewAdapter.Holder>
 {
 
-    List<Video.DataBean.DataBeans> results;
+    List<VideoBean> results;
     DatabaseHelper helper ;
     VideoDao  videdao;
     LayoutInflater inflater;
-    JCMediaManager mediaManager;
     private Context context;
 
-    public VideoViewAdapter(List<Video.DataBean.DataBeans> results, Context context)
+    public MyVideoViewAdapter( List<VideoBean> results, Context context)
     {
         this.results = results;
         this.inflater = LayoutInflater.from(context);
@@ -54,7 +48,7 @@ public class VideoViewAdapter extends RecyclerView.Adapter<VideoViewAdapter.Hold
         Holder holder = null;
         if (holder == null)
         {
-            holder = new Holder(inflater.inflate(R.layout.videoview_adapter, parent, false));
+            holder = new Holder(inflater.inflate(R.layout.myvideoview_adapter, parent, false));
         }
         return holder;
     }
@@ -63,56 +57,18 @@ public class VideoViewAdapter extends RecyclerView.Adapter<VideoViewAdapter.Hold
     public void onBindViewHolder(final Holder holder, final int position)
     {
 
-        if (results != null && results.get(position) != null && results.get(position).group != null)
+        if (results != null && results.get(position) != null )
         {
-            final String thunbUrl=results.get(position).getGroup().medium_cover.getUrl_list().get(0).url;
+            final String thunbUrl=results.get(position).getThumbUrl();
             holder.custom_videoplayer.setUp(
-                    results.get(position).group.mp4_url,
+                    results.get(position).getVideoUri(),
                     JCVideoPlayer.SCREEN_LAYOUT_LIST,
-                    results.get(position).getGroup().text
+                    results.get(position).getTittle()
             );
-            Logger.e(results.get(position).group.mp4_url);
 
-            //      holder.tittle.setText(results.get(position).getGroup().text+"");
             Picasso.with(myApplication.context)
                     .load(String.valueOf(thunbUrl))
                     .into(holder.custom_videoplayer.thumbImageView);
-            holder.saved.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View view)
-                {
-
-                        VideoBean Bean=new VideoBean();
-                        if(results.get(position).getGroup().text!=null&&results.get(position).getGroup().text.trim().length()!=0)
-                        {
-                            Bean.setTittle(results.get(position).getGroup().text+"");
-                        }else
-                        {
-                            Bean.setTittle(" ");
-                        }
-                    if(!TextUtils.isEmpty(thunbUrl))
-                    {
-                        Bean.setThumbUrl(thunbUrl+"");
-                    }else
-                    {
-                        Bean.setThumbUrl(" ");
-                    }
-                    if(!TextUtils.isEmpty(results.get(position).group.mp4_url))
-                    {
-                        Bean.setVideoUri(results.get(position).group.mp4_url+"");
-                        videdao=new VideoDao(context);
-                        videdao.add(Bean);
-                    }else
-                    {
-                        ToastUtil.show("收藏失败");
-                    }
-
-
-
-
-                }
-            });
         }
     }
 

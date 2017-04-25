@@ -74,6 +74,13 @@
         </activity>
         <activity android:name=".ui.story.StoryRead">
         </activity>
+        <activity
+            android:name=".ui.UserActivity.UserActivity"
+            android:label="@string/title_activity_user"
+            android:theme="@style/AppTheme">
+        </activity>
+        <activity android:name=".ui.UserActivity.MyVideoActivity">
+        </activity>
     </application>
 
 </manifest>

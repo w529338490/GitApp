@@ -32,7 +32,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="收藏"
+                android:text="下载"
                 android:textSize="15dp"/>
               <TextView
                   android:background="@color/colorPrimaryDark"

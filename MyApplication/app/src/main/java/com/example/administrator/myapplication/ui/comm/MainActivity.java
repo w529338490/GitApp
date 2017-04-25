@@ -20,9 +20,9 @@ import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.adapter.PaperAdapter;
 import com.example.administrator.myapplication.fragment.NewsFragment;
 import com.example.administrator.myapplication.ui.Fan.FanActivity;
+import com.example.administrator.myapplication.ui.UserActivity.UserActivity;
 import com.example.administrator.myapplication.ui.article.ArtcleActivity;
 import com.example.administrator.myapplication.ui.gank.GankActivity;
-import com.example.administrator.myapplication.ui.gif.GifActivity;
 import com.example.administrator.myapplication.ui.story.MusicActivity;
 import com.example.administrator.myapplication.ui.story.StoryActivity;
 import com.example.administrator.myapplication.ui.video.VideoActivity;
@@ -94,8 +94,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch (item.getItemId())
         {
-            case R.id.nav_gif:
-                Intent intent = new Intent(MainActivity.this, GifActivity.class);
+            case R.id.nav_user:
+                Intent intent = new Intent(MainActivity.this, UserActivity.class);
                 startActivity(intent);
                 break;
             case R.id.nav_video:

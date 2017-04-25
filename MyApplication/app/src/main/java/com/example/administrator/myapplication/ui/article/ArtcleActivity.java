@@ -4,19 +4,22 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.Utill.JsoupUtil;
 import com.example.administrator.myapplication.Utill.layoutmanger.CardConfig;
 import com.example.administrator.myapplication.Utill.layoutmanger.OverLayCardLayoutManager;
 import com.example.administrator.myapplication.adapter.ArtcleAdapter.ArtcleAdapter;
-import com.example.administrator.myapplication.adapter.GankAdapter.GankAdapter;
+import com.example.administrator.myapplication.common.myApplication;
 import com.example.administrator.myapplication.entity.Article;
+import com.squareup.picasso.Picasso;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 import java.util.ArrayList;
@@ -33,6 +36,7 @@ public class ArtcleActivity extends RxAppCompatActivity
 {
 
     OverLayCardLayoutManager manager;
+    LinearLayoutManager linearLayoutManager;
     RecyclerView recyview;
     ArtcleAdapter adapter;
     List<Article> results = new ArrayList<>();
@@ -80,7 +84,7 @@ public class ArtcleActivity extends RxAppCompatActivity
             }
         });
         getArtcle.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                 .observeOn(AndroidSchedulers.mainThread())
                  .compose(this.<Integer>bindToLifecycle())
                 .subscribe(new Action1<Integer>()
                 {
@@ -96,18 +100,48 @@ public class ArtcleActivity extends RxAppCompatActivity
 
     private void upDateUI()
     {
-
         adapter = new ArtcleAdapter(results);
-        recyview.setLayoutManager(manager);
+
+        linearLayoutManager=new LinearLayoutManager(this);
+        recyview.setLayoutManager(linearLayoutManager);
         recyview.setAdapter(adapter);
-        adapter.setOnItemViewClickLisnter(new GankAdapter.OnItemViewClickLisnter()
+        recyview.addOnItemTouchListener(new RecyclerView.OnItemTouchListener()
         {
             @Override
-            public void getItemViewPosition(int Postion)
+            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e)
+            {
+
+                return false;
+            }
+
+            @Override
+            public void onTouchEvent(RecyclerView rv, MotionEvent e)
+            {
+
+            }
+
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept)
+            {
+
+            }
+        });
+        adapter.setOnItemViewClickLisnter(new ArtcleAdapter.OnItemViewClickLisnter()
+        {
+            @Override
+            public void getItemViewPosition(int Postion, View v)
             {
                 Intent intent = new Intent(ArtcleActivity.this, ArtcleContetnActivity.class);
                 intent.putExtra("Art", results.get(Postion));
-                startActivity(intent);
+             //   startActivity(intent);
+                Picasso.with(myApplication.context)
+                        .load("https://unsplash.it/400/800/?random")
+                        .resize(400,400)
+                        .error(R.drawable.bg_card)
+                        .placeholder(R.drawable.bg_card)
+                        .centerCrop()
+                        .skipMemoryCache()
+                        .into((ImageView) v);
 
             }
         });
@@ -160,8 +194,9 @@ public class ArtcleActivity extends RxAppCompatActivity
                  * @param viewHolder 滑动的ViewHolder
                  * @param direction 滑动的方向
                  */
+
                 Object remove = results.remove(viewHolder.getLayoutPosition());
-                 results.add(0, (Article) remove);
+                results.add(0, (Article) remove);
                 adapter.notifyDataSetChanged();
             }
 
