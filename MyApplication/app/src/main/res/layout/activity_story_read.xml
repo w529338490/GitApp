@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/activity_background"
+    tools:context="com.example.administrator.myapplication.ui.story.StoryRead">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:minHeight="?attr/actionBarSize"
+        app:layout_scrollFlags="scroll|enterAlways"
+        app:navigationIcon="?attr/homeAsUpIndicator"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:title="作品"
+        app:titleTextColor="@android:color/white"/>
+
+    <TextView
+        android:id="@+id/tv_zhengWen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:layout_marginTop="10dp"
+        android:background="@android:color/white"
+        android:padding="10dp"
+        android:text="正文："
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/btly_switch"
+        android:layout_below="@id/tv_zhengWen"
+        android:layout_marginTop="10dp"
+        android:background="@android:color/white"
+        android:padding="10dp"
+        android:textSize="18sp"/>
+
+    <android.support.v7.widget.ButtonBarLayout
+        android:id="@id/btly_switch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:elevation="4dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/bt_previous"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="上一章"
+            android:textColor="@android:color/holo_blue_light"
+            android:textSize="18sp"/>
+
+        <Button
+            android:id="@+id/bt_next"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="下一章"
+            android:textColor="@android:color/holo_blue_light"
+            android:textSize="18sp"/>
+
+
+    </android.support.v7.widget.ButtonBarLayout>
+</RelativeLayout>

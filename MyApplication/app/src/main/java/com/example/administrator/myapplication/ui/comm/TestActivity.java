@@ -32,7 +32,7 @@ public class TestActivity extends AppCompatActivity
             @Override
             public void call(Subscriber<? super Integer> subscriber)
             {
-                JsoupUtil.getStoryCatalogs("http://book.zongheng.com/showchapter/661757.html");
+                JsoupUtil.getStoryText("http://book.zongheng.com/chapter/661757/36580613.html");
                 subscriber.onNext(1);
             }
         });
