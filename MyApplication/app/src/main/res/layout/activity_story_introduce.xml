@@ -79,21 +79,33 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <TextView
+                    <com.example.administrator.myapplication.Utill.MarqueeTextView
                         android:id="@+id/tv_tpye"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:padding="5dp"
                         android:text="分类："
+                        android:ellipsize="marquee"
+                        android:focusable="true"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:singleLine="true"
+                        android:lines="1"
+                        android:maxLines="1"
                         android:textSize="18sp"/>
 
-                    <TextView
+                    <com.example.administrator.myapplication.Utill.MarqueeTextView
                         android:id="@+id/tv_words"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="right"
+                        android:ellipsize="marquee"
+                        android:focusable="true"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:singleLine="true"
+                        android:lines="1"
+                        android:maxLines="1"
                         android:padding="5dp"
                         android:text="字数："
                         android:textSize="18sp"/>

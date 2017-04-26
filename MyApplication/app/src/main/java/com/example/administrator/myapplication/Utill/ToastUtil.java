@@ -27,5 +27,15 @@ public class ToastUtil
         }
 
     }
-
+    public static void showLong(String str)
+    {
+    if (str != null && str.trim().length() != 0)
+    {
+        Toast.makeText(myApplication.context, str, Toast.LENGTH_LONG).show();
+    } else
+    {
+        ToastUtil.show("Error>>:  You Showed String is Null!!");
+        Logger.e("error for Str>>" + str);
+    }
+}
 }

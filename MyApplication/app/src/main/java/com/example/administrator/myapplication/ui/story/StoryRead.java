@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.Utill.JsoupUtil;
+import com.example.administrator.myapplication.Utill.ToastUtil;
 import com.example.administrator.myapplication.entity.Story;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
@@ -109,13 +110,21 @@ public class StoryRead extends RxAppCompatActivity
         switch (view.getId())
         {
             case R.id.bt_previous:
-                if (story.getPrevious() == null  || "".equals(story.getPrevious()))
+            try
+            {
+
+                if (story.getPrevious() == null || "".equals(story.getPrevious()))
                 {
                     Snackbar.make(bt_previous, "已经是第一章了", Snackbar.LENGTH_SHORT).show();
                 } else
                 {
                     startActivity(new Intent(activity, StoryRead.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).putExtra("url", story.getPrevious()));
                 }
+            }catch (NullPointerException e)
+            {
+                ToastUtil.show("亲，你点击太快了！！");
+            }
+
                 break;
             case R.id.bt_next:
             try

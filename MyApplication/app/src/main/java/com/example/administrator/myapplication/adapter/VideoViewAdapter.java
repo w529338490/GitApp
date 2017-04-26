@@ -89,14 +89,16 @@ public class VideoViewAdapter extends RecyclerView.Adapter<VideoViewAdapter.Hold
                             Bean.setTittle(results.get(position).getGroup().text+"");
                         }else
                         {
-                            Bean.setTittle(" ");
+                            ToastUtil.show("收藏失败");
+                            return;
                         }
                     if(!TextUtils.isEmpty(thunbUrl))
                     {
                         Bean.setThumbUrl(thunbUrl+"");
                     }else
                     {
-                        Bean.setThumbUrl(" ");
+                        ToastUtil.show("收藏失败");
+                       return;
                     }
                     if(!TextUtils.isEmpty(results.get(position).group.mp4_url))
                     {
@@ -106,10 +108,9 @@ public class VideoViewAdapter extends RecyclerView.Adapter<VideoViewAdapter.Hold
                     }else
                     {
                         ToastUtil.show("收藏失败");
+                        return;
+
                     }
-
-
-
 
                 }
             });
