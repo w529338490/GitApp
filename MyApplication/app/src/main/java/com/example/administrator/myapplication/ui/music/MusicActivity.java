@@ -1,11 +1,11 @@
-package com.example.administrator.myapplication.ui.story;
+package com.example.administrator.myapplication.ui.music;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.example.administrator.myapplication.R;
 
-public class MusicActivity extends Activity
+public class MusicActivity extends AppCompatActivity
 {
 
     @Override

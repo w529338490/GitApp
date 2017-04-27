@@ -15,7 +15,7 @@ import java.util.List;
  * Created by Administrator on 2017/4/25.
  * 数据库操作类
  */
-public class VideoDao
+public class  VideoDao
 {
     private Context context;
     private Dao<VideoBean, Integer> userDaoOpe;

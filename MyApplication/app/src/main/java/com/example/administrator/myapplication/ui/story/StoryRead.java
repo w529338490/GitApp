@@ -36,6 +36,7 @@ public class StoryRead extends RxAppCompatActivity
 
     private Story story;
     private Activity activity = StoryRead.this;
+    private String url= null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -43,8 +44,9 @@ public class StoryRead extends RxAppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_story_read);
         ButterKnife.inject(this);
+        url = getIntent().getStringExtra("url");
         initWidght();
-        getData();
+        getData(url);
     }
 
 
@@ -61,9 +63,9 @@ public class StoryRead extends RxAppCompatActivity
         });
     }
 
-    private void getData()
+    private void getData(final String url)
     {
-        final String url = getIntent().getStringExtra("url");
+
         if (null == url || "".equals(url))
         {
             Snackbar.make(tb_bar.getRootView(), "网络出现了一些故障，请您稍后再试", Snackbar.LENGTH_SHORT)
@@ -126,9 +128,7 @@ public class StoryRead extends RxAppCompatActivity
                     Snackbar.make(bt_next, "已经是最后一章了", Snackbar.LENGTH_SHORT).show();
                 } else
                 {
-
                     startActivity(new Intent(activity, StoryRead.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).putExtra("url", story.getNext()));
-
                 }
             }catch (NullPointerException e)
             {
@@ -138,12 +138,6 @@ public class StoryRead extends RxAppCompatActivity
         }
     }
 
-    @Override
-    protected void onNewIntent(Intent intent)
-    {
-        super.onNewIntent(intent);
-        getData();
-    }
 
     @Override
     protected void onDestroy()

@@ -8,9 +8,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.example.administrator.myapplication.R;
+import com.example.administrator.myapplication.Utill.ToastUtil;
 import com.example.administrator.myapplication.adapter.PaperAdapter;
 import com.example.administrator.myapplication.fragment.StoryFragment;
 
@@ -65,5 +68,32 @@ public class StoryActivity extends AppCompatActivity
                 finish();
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.mune_story, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case R.id.item_shujia:
+                ToastUtil.show("暂时不给你看书架");
+                return true;
+            case R.id.item_recent:
+                return true;
+            case R.id.item_setting:
+                ToastUtil.show("暂时不让你设置");
+//                startActivity(new Intent());
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
