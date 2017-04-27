@@ -18,6 +18,7 @@ import java.util.List;
 
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
+import rx.Observable;
 
 /**
  * Created by Administrator on 2017/3/27.
@@ -31,6 +32,7 @@ public class MyVideoViewAdapter extends RecyclerView.Adapter<MyVideoViewAdapter.
     VideoDao  videdao;
     LayoutInflater inflater;
     private Context context;
+    DownlodLiner downlinsner;
 
     public MyVideoViewAdapter( List<VideoBean> results, Context context)
     {
@@ -70,6 +72,14 @@ public class MyVideoViewAdapter extends RecyclerView.Adapter<MyVideoViewAdapter.
                     .load(String.valueOf(thunbUrl))
                     .into(holder.custom_videoplayer.thumbImageView);
         }
+        holder.saved.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                downlinsner.down(results.get(position).getVideoUri(),results.get(position).getTittle());
+            }
+        });
     }
 
     @Override
@@ -95,4 +105,16 @@ public class MyVideoViewAdapter extends RecyclerView.Adapter<MyVideoViewAdapter.
 
         }
     }
+
+
+    public void SetDownlodLiner(DownlodLiner liner)
+    {
+        this.downlinsner=liner;
+    }
+    public interface  DownlodLiner
+    {
+        void down(String path,String tittle);
+
+    }
+
 }

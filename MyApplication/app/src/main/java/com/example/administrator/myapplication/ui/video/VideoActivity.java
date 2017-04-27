@@ -50,7 +50,6 @@ public class VideoActivity extends RxAppCompatActivity implements SwipeRefreshLa
 
     private void init()
     {
-        myVideos= (List<VideoBean>) this.getIntent().getSerializableExtra("myvideo");
         recyview = (RecyclerView) findViewById(R.id.recyview);
         manager = new LinearLayoutManager(this);
         fresh = (SwipeRefreshLayout)findViewById(R.id.fresh);
@@ -58,40 +57,8 @@ public class VideoActivity extends RxAppCompatActivity implements SwipeRefreshLa
 
         fresh.setColorSchemeResources(android.R.color.holo_orange_light, android.R.color.holo_red_light, android.R.color.holo_green_light);
 
-        if(myVideos!=null&&myVideos.size()!=0)
-        {
-            fresh.setRefreshing(false);
-            fresh.setVisibility(View.GONE);
-            listData.clear();
-            for(int i=0;i<myVideos.size();i++)
-            {
-                Video.DataBean.DataBeans dataBeans=new Video.DataBean.DataBeans();
-                Video.DataBean.DataBeans.GroupBean groupBean=new Video.DataBean.DataBeans.GroupBean();
 
-                if(myVideos.get(i).getThumbUrl()!=null&&myVideos.get(i).getThumbUrl().trim().length()!=0)
-                {
-
-                    List<Video.DataBean.DataBeans.GroupBean.MediumCoverBean.UrlListBean> url_list = new ArrayList<>();
-                    Video.DataBean.DataBeans.GroupBean.MediumCoverBean.UrlListBean UrlListBean = new Video.DataBean.DataBeans.GroupBean.MediumCoverBean.UrlListBean();
-                    UrlListBean.setUrl(myVideos.get(i).getThumbUrl());
-
-                    dataBeans.group.medium_cover.setUrl_list(url_list);
-                }
-
-                groupBean.mp4_url=myVideos.get(i).getVideoUri();
-                dataBeans.setGroup(groupBean);
-                listData.add(dataBeans);
-
-            }
-            adapter = new VideoViewAdapter(listData, VideoActivity.this);
-            recyview.setLayoutManager(manager);
-            adapter.notifyDataSetChanged();
-            recyview.setAdapter(adapter);
-        }else
-        {
-            fresh.setVisibility(View.VISIBLE);
             getData();
-        }
 
     }
 
