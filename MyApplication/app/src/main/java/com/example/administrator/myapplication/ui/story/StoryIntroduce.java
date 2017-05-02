@@ -128,7 +128,7 @@ public class StoryIntroduce extends AppCompatActivity
 
         mAdapter = new StoryCatalogsAdapter(activity, story.getCatalogList());
         rv_list.setHasFixedSize(true);
-        rv_list.setLayoutManager(new LinearLayoutManager(StoryIntroduce.this));
+        rv_list.setLayoutManager(new LinearLayoutManager(activity));
         rv_list.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(new StoryCatalogsAdapter.OnItemClickListener()
         {

@@ -33,17 +33,22 @@
         android:text="正文："
         android:textSize="18sp"/>
 
+    <ScrollView
+        android:layout_below="@id/tv_zhengWen"
+        android:layout_width="match_parent"
+        android:layout_above="@+id/btly_switch"
+        android:layout_height="match_parent">
+
     <TextView
         android:id="@+id/tv_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/btly_switch"
-        android:layout_below="@id/tv_zhengWen"
         android:layout_marginTop="10dp"
         android:background="@android:color/white"
         android:padding="10dp"
         android:textSize="18sp"/>
 
+    </ScrollView>
     <android.support.v7.widget.ButtonBarLayout
         android:id="@id/btly_switch"
         android:layout_width="match_parent"

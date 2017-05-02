@@ -51,7 +51,7 @@
             android:label="@string/title_activity_gank_detail">
         </activity>
         <activity
-            android:name=".ui.story.MusicActivity"
+            android:name=".ui.music.MusicActivity"
             android:label="@string/title_activity_music"/>
         <activity
             android:name=".ui.story.StoryActivity"
