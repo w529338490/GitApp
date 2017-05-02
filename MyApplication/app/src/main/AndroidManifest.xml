@@ -75,11 +75,11 @@
         <activity android:name=".ui.story.StoryRead">
         </activity>
         <activity
-            android:name=".ui.UserActivity.UserActivity"
+            android:name=".ui.user.UserActivity"
             android:label="@string/title_activity_user"
             android:theme="@style/AppTheme">
         </activity>
-        <activity android:name=".ui.UserActivity.MyVideoActivity">
+        <activity android:name=".ui.user.MyVideoActivity">
         </activity>
     </application>
 

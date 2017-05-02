@@ -1,4 +1,4 @@
-package com.example.administrator.myapplication.ui.UserActivity;
+package com.example.administrator.myapplication.ui.user;
 
 import android.content.Intent;
 import android.os.Bundle;

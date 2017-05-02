@@ -88,5 +88,23 @@ public class VideoDao
         }
         return listsBeans;
     }
+    /**
+     * 查询单个
+     */
+    public VideoBean findBeanByPath(String paath)
+    {
+        VideoBean bean = null;
+        try
+        {
+             if(userDaoOpe.queryBuilder().where().eq("videoUri", paath).query().size()!=0)
+             {
+                 bean=userDaoOpe.queryBuilder().where().eq("videoUri", paath).query().get(0);
+             }
+        } catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return bean;
+    }
 
 }

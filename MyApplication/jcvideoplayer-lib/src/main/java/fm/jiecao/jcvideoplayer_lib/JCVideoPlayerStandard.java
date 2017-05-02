@@ -36,6 +36,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     public TextView titleTextView;
     public ImageView thumbImageView;
     public ImageView tinyBackImageView;
+    public  boolean canShouwDialog=true;
 
 
     protected DismissControlViewTimerTask mDismissControlViewTimerTask;
@@ -176,18 +177,26 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         super.onClick(v);
         int i = v.getId();
         if (i == R.id.thumb) {
-            if (TextUtils.isEmpty(url)) {
+            if (TextUtils.isEmpty(url))
+            {
                 Toast.makeText(getContext(), getResources().getString(R.string.no_url), Toast.LENGTH_SHORT).show();
                 return;
             }
-            if (currentState == CURRENT_STATE_NORMAL) {
+            if (currentState == CURRENT_STATE_NORMAL)
+            {
                 if (!url.startsWith("file") && !url.startsWith("/") &&
-                        !JCUtils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED) {
-                    showWifiDialog();
+                        !JCUtils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED)
+                {
+                    if(this.canShouwDialog)
+                    {
+                        showWifiDialog();
+                    }
+
                     return;
                 }
                 startVideo();
-            } else if (currentState == CURRENT_STATE_AUTO_COMPLETE) {
+            } else if (currentState == CURRENT_STATE_AUTO_COMPLETE)
+            {
                 onClickUiToggle();
             }
         } else if (i == R.id.surface_container) {
@@ -777,5 +786,15 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     public void onCompletion() {
         super.onCompletion();
         cancelDismissControlViewTimer();
+    }
+
+    public boolean isCanShouwDialog()
+    {
+        return canShouwDialog;
+    }
+
+    public void setCanShouwDialog(boolean canShouwDialog)
+    {
+        this.canShouwDialog = canShouwDialog;
     }
 }

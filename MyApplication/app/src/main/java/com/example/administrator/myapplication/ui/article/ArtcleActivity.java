@@ -103,7 +103,7 @@ public class ArtcleActivity extends RxAppCompatActivity
         adapter = new ArtcleAdapter(results);
 
         linearLayoutManager=new LinearLayoutManager(this);
-        recyview.setLayoutManager(linearLayoutManager);
+        recyview.setLayoutManager(manager);
         recyview.setAdapter(adapter);
         recyview.addOnItemTouchListener(new RecyclerView.OnItemTouchListener()
         {

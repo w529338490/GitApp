@@ -20,7 +20,7 @@ import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.adapter.PaperAdapter;
 import com.example.administrator.myapplication.fragment.NewsFragment;
 import com.example.administrator.myapplication.ui.Fan.FanActivity;
-import com.example.administrator.myapplication.ui.UserActivity.UserActivity;
+import com.example.administrator.myapplication.ui.user.UserActivity;
 import com.example.administrator.myapplication.ui.article.ArtcleActivity;
 import com.example.administrator.myapplication.ui.gank.GankActivity;
 import com.example.administrator.myapplication.ui.story.MusicActivity;

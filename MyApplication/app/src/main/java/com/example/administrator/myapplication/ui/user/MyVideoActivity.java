@@ -1,43 +1,30 @@
-package com.example.administrator.myapplication.ui.UserActivity;
+package com.example.administrator.myapplication.ui.user;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 
+import com.example.administrator.myapplication.DB.DbBean.VideoBean;
+import com.example.administrator.myapplication.DB.DbDao.VideoDao;
 import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.Utill.ToastUtil;
 import com.example.administrator.myapplication.adapter.MyVideoViewAdapter;
-import com.example.administrator.myapplication.DB.DbBean.VideoBean;
-import com.example.administrator.myapplication.ui.gank.ImageActivity;
 import com.orhanobut.logger.Logger;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
-import java.util.Objects;
-
-import retrofit2.http.Url;
-import rx.Observable;
-import rx.Subscriber;
 
 public class MyVideoActivity extends AppCompatActivity
 {
@@ -46,7 +33,7 @@ public class MyVideoActivity extends AppCompatActivity
     MyVideoViewAdapter adpter;
     LinearLayoutManager manger;
     ItemTouchHelper helper;   //实现recyview拖拽动画
-
+    VideoDao Dao=new VideoDao(MyVideoActivity.this);
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -66,10 +53,17 @@ public class MyVideoActivity extends AppCompatActivity
         adpter.SetDownlodLiner(new MyVideoViewAdapter.DownlodLiner()
         {
             @Override
-            public void down(String path,String tittle)
+            public void down(String path, String tittle)
             {
-
                 DownLodVieo(path,tittle);
+            }
+
+            @Override
+            public void delet(VideoBean currentBean,int position)
+            {
+                Dao.deletData(currentBean);
+                myVideos.remove(position);
+                adpter.notifyDataSetChanged();
 
             }
         });
@@ -126,9 +120,10 @@ public class MyVideoActivity extends AppCompatActivity
                 HttpURLConnection http = (HttpURLConnection) url.openConnection();
                 //设置超时时间
                 http.setConnectTimeout(5000);
-               Logger.e( http.getResponseMessage());
+                Logger.e( http.getResponseMessage());
                 //获得总长度
                 int length = http.getContentLength();
+                Logger.e(length/1024+"");
                 Logger.e("=======", length + "");
                 //为total分配空间
                 total = new byte[length];
@@ -171,8 +166,12 @@ public class MyVideoActivity extends AppCompatActivity
             super.onPostExecute(bytes);
 
             progressDialog.dismiss();
-            if(bytes!=null){
+            if(bytes!=null)
+            {
                 saveCroppedImage(bytes,tittle);
+            }else
+            {
+                ToastUtil.show("下载失败!");
             }
 
 
@@ -191,6 +190,8 @@ public class MyVideoActivity extends AppCompatActivity
 
         }
     }
+
+    //把下载的 字节数组,写入指定文件
     private void saveCroppedImage(byte[] bytes,String tittle)
     {
         String path = null;
@@ -218,6 +219,18 @@ public class MyVideoActivity extends AppCompatActivity
         {
             ToastUtil.showLong("下载失败,文件在");
             e.printStackTrace();
+        } finally
+        {
+            try
+            {
+                if (outputStream != null)
+                {
+                    outputStream.close();
+                }
+            } catch (IOException e)
+            {
+                e.printStackTrace();
+            }
         }
 
     }

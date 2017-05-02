@@ -7,18 +7,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.administrator.myapplication.R;
-import com.example.administrator.myapplication.common.myApplication;
-import com.example.administrator.myapplication.DB.DbDao.VideoDao;
 import com.example.administrator.myapplication.DB.DatabaseHelper;
 import com.example.administrator.myapplication.DB.DbBean.VideoBean;
+import com.example.administrator.myapplication.DB.DbDao.VideoDao;
+import com.example.administrator.myapplication.R;
+import com.example.administrator.myapplication.Utill.FileUtil;
+import com.example.administrator.myapplication.Utill.ToastUtil;
+import com.example.administrator.myapplication.common.myApplication;
+import com.orhanobut.logger.Logger;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
-import rx.Observable;
 
 /**
  * Created by Administrator on 2017/3/27.
@@ -34,12 +36,14 @@ public class MyVideoViewAdapter extends RecyclerView.Adapter<MyVideoViewAdapter.
     private Context context;
     DownlodLiner downlinsner;
 
+
     public MyVideoViewAdapter( List<VideoBean> results, Context context)
     {
         this.results = results;
         this.inflater = LayoutInflater.from(context);
         this.context = context;
         this.helper = DatabaseHelper.getHelper(context);
+        this.videdao=new VideoDao(context);
 
     }
 
@@ -62,22 +66,50 @@ public class MyVideoViewAdapter extends RecyclerView.Adapter<MyVideoViewAdapter.
         if (results != null && results.get(position) != null )
         {
             final String thunbUrl=results.get(position).getThumbUrl();
-            holder.custom_videoplayer.setUp(
+            //查看是否有下载到本地的 视屏 有则加载本地,无则加载网络
+                String sdkPath=videdao.findBeanByPath(results.get(position).getVideoUri()).getTittle();
+                if(FileUtil.chechFile(sdkPath+".mp4"))
+                {
+                    holder.custom_videoplayer.canShouwDialog=false;
+                    holder.custom_videoplayer.setUp(
+                            FileUtil.FILE_ROOT+sdkPath+".mp4",
+                            JCVideoPlayer.SCREEN_LAYOUT_LIST,
+                            results.get(position).getTittle());
+
+                    Logger.e(FileUtil.FILE_ROOT+sdkPath);
+                }
+            else
+            {
+                holder.custom_videoplayer.canShouwDialog=true;
+                holder.custom_videoplayer.setUp(
                     results.get(position).getVideoUri(),
                     JCVideoPlayer.SCREEN_LAYOUT_LIST,
-                    results.get(position).getTittle()
-            );
+                    results.get(position).getTittle());
+                ToastUtil.show("播放网络视屏");
+
+            }
 
             Picasso.with(myApplication.context)
                     .load(String.valueOf(thunbUrl))
                     .into(holder.custom_videoplayer.thumbImageView);
         }
+        //下载 视屏
         holder.saved.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
                 downlinsner.down(results.get(position).getVideoUri(),results.get(position).getTittle());
+            }
+        });
+
+        //删除保存
+        holder.delete.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                downlinsner.delet(results.get(position),position);
             }
         });
     }
@@ -94,6 +126,7 @@ public class MyVideoViewAdapter extends RecyclerView.Adapter<MyVideoViewAdapter.
         JCVideoPlayerStandard custom_videoplayer;
         TextView saved ;
         TextView img_share ;
+        TextView delete ;
 
         public Holder(View view)
         {
@@ -101,6 +134,7 @@ public class MyVideoViewAdapter extends RecyclerView.Adapter<MyVideoViewAdapter.
             tittle = (TextView) view.findViewById(R.id.tittle);
             saved = (TextView) view.findViewById(R.id.saved);
             img_share = (TextView) view.findViewById(R.id.img_share);
+            delete = (TextView) view.findViewById(R.id.delete);
             custom_videoplayer = (JCVideoPlayerStandard) view.findViewById(R.id.custom_videoplayer);
 
         }
@@ -114,7 +148,7 @@ public class MyVideoViewAdapter extends RecyclerView.Adapter<MyVideoViewAdapter.
     public interface  DownlodLiner
     {
         void down(String path,String tittle);
-
+         void delet(VideoBean currentBean,int position);
     }
 
 }

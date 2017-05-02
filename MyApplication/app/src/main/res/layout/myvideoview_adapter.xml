@@ -46,6 +46,18 @@
                 android:gravity="center"
                 android:text="分享"
                 android:textSize="15dp"/>
+            <TextView
+                android:background="@color/colorPrimaryDark"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"/>
+            <TextView
+                android:id="@+id/delete"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="删除"
+                android:textSize="15dp"/>
 
         </LinearLayout>
 
