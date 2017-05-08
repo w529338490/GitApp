@@ -5,7 +5,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              tools:context="com.example.administrator.myapplication.ui.video.VideoActivity">
+              tools:context="com.example.w.duanzi.com.example.duanzi.ui.video.VideoActivity">
 
 
     <android.support.v4.widget.SwipeRefreshLayout
