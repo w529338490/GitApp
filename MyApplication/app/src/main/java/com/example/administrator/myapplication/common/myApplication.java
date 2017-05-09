@@ -12,6 +12,13 @@ import com.orhanobut.logger.Logger;
 public class myApplication extends Application
 {
 
+
+    /**
+     * 微信账号
+     */
+    public static final String WECHAI_APP_ID = "wx69e49555a65406a3";
+    public static final String WECHAT_AppSecret = "0a3afa56b65e236dcd0d88735e38f3f7";
+
     public static Context context;
 
     @Override
