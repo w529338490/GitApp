@@ -28,7 +28,7 @@
             app:expandedTitleMarginEnd="64dp"
             >
 
-            <com.example.administrator.myapplication.ui.view.GifImageView
+            <com.duanzi.ui.view.GifImageView
                 android:id="@+id/tittle_img"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -36,7 +36,7 @@
                 android:fitsSystemWindows="true"
                 app:layout_collapseMode="parallax"
                 >
-            </com.example.administrator.myapplication.ui.view.GifImageView>
+            </com.duanzi.ui.view.GifImageView>
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"

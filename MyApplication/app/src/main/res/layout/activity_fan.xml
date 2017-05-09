@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    tools:context="com.example.administrator.myapplication.ui.Fan.FanActivity">
+    tools:context="com.example.w.duanzi.com.example.duanzi.ui.Fan.FanActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,7 +13,7 @@
         android:layout_gravity="center"
         android:orientation="vertical">
 
-        <com.example.administrator.myapplication.ui.view.My3DGrop
+        <com.duanzi.ui.view.My3DGrop
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:layout_gravity="center_horizontal"
@@ -51,7 +51,7 @@
                 android:src="@drawable/p4"
                 />
 
-        </com.example.administrator.myapplication.ui.view.My3DGrop>
+        </com.duanzi.ui.view.My3DGrop>
 
     </LinearLayout>
 

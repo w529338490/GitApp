@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:elevation="4dp"
-    tools:context="com.example.administrator.myapplication.ui.story.StoryActivity">
+    tools:context="com.example.w.duanzi.com.example.duanzi.ui.story.StoryActivity">
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
