@@ -6,7 +6,6 @@ import java.util.List;
  * 书籍实体类
  * Created by admin on 2017/4/3.
  */
-
 public class Story
 {
     private List<Story> storyList;

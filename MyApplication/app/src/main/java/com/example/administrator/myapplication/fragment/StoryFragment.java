@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 
 import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.Utill.JsoupUtil;
-import com.example.administrator.myapplication.adapter.StorysAdapter;
+import com.example.administrator.myapplication.adapter.StoryAdapter.StorysAdapter;
 import com.example.administrator.myapplication.common.Ip;
 import com.example.administrator.myapplication.entity.Story;
 import com.example.administrator.myapplication.ui.story.StoryIntroduce;

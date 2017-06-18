@@ -81,6 +81,8 @@
         </activity>
         <activity android:name=".ui.UserActivity.MyVideoActivity">
         </activity>
+        <activity android:name=".ui.story.RecentActivity">
+        </activity>
     </application>
 
 </manifest>

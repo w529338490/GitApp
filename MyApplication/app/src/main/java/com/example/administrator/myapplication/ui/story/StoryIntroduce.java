@@ -16,8 +16,11 @@ import com.bumptech.glide.Glide;
 import com.example.administrator.myapplication.R;
 import com.example.administrator.myapplication.Utill.GlideRoundTransform;
 import com.example.administrator.myapplication.Utill.JsoupUtil;
-import com.example.administrator.myapplication.adapter.StoryCatalogsAdapter;
+import com.example.administrator.myapplication.adapter.StoryAdapter.StoryCatalogsAdapter;
+import com.example.administrator.myapplication.common.myApplication;
+import com.example.administrator.myapplication.entity.RecentStory;
 import com.example.administrator.myapplication.entity.Story;
+import com.example.administrator.myapplication.entity.gen.RecentStoryDao;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -146,6 +149,13 @@ public class StoryIntroduce extends AppCompatActivity
         switch (view.getId())
         {
             case R.id.bt_startRead:
+                // 添加到最近浏览
+                RecentStoryDao dao = myApplication.getRecentSession().getRecentStoryDao();
+                RecentStory recentStory = new RecentStory();
+                recentStory.setStoryName(story.getTitle());
+                recentStory.setPic(story.getStoryPic());
+                recentStory.setUrl(story.getReadUrl());
+                dao.insert(recentStory);
                 startActivity(new Intent(activity, StoryRead.class).putExtra("url", story.getReadUrl()));
                 break;
         }

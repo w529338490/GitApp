@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao' // 添加greenDao依赖插件
 
 android {
 
@@ -18,6 +19,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    greendao {
+        schemaVersion 1
+        daoPackage 'com.example.administrator.myapplication.entity.gen'
+        targetGenDir 'src/main/java'
+    }
 }
 
 dependencies {
@@ -25,20 +31,22 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    //     compile 'fm.jiecao:jiecaovideoplayer:3.1'
+    //ijkplayer视频播放
+    compile project(':jcvideoplayer-lib')
+    // compile 'com.android.support.constraint:constraint-layout:1.0.2'
     //design
     //注解
     //网络请求
+    // GSON
     //数据抓取
-    //ijkplayer视频播放
-    //     compile 'fm.jiecao:jiecaovideoplayer:3.1'
     //RxJava RxAndroid
     //事件总线
     //okhtttp
     //图片相关
     //图片处理glide加载
-    //loggoing
-    compile project(':jcvideoplayer-lib')
-    // compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    // loggoing
+    // 数据库
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
     compile 'com.jakewharton:butterknife:5.1.1'
@@ -64,4 +72,6 @@ dependencies {
     compile 'com.j256.ormlite:ormlite-core:5.0'
     compile 'com.android.support:support-v4:25.3.1'
     compile 'com.android.support:recyclerview-v7:25.3.1'
+    compile 'org.greenrobot:greendao:3.2.2'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 }

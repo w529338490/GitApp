@@ -1,4 +1,4 @@
-package com.example.administrator.myapplication.adapter;
+package com.example.administrator.myapplication.adapter.StoryAdapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

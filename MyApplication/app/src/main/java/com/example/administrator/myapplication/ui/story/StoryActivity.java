@@ -1,5 +1,6 @@
 package com.example.administrator.myapplication.ui.story;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -87,6 +88,7 @@ public class StoryActivity extends AppCompatActivity
                 ToastUtil.show("暂时不给你看书架");
                 return true;
             case R.id.item_recent:
+                startActivity(new Intent(StoryActivity.this, RecentActivity.class));
                 return true;
             case R.id.item_setting:
                 ToastUtil.show("暂时不让你设置");

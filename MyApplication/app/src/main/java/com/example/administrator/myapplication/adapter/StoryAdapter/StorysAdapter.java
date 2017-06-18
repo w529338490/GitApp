@@ -1,4 +1,4 @@
-package com.example.administrator.myapplication.adapter;
+package com.example.administrator.myapplication.adapter.StoryAdapter;
 
 
 import android.content.Context;

@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -147,11 +149,35 @@ public class StoryRead extends RxAppCompatActivity
         }
     }
 
-
     @Override
     protected void onDestroy()
     {
         super.onDestroy();
         ButterKnife.reset(this);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.mune_story_reading, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case R.id.item_add_booklist:
+                ToastUtil.show("添加至我的书架");
+                return true;
+            case R.id.item_setting:
+                ToastUtil.show("暂时不让你设置");
+//                startActivity(new Intent(activity, StorySettingActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
