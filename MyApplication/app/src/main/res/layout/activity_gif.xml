@@ -5,7 +5,7 @@
                 android:id="@+id/activity_gif"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:context="com.example.administrator.myapplication.ui.gif.GifActivity">
+                tools:context="com.example.w.duanzi.com.example.duanzi.ui.gif.GifActivity">
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"

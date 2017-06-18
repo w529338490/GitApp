@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SizeReadyCallback;
-import com.example.administrator.myapplication.R;
+import com.duanzi.R;
 import com.example.administrator.myapplication.entity.RecentStory;
 
 import java.util.List;

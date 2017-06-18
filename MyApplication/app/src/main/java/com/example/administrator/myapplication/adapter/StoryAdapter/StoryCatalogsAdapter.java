@@ -7,10 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.administrator.myapplication.R;
-import com.example.administrator.myapplication.entity.Story.StoryCatalog;
+import com.duanzi.R;
+import com.duanzi.entity.Story;
 
 import java.util.List;
+
 
 /**
  * 小说目录列表
@@ -21,11 +22,11 @@ public class StoryCatalogsAdapter extends RecyclerView.Adapter<StoryCatalogsAdap
 {
     Context context;
     LayoutInflater inflater;
-    List<StoryCatalog> catalogList;
+    List<Story.StoryCatalog> catalogList;
 
     public OnItemClickListener itemClickListener = null;
 
-    public StoryCatalogsAdapter(Context context, List<StoryCatalog> list)
+    public StoryCatalogsAdapter(Context context, List<Story.StoryCatalog> list)
     {
         this.context = context;
         this.catalogList = list;

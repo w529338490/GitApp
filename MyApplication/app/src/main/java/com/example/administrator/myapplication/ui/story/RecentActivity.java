@@ -8,9 +8,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.example.administrator.myapplication.R;
+import com.duanzi.R;
+import com.duanzi.common.myApplication;
+import com.duanzi.ui.story.StoryRead;
 import com.example.administrator.myapplication.adapter.StoryAdapter.StoryRecentAdapter;
-import com.example.administrator.myapplication.common.myApplication;
 import com.example.administrator.myapplication.entity.RecentStory;
 import com.example.administrator.myapplication.entity.gen.RecentStoryDao;
 

@@ -6,9 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorAccent"
-    tools:context="com.example.administrator.myapplication.ui.gank.GankActivity">
+    tools:context="com.example.w.duanzi.com.example.duanzi.ui.gank.GankActivity">
 
-    <com.example.administrator.myapplication.ui.view.GifImageView
+    <com.duanzi.ui.view.GifImageView
         android:id="@+id/error_bgimg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

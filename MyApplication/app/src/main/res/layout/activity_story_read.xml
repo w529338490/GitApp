@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/activity_background"
-    tools:context="com.example.administrator.myapplication.ui.story.StoryRead">
+    tools:context="com.example.w.duanzi.com.example.duanzi.ui.story.StoryRead">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"

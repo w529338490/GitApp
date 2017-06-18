@@ -2,27 +2,17 @@ package com.example.administrator.myapplication.adapter.StoryAdapter;
 
 
 import android.content.Context;
-
 import android.support.v7.widget.RecyclerView;
-
 import android.view.LayoutInflater;
-
 import android.view.View;
-
 import android.view.ViewGroup;
-
 import android.widget.TextView;
 
-
-import com.example.administrator.myapplication.R;
-
-import com.example.administrator.myapplication.Utill.MarqueeTextView;
-
-import com.example.administrator.myapplication.entity.Story;
-
+import com.duanzi.R;
+import com.duanzi.Utill.MarqueeTextView;
+import com.duanzi.entity.Story;
 
 import java.util.List;
-
 
 /**
  * Created by k9579 on 2017/3/28.

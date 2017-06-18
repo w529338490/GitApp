@@ -27,7 +27,7 @@
                 android:text="[分类]"
                 android:textSize="18sp"/>
 
-            <com.example.administrator.myapplication.Utill.MarqueeTextView
+            <com.duanzi.Utill.MarqueeTextView
                 android:id="@+id/story_tittle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
                 android:textSize="18sp"/>
         </LinearLayout>
 
-        <com.example.administrator.myapplication.Utill.MarqueeTextView
+        <com.duanzi.Utill.MarqueeTextView
             android:id="@+id/story_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
