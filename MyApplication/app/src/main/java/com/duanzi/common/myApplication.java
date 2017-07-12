@@ -3,8 +3,8 @@ package com.duanzi.common;
 import android.app.Application;
 import android.content.Context;
 
-import com.example.administrator.myapplication.entity.gen.DaoMaster;
-import com.example.administrator.myapplication.entity.gen.DaoSession;
+import com.duanzi.DB.gen.DaoMaster;
+import com.duanzi.DB.gen.DaoSession;
 import com.orhanobut.logger.Logger;
 
 /**

@@ -19,8 +19,8 @@ import com.duanzi.Utill.JsoupUtil;
 import com.duanzi.adapter.StoryCatalogsAdapter;
 import com.duanzi.common.myApplication;
 import com.duanzi.entity.Story;
-import com.example.administrator.myapplication.entity.RecentStory;
-import com.example.administrator.myapplication.entity.gen.RecentStoryDao;
+import com.duanzi.entity.RecentStory;
+import com.duanzi.DB.gen.RecentStoryDao;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;

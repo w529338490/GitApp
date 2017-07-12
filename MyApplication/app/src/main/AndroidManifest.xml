@@ -90,7 +90,7 @@
         </activity>
         <activity android:name="com.duanzi.ui.user.MyVideoActivity">
         </activity>
-        <activity android:name="com.example.administrator.myapplication.ui.story.RecentActivity"/>
+        <activity android:name=".ui.story.RecentActivity"/>
         <!-- 集成分享-->
         <activity
             android:name="com.mob.tools.MobUIShell"

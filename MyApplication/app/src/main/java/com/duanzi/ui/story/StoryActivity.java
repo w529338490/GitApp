@@ -17,7 +17,6 @@ import com.duanzi.R;
 import com.duanzi.Utill.ToastUtil;
 import com.duanzi.adapter.PaperAdapter;
 import com.duanzi.fragment.StoryFragment;
-import com.example.administrator.myapplication.ui.story.RecentActivity;
 
 import java.util.ArrayList;
 
