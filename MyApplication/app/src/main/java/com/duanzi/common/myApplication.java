@@ -24,6 +24,7 @@ public class myApplication extends Application
 
     private DaoMaster daoMaster;
     private static DaoSession recentSession;
+    private static DaoSession shujiaSession;
 
     @Override
     public void onCreate()
@@ -34,6 +35,7 @@ public class myApplication extends Application
 
         this.context = getApplicationContext();  //获得全局 的Context;
         getRecentDao();
+        getShuJia();
     }
 
     /**
@@ -49,5 +51,17 @@ public class myApplication extends Application
     public static DaoSession getRecentSession()
     {
         return recentSession;
+    }
+
+    private void getShuJia()
+    {
+        DaoMaster.DevOpenHelper devOpenHelper = new DaoMaster.DevOpenHelper(this, "shujia.db", null);
+        daoMaster = new DaoMaster(devOpenHelper.getWritableDatabase());
+        shujiaSession = daoMaster.newSession();
+    }
+
+    public static DaoSession getShuJiaSession()
+    {
+        return shujiaSession;
     }
 }

@@ -11,13 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.duanzi.DB.gen.RecentStoryDao;
 import com.duanzi.R;
 import com.duanzi.Utill.JsoupUtil;
 import com.duanzi.adapter.StorysAdapter;
 import com.duanzi.common.Ip;
-import com.duanzi.common.myApplication;
-import com.duanzi.entity.RecentStory;
 import com.duanzi.entity.Story;
 import com.duanzi.ui.story.StoryIntroduce;
 
@@ -50,8 +47,6 @@ public class StoryFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
     String url = "";
     String str[] = new String[]{Ip.url_story_qihuan, Ip.url_story_wuxia, Ip.url_story_history, Ip.url_story_yule, Ip.url_story_kehuan};
-
-    private RecentStoryDao dao;
 
     public static StoryFragment newInstance(int type)
     {
@@ -130,16 +125,7 @@ public class StoryFragment extends Fragment implements SwipeRefreshLayout.OnRefr
             @Override
             public void onItemClick(View view, Story story)
             {
-                // 添加至最近浏览
-                dao = myApplication.getRecentSession().getRecentStoryDao();
-                if (dao.queryBuilder().where(RecentStoryDao.Properties.StoryName.eq(story.getTitle())).list().size() == 0) // 如果数据库已存在就不做操作
-                {
-                    RecentStory recent = new RecentStory();
-                    recent.setStoryName(story.getTitle());
-                    recent.setUrl(story.getUri());
-                    recent.setPic(story.getStoryPic());
-                    dao.insert(recent);
-                }
+
                 startActivity(new Intent(getActivity(), StoryIntroduce.class).putExtra("uri", story.getUri()));
             }
         });

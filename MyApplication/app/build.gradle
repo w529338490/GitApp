@@ -32,7 +32,7 @@ android {
                     String channel = variant.productFlavors[0].name.replace("_", "")
                     //output: CSL-v1.0.9-baidu.apk
                     output.outputFile =
-                            new File(output.outputFile.parent, "段子" + defaultConfig.versionName + "-"+channel + ".apk")
+                            new File(output.outputFile.parent, "段子" + defaultConfig.versionName + "-" + channel + ".apk")
                 }
             }
         }
@@ -48,7 +48,7 @@ android {
     //多个渠道包
     productFlavors {
         _duanzi {}
-         baidu{}
+        baidu {}
     }
     productFlavors.all {
             //循环替换manifest的渠道号
@@ -82,6 +82,9 @@ dependencies {
     //图片处理glide加载
     // loggoing
     // 数据库
+    //微信第三方接口
+    compile files('libs/MobCommons-2017.0412.1554.jar')
+    compile files('libs/ShareSDK-YouDao-2.8.3.jar')
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
     compile 'com.jakewharton:butterknife:5.1.1'
@@ -109,7 +112,4 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:25.3.1'
     compile 'org.greenrobot:greendao:3.2.2'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    //微信第三方接口
-    compile files('libs/MobCommons-2017.0412.1554.jar')
-    compile files('libs/ShareSDK-YouDao-2.8.3.jar')
 }

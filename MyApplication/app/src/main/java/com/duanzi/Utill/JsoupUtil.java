@@ -309,7 +309,7 @@ public class JsoupUtil
         } catch (IOException e)
         {
             e.printStackTrace();
-            return null;
+            return storyList;
         }
         return storyList;
     }

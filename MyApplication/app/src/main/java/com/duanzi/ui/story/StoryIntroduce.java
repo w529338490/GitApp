@@ -13,14 +13,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.duanzi.DB.gen.StoryShuJiaDao;
 import com.duanzi.R;
 import com.duanzi.Utill.GlideRoundTransform;
 import com.duanzi.Utill.JsoupUtil;
+import com.duanzi.Utill.ToastUtil;
 import com.duanzi.adapter.StoryCatalogsAdapter;
 import com.duanzi.common.myApplication;
 import com.duanzi.entity.Story;
-import com.duanzi.entity.RecentStory;
-import com.duanzi.DB.gen.RecentStoryDao;
+import com.duanzi.entity.StoryShuJia;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -56,11 +57,15 @@ public class StoryIntroduce extends AppCompatActivity
     RecyclerView rv_list;
     @InjectView(R.id.bt_startRead)
     Button bt_read;
+    @InjectView(R.id.tv_add)
+    TextView tv_add;
 
     private Story story;
 
     private Activity activity = StoryIntroduce.this;
     private StoryCatalogsAdapter mAdapter;
+
+    private StoryShuJiaDao dao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -69,6 +74,7 @@ public class StoryIntroduce extends AppCompatActivity
         setContentView(R.layout.activity_story_introduce);
         intentUri = getIntent().getStringExtra("uri");
         ButterKnife.inject(this);
+
         initWidght();
         getData(intentUri);
     }
@@ -89,7 +95,7 @@ public class StoryIntroduce extends AppCompatActivity
     private void getData(final String uri)
     {
         //使用RxJava 异步网络请求
-        Observable<Integer> observable = Observable.create(new rx.Observable.OnSubscribe<Integer>()
+        Observable<Integer> observable = Observable.create(new Observable.OnSubscribe<Integer>()
         {
             @Override
             public void call(Subscriber<? super Integer> subscriber)
@@ -142,20 +148,29 @@ public class StoryIntroduce extends AppCompatActivity
         });
     }
 
-    @OnClick({R.id.bt_startRead})
+    @OnClick({R.id.bt_startRead, R.id.tv_add})
     public void onViewClicked(View view)
     {
         switch (view.getId())
         {
             case R.id.bt_startRead:
-                // 添加到最近浏览
-                RecentStoryDao dao = myApplication.getRecentSession().getRecentStoryDao();
-                RecentStory recentStory = new RecentStory();
-                recentStory.setStoryName(story.getTitle());
-                recentStory.setPic(story.getStoryPic());
-                recentStory.setUrl(story.getReadUrl());
-                dao.insert(recentStory);
                 startActivity(new Intent(activity, StoryRead.class).putExtra("url", story.getReadUrl()));
+                break;
+            case R.id.tv_add:
+                // 添加至书架
+                dao = myApplication.getShuJiaSession().getStoryShuJiaDao();
+                if (dao.queryBuilder().where(StoryShuJiaDao.Properties.StoryName.eq(story.getTitle())).list().size() == 0) // 如果数据库已存在就不做操作
+                {
+                    StoryShuJia shuJia = new StoryShuJia();
+                    shuJia.setStoryName(story.getTitle());
+                    shuJia.setUrl(intentUri);
+                    shuJia.setPic(story.getStoryPic());
+                    dao.insert(shuJia);
+                    ToastUtil.show("添加成功！");
+                } else
+                {
+                    ToastUtil.show("添加失败，该书可能已存在于您的书架");
+                }
                 break;
         }
     }

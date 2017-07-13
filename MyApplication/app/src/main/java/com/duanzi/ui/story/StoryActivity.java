@@ -84,7 +84,7 @@ public class StoryActivity extends AppCompatActivity
         switch (item.getItemId())
         {
             case R.id.item_shujia:
-                ToastUtil.show("暂时不给你看书架");
+                startActivity(new Intent(StoryActivity.this, ShuJiaActivity.class));
                 return true;
             case R.id.item_recent:
                 startActivity(new Intent(StoryActivity.this, RecentActivity.class));
