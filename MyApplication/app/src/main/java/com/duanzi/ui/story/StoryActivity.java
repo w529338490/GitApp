@@ -91,7 +91,9 @@ public class StoryActivity extends AppCompatActivity
                 return true;
             case R.id.item_setting:
                 ToastUtil.show("暂时不让你设置");
-//                startActivity(new Intent());
+                // TODO 小说设置
+                // 设置字体大小 行间距 字间距 字体颜色 背景图
+                startActivity(new Intent(StoryActivity.this, StorySetting.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

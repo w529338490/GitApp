@@ -15,7 +15,6 @@ public class MarqueeTextView extends TextView
     public MarqueeTextView(Context context)
     {
         super(context);
-        // TODO Auto-generated constructor stub
     }
 
     public MarqueeTextView(Context context, AttributeSet attrs)

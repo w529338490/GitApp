@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import com.duanzi.DB.gen.RecentStoryDao;
 import com.duanzi.DB.gen.StoryShuJiaDao;
 import com.duanzi.R;
 import com.duanzi.Utill.ToastUtil;
@@ -27,6 +26,7 @@ public class ShuJiaActivity extends AppCompatActivity
     RecyclerView rv_list;
     @InjectView(R.id.tb_toolbar)
     Toolbar tb_toolbar;
+
     private StoryShuJiaDao dao;
     private StoryShuJiaAdapter mAdapter;
 
@@ -80,14 +80,16 @@ public class ShuJiaActivity extends AppCompatActivity
             {
                 try
                 {
-                    dao.queryBuilder().where(RecentStoryDao.Properties.StoryName.eq(recent.getStoryName())).buildDelete().executeDeleteWithoutDetachingEntities();
+                    dao.queryBuilder().where(StoryShuJiaDao.Properties.StoryName.eq(recent.getStoryName())).buildDelete().executeDeleteWithoutDetachingEntities();
                     mAdapter.remove(position);
                     mAdapter.notifyDataSetChanged();
                 } catch (Exception e)
                 {
                     ToastUtil.show(e.getMessage());
+                    e.printStackTrace();
                 }
             }
         });
     }
+
 }

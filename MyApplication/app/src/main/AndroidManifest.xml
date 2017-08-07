@@ -123,6 +123,8 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
         <activity android:name=".ui.story.ShuJiaActivity">
         </activity>
+        <activity android:name=".ui.story.StorySetting">
+        </activity>
     </application>
 
 </manifest>
