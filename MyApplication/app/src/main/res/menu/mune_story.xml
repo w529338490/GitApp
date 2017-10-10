@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context=".MainActivity">
+
+    <item
+        android:id="@+id/item_shujia"
+        android:icon="@drawable/ic_shujia"
+        android:orderInCategory="80"
+
+        android:title="我的书架"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/item_recent"
+        android:icon="@drawable/ic_recent"
+        android:orderInCategory="90"
+        android:title="最近浏览"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/item_setting"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_setting"
+        android:title="设置"
+        app:showAsAction="never"/>
+</menu>

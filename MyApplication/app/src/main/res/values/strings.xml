@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="navigation_drawer_open">open</string>
+    <string name="navigation_drawer_close">close</string>
+    <string name="title_activity_web">WebActivity</string>
+    <string name="title_activity_gank">GankActivity</string>
+    <string name="title_activity_iamge">IamgeActivity</string>
+    <string name="title_activity_music">MusicActivity</string>
+    <string name="title_activity_story">StoryActivity</string>
+    <string name="title_activity_gank_detail">GankDetailActivity</string>
+    <string name="lorem">在Google I/O 15上，谷歌发布了一个新的 support library，里面包含了一些遵循Material Design\'s spec的UI组件，比如，AppbarLayout, CollapsingToolbarLayout 和 CoordinatorLayout。 这些组件配合起来使用可以产生强大的效果，那么让我们通过这篇文章来学习如何使用这些组件。</string>
+    <string name="flexible_title" translatable="false">this is tittle</string>
+    <string name="title_activity_artcle">ARtcleActivity</string>
+    <string name="title_activity_artcle_contetn">ArtcleContetnActivity</string>
+    <string name="title_activity_story_introduce">StoryIntroduce</string>
+    <string name="hello_round">Hello Round World!</string>
+    <string name="hello_square">Hello Square World!</string>
+    <string name="webText">
+<![CDATA[
+<html>
+ <head></head>
+ <body style="background-color:#F5F5F5;">
+    <p style="text-align:justify;font-size:18px;color:#323232;text-indent:2em;">
+    Android一词的本义指“机器人”，同时也是Google于2007年11月5日 宣布的基于Linux平台的开源手机操作系统的名称，该平台由操作系统、中间件、用户界面和应用软件组成。
+    </p>
+      </body>
+</html>
+]]>
+    </string>
+    <string name="title_activity_user">UserActivity</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>

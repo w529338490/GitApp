@@ -1,0 +1,115 @@
+apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao' // 添加greenDao依赖插件
+
+android {
+
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+    defaultConfig {
+        applicationId "com.duanzi"
+        minSdkVersion 21
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    signingConfigs {
+        release {
+            storeFile file("../app/android.keystore")
+            storePassword "123456"
+            keyAlias "gitapp"
+            keyPassword "123456"
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    String channel = variant.productFlavors[0].name.replace("_", "")
+                    //output: CSL-v1.0.9-baidu.apk
+                    output.outputFile =
+                            new File(output.outputFile.parent, "段子" + defaultConfig.versionName + "-" + channel + ".apk")
+                }
+            }
+        }
+
+        debug {
+            signingConfig signingConfigs.release
+        }
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+    //多个渠道包
+    productFlavors {
+        _duanzi {}
+        baidu {}
+    }
+    productFlavors.all {
+            //循环替换manifest的渠道号
+        flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
+    }
+    greendao {
+        schemaVersion 1
+        daoPackage 'com.duanzi.DB.gen'
+        targetGenDir 'src/main/java'
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    //     compile 'fm.jiecao:jiecaovideoplayer:3.1'
+    //ijkplayer视频播放
+    compile project(':jcvideoplayer-lib')
+    // compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    //design
+    //注解
+    //网络请求
+    // GSON
+    //数据抓取
+    //RxJava RxAndroid
+    //事件总线
+    //okhtttp
+    //图片相关
+    //图片处理glide加载
+    // loggoing
+    // 数据库
+    //微信第三方接口
+    compile files('libs/MobCommons-2017.0412.1554.jar')
+    compile files('libs/ShareSDK-YouDao-2.8.3.jar')
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:design:25.3.1'
+    compile 'com.jakewharton:butterknife:5.1.1'
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    compile 'org.jsoup:jsoup:1.10.1'
+    compile 'com.trello:rxlifecycle:0.4.0'
+    compile 'com.trello:rxlifecycle-components:0.4.0'
+    compile 'com.squareup.retrofit2:converter-scalars:2.0.0'
+    compile 'io.reactivex:rxandroid:1.0.1'
+    compile 'io.reactivex:rxjava:1.0.16'
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
+    compile 'de.greenrobot:eventbus:2.4.0'
+    compile 'com.squareup.okhttp:okhttp:2.5.0'
+    compile 'com.squareup.okhttp:okhttp-urlconnection:2.5.0'
+    compile 'com.squareup.picasso:picasso:2.3.2'
+    compile 'com.commit451:PhotoView:1.2.4'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.android.support:cardview-v7:25.3.1'
+    compile 'com.orhanobut:logger:1.15'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.4.2'
+    compile 'com.j256.ormlite:ormlite-android:5.0'
+    compile 'com.j256.ormlite:ormlite-core:5.0'
+    compile 'com.android.support:support-v4:25.3.1'
+    compile 'com.android.support:recyclerview-v7:25.3.1'
+    compile 'org.greenrobot:greendao:3.2.2'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+}
