@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.tautua.markdownpapers.Markdown;
 import org.tautua.markdownpapers.parser.ParseException;
 
+import javax.servlet.http.HttpSession;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.List;
@@ -35,10 +36,11 @@ public class ArticleController {
     TODO：分页
      */
     @RequestMapping("/")
-    public String list(Model model){
+    public String list(HttpSession session, Model model){
         List<Article> articles = articleService.list();
         model.addAttribute("articles", articles);
-
+        model.addAttribute("sessionName", session.getAttribute("username"));
+        System.out.println( session.getAttribute("username"));
         return "front/index";
     }
 

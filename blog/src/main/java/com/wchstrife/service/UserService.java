@@ -48,12 +48,19 @@ public class UserService {
      *
      */
     public  boolean regiset(User user){
-
         if(user!=null){
             userDao.save(user);
             return true;
         }
-
         return false;
+    }
+    /**
+     * findById
+     */
+    public  User findById(String id){
+      if(  userDao.findOne(id)!=null){
+          return userDao.findOne(id);
+      }
+        return null;
     }
 }

@@ -1,4 +1,5 @@
 package com.wchstrife.controller;
+import com.wchstrife.dao.UserDao;
 import com.wchstrife.entity.Article;
 import com.wchstrife.entity.Category;
 import com.wchstrife.entity.User;
@@ -12,6 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -40,7 +43,8 @@ public class UserController {
         List<Article> articles = articleService.list();
         model.addAttribute("articles", articles);
 
-        return "admin/index";
+      //  return "admin/index";
+        return "me";
     }
 
     /**
@@ -81,11 +85,11 @@ public class UserController {
      */
 
     @RequestMapping(value ="/dologin", method = RequestMethod.POST)
-    public String doLogin(User user, Model model){
+    public String doLogin(HttpSession session, User user, Model model){
 
         if(userService.login(user.getUsername(), user.getPassword())){
-
-            return "redirect:/admin";
+            session.setAttribute("username",user.getUsername());
+            return "redirect:/article/";
         }else {
             model.addAttribute("error", "用户名或者密码错误");
             System.out.println("failture");
@@ -116,7 +120,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String save(Article article){
+    public String save(HttpSession session,Article article){
         //设置种类
         String name = article.getCategory().getName();
         Category category = categoryService.fingdByName(name);
@@ -128,8 +132,9 @@ public class UserController {
             article.setSummary(article.getContent().substring(0, article.getContent().length()));
         }
         article.setDate(sdf.format(new Date()));
+        article.setUsername(session.getAttribute("username").toString());
+        System.out.println(session.getAttribute("username").toString());
         articleService.save(article);
-
         return "redirect:/admin";
     }
 
@@ -141,5 +146,13 @@ public class UserController {
         model.addAttribute("categories", categories);
         model.addAttribute("article", new Article());
         return "admin/update";
+    }
+    /**
+     * 退出登录
+     */
+    @RequestMapping("/logout")
+    public String LogOut(HttpSession session){
+        session.removeAttribute("username");
+        return "redirect:/article/";
     }
 }
